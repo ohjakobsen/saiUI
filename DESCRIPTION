@@ -1,0 +1,16 @@
+Package: saiUI
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Ove Haugland Jakobsen
+Maintainer: Ove Haugland Jakobsen <ohj@mac.comt>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: GPL-3
+Depends:
+    R (>= 3.4.1)
+Imports:
+    htmltools (>= 0.3.5)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
