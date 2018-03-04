@@ -5,8 +5,7 @@
 \title{SAI page element}
 \usage{
 saiPage(title, ..., id = NULL, selected = NULL, position = c(),
-  header = NULL, footer = NULL, inverse = FALSE, fluid = TRUE,
-  theme = NULL, windowTitle = title)
+  header = NULL, footer = NULL, theme = NULL, windowTitle = title)
 }
 \description{
 This functions builds the actual HTML page.

@@ -17,12 +17,20 @@ ui <- saiPage(
 
   tabPanel(title = 'Tab 1',
     saiMenu(
-      p('Hello world'),
       selectInput('test', 'Test', choices = c('A', 'B'), selected = 'A')
     ),
     saiMain(
-      p('Hello world')
+      h2('Old Faithful plot'),
+      plotOutput('distPlot')
     )
+  ),
+  tabPanel(
+    title = 'Tab 2',
+    h2('This is Tab 2')
+  ),
+  tabPanel(
+    title = 'Tab 3',
+    h2('This is Tab 3')
   )
 
 )
@@ -33,10 +41,10 @@ server <- function(input, output) {
    output$distPlot <- renderPlot({
       # generate bins based on input$bins from ui.R
       x    <- faithful[, 2]
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      bins <- seq(min(x), max(x), length.out = 30)
 
       # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+      hist(x, breaks = bins, col = 'blue', border = 'white')
    })
 }
 
