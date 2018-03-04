@@ -6,7 +6,7 @@
 #' @param color A parameter
 #'
 #' @export
-bs4Page <- function(..., title = NULL, theme = NULL, color = 'primary') {
+bs4Page <- function(..., title = NULL, theme = NULL) {
 
   attachDependencies(
     tagList(
@@ -50,6 +50,7 @@ saiPage <- function(title,
                     header = NULL,
                     footer = NULL,
                     theme = NULL,
+                    color = 'primary',
                     windowTitle = title) {
 
   pageTitle <- title
@@ -58,14 +59,16 @@ saiPage <- function(title,
   tabs[[1]]$attribs$class <- 'tab-pane fade show active'
   # lapply(tabs, function(t) print(t$attribs))
 
-  navItems <- buildNavbar(pageTitle, tabs)
+  class = paste0('navbar navbar-expand-lg navbar-dark bg-', color)
+
+  navItems <- buildNavbar(pageTitle, tabs, color)
 
   # Build the page
   bs4Page(
     title = windowTitle,
     theme = theme,
-    tags$nav(class='navbar navbar-expand-lg navbar-dark bg-primary', navItems),
-    tags$div(class='tab-content', tabs)
+    tags$nav(class = class, navItems),
+    tags$div(class = 'tab-content', tabs)
   )
 
 }
@@ -89,17 +92,18 @@ saiMain <- function(..., width = 8) {
 
 }
 
-buildNavbar <- function(title, tabs) {
+buildNavbar <- function(title, tabs, color = 'primary') {
 
   i <- 1
   tabs <- lapply(tabs, function(t) {
 
     class <- ifelse(i == 1, 'nav-link active', 'nav-link')
+    class <- paste0(class, ' btn btn-', color)
     selected <- ifelse(i == 1, 'true', 'false')
     i <<- i + 1
 
     list(
-      tags$li(class='nav-item',
+      tags$li(class='nav-item px-1',
         a(id = paste0(gsub('\\s', '', t$attribs$title), '-tab'), class = class,
           href = paste0('#', gsub('\\s', '', t$attribs$title)), `data-toggle` = 'pill', t$attribs$title,
           `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$title))
@@ -110,10 +114,10 @@ buildNavbar <- function(title, tabs) {
 
   list(
     tags$a(class='navbar-brand', href='#', title),
-    HTML('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    HTML('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#shinyNavbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
          </button>'),
-    tags$div(class='collapse navbar-collapse',
+    tags$div(id = 'shinyNavbar', class='collapse navbar-collapse',
       tags$ul(class='nav nav-pills navbar-nav mr-auto', `role` = 'tablist',
         tabs
       )
