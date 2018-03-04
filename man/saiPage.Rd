@@ -4,8 +4,27 @@
 \alias{saiPage}
 \title{SAI page element}
 \usage{
-saiPage(title, ..., id = NULL, selected = NULL, position = c(),
-  header = NULL, footer = NULL, theme = NULL, windowTitle = title)
+saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
+  footer = NULL, theme = NULL, color = "primary", windowTitle = title)
+}
+\arguments{
+\item{title}{The title to display in the navbar.}
+
+\item{...}{The UI elements of the page. Top level elements should be \code{\link{tabPanel}}.}
+
+\item{id}{The page ID}
+
+\item{selected}{The tab that is initially selected}
+
+\item{header}{Tag or list of tags to display as a common header above all tabPanels.}
+
+\item{footer}{Tag or list of tags to display as a common footer below all tabPanels.}
+
+\item{theme}{Alternate Bootstrap 4 stylesheet.}
+
+\item{color}{Color for the navbar. Supports all Bootstrap 4 colors.}
+
+\item{windowTitle}{The title that should be displayed by the browser window.}
 }
 \description{
 This functions builds the actual HTML page.

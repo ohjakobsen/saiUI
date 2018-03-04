@@ -4,7 +4,7 @@
 \alias{bs4Page}
 \title{Bootstrap Page}
 \usage{
-bs4Page(..., title = NULL, theme = NULL, color = "primary")
+bs4Page(..., title = NULL, theme = NULL)
 }
 \arguments{
 \item{...}{A parameter}
@@ -12,8 +12,6 @@ bs4Page(..., title = NULL, theme = NULL, color = "primary")
 \item{title}{The title for the page}
 
 \item{theme}{A parameter}
-
-\item{color}{A parameter}
 }
 \description{
 Bootstrap Page

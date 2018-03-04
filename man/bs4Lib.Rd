@@ -6,6 +6,9 @@
 \usage{
 bs4Lib(theme = NULL)
 }
+\arguments{
+\item{theme}{Alternate Bootstrap 4 stylesheet.}
+}
 \description{
 This function returns a set of web dependencies necessary for using Bootstrap
 components in a web page

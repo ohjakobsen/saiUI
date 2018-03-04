@@ -3,7 +3,6 @@
 #' @param ... A parameter
 #' @param title The title for the page
 #' @param theme A parameter
-#' @param color A parameter
 #'
 #' @export
 bs4Page <- function(..., title = NULL, theme = NULL) {
@@ -27,6 +26,8 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 #' This function returns a set of web dependencies necessary for using Bootstrap
 #' components in a web page
 #'
+#' @param theme Alternate Bootstrap 4 stylesheet.
+#'
 #' @export
 bs4Lib <- function(theme = NULL) {
   htmlDependency('bootstrap', '4.0.0',
@@ -41,12 +42,21 @@ bs4Lib <- function(theme = NULL) {
 #'
 #' This functions builds the actual HTML page.
 #'
+#' @param title The title to display in the navbar.
+#' @param ... The UI elements of the page. Top level elements should be \code{\link{tabPanel}}.
+#' @param id The page ID
+#' @param selected The tab that is initially selected
+#' @param header Tag or list of tags to display as a common header above all tabPanels.
+#' @param footer Tag or list of tags to display as a common footer below all tabPanels.
+#' @param theme Alternate Bootstrap 4 stylesheet.
+#' @param color Color for the navbar. Supports all Bootstrap 4 colors.
+#' @param windowTitle The title that should be displayed by the browser window.
+#'
 #' @export
 saiPage <- function(title,
                     ...,
                     id = NULL,
                     selected = NULL,
-                    position = c(),
                     header = NULL,
                     footer = NULL,
                     theme = NULL,
@@ -73,6 +83,14 @@ saiPage <- function(title,
 
 }
 
+#' SAI menu
+#'
+#' Create a sidebar panel containing input controls.
+#'
+#' @param ... UI elements to include on the sidebar
+#' @param width The width of the sidebar. For fluid layouts this is out of 12 total units;
+#'   for fixed layouts it is out of whatever the width of the sidebar's parent column is.
+#'
 #' @export
 saiMenu <- function(..., width = 4) {
 
@@ -83,6 +101,14 @@ saiMenu <- function(..., width = 4) {
 
 }
 
+#' Main content
+#'
+#' Create a main panel containing output elements
+#'
+#' @param ... Output elements to include in the main panel
+#' @param width The width of the main panel. For fluid layouts this is out of 12 total units;
+#'   for fixed layouts it is out of whatever the width of the sidebar's parent column is.
+#'
 #' @export
 saiMain <- function(..., width = 8) {
 
@@ -126,16 +152,24 @@ buildNavbar <- function(title, tabs, color = 'primary') {
 
 }
 
-#' Overrides default Shiny `tabPanel`
+#' Create a tab panel
+#'
+#' Create a tab panel that can be included within a \code{tabsetPanel}. Overrides default Shiny
+#'   \code{tabPanel}.
+#'
+#' @param title Display title for tab.
+#' @param ... UI elements to include within the tab.
+#' @param value The value that should be sent when \code{tabsetPanel} reports that this tab is selected.
+#' @param icon Optional icon to appear on the tab.
 #'
 #' @export
 tabPanel <- function(title, ..., value = title, icon = NULL) {
-  divTag <- div(class='tab-pane fade',
+  divTag <- div(class = 'tab-pane fade',
                 id = gsub('\\s', '', title),
-                title=title,
+                title = title,
                 `role` = 'tabpanel',
                 `aria-labelledby` = paste0(gsub('\\s', '', title), '-tab'),
-                `data-value`=value,
+                `data-value` = value,
                 `data-icon-class` = NULL,
                 div(class = 'row', ...))
 }

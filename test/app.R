@@ -15,7 +15,7 @@ require(DT)
 
 # Define UI for application that draws a histogram
 ui <- saiPage(
-  title = 'Test av UI', color = 'primary',
+  title = 'Test av UI', color = 'dark',
 
   tabPanel(title = 'Histogram',
     saiMenu(

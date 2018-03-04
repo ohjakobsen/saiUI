@@ -2,10 +2,20 @@
 % Please edit documentation in R/bootstrap.R
 \name{tabPanel}
 \alias{tabPanel}
-\title{Overrides default Shiny `tabPanel`}
+\title{Create a tab panel}
 \usage{
 tabPanel(title, ..., value = title, icon = NULL)
 }
+\arguments{
+\item{title}{Display title for tab.}
+
+\item{...}{UI elements to include within the tab.}
+
+\item{value}{The value that should be sent when \code{tabsetPanel} reports that this tab is selected.}
+
+\item{icon}{Optional icon to appear on the tab.}
+}
 \description{
-Overrides default Shiny `tabPanel`
+Create a tab panel that can be included within a \code{tabsetPanel}. Overrides default Shiny
+  \code{tabPanel}.
 }
