@@ -10,19 +10,32 @@
 require(shiny)
 require(saiUI)
 require(htmltools) # dependency must be added to saiUI
+require(data.table)
+require(DT)
 
 # Define UI for application that draws a histogram
 ui <- saiPage(
-  title = 'Test av UI',
+  title = 'Test av UI', color = 'primary',
 
-  tabPanel(title = 'Tab 1',
+  tabPanel(title = 'Histogram',
     saiMenu(
-      p('Hello world'),
       selectInput('test', 'Test', choices = c('A', 'B'), selected = 'A')
     ),
     saiMain(
-      p('Hello world')
+      h2('Old Faithful plot'),
+      plotOutput('distPlot')
     )
+  ),
+  tabPanel(
+    title = 'Table',
+    div(class = 'col-12',
+      h2('This is Tab 2'),
+      dataTableOutput('dt')
+    )
+  ),
+  tabPanel(
+    title = 'Content',
+    div(class = 'col-12', h2('This is Tab 3'))
   )
 
 )
@@ -33,10 +46,14 @@ server <- function(input, output) {
    output$distPlot <- renderPlot({
       # generate bins based on input$bins from ui.R
       x    <- faithful[, 2]
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      bins <- seq(min(x), max(x), length.out = 30)
 
       # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+      hist(x, breaks = bins, col = 'blue', border = 'white')
+   })
+
+   output$dt <- renderDataTable({
+     DT::datatable(iris)
    })
 }
 

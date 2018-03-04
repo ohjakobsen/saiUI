@@ -1,6 +1,12 @@
 #' Bootstrap Page
+#'
+#' @param ... A parameter
+#' @param title The title for the page
+#' @param theme A parameter
+#' @param color A parameter
+#'
 #' @export
-bs4Page <- function(..., title = NULL, theme = NULL, color = 'primary') {
+bs4Page <- function(..., title = NULL, theme = NULL) {
 
   attachDependencies(
     tagList(
@@ -24,9 +30,9 @@ bs4Page <- function(..., title = NULL, theme = NULL, color = 'primary') {
 #' @export
 bs4Lib <- function(theme = NULL) {
   htmlDependency('bootstrap', '4.0.0',
-    c(file = system.file('www/bs4', package = 'saiUI')),
-    script = c('js/bootstrap.min.js'),
-    stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
+    c(file = system.file('www', package = 'saiUI')),
+    script = c('bs4/js/bootstrap.min.js', 'js/saiUI.min.js'),
+    stylesheet = if (is.null(theme)) 'bs4/css/bootstrap.min.css',
     meta = list(viewport = "width=device-width, initial-scale=1")
   )
 }
@@ -43,23 +49,26 @@ saiPage <- function(title,
                     position = c(),
                     header = NULL,
                     footer = NULL,
-                    inverse = FALSE,
-                    fluid = TRUE,
                     theme = NULL,
+                    color = 'primary',
                     windowTitle = title) {
 
   pageTitle <- title
 
   tabs <- list(...)
+  tabs[[1]]$attribs$class <- 'tab-pane fade show active'
+  # lapply(tabs, function(t) print(t$attribs))
 
-  navItems <- buildNavbar(pageTitle)
+  class = paste0('navbar navbar-expand-lg navbar-dark bg-', color)
+
+  navItems <- buildNavbar(pageTitle, tabs, color)
 
   # Build the page
   bs4Page(
     title = windowTitle,
     theme = theme,
-    tags$nav(class='navbar navbar-expand-lg navbar-dark bg-primary', navItems),
-    tags$div(class='content', ...)
+    tags$nav(class = class, navItems),
+    tags$div(class = 'tab-content', tabs)
   )
 
 }
@@ -83,19 +92,34 @@ saiMain <- function(..., width = 8) {
 
 }
 
-buildNavbar <- function(title) {
+buildNavbar <- function(title, tabs, color = 'primary') {
+
+  i <- 1
+  tabs <- lapply(tabs, function(t) {
+
+    class <- ifelse(i == 1, 'nav-link active', 'nav-link')
+    class <- paste0(class, ' btn btn-', color)
+    selected <- ifelse(i == 1, 'true', 'false')
+    i <<- i + 1
+
+    list(
+      tags$li(class='nav-item px-1',
+        a(id = paste0(gsub('\\s', '', t$attribs$title), '-tab'), class = class,
+          href = paste0('#', gsub('\\s', '', t$attribs$title)), `data-toggle` = 'pill', t$attribs$title,
+          `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$title))
+      )
+    )
+
+  })
 
   list(
     tags$a(class='navbar-brand', href='#', title),
-    HTML('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    HTML('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#shinyNavbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
          </button>'),
-    tags$div(class='collapse navbar-collapse',
-      tags$ul(class='navbar-nav mr-auto',
-        tags$li(
-          class='nav-item',
-          a(class = 'nav-link', href = '#', 'Tab')
-        )
+    tags$div(id = 'shinyNavbar', class='collapse navbar-collapse',
+      tags$ul(class='nav nav-pills navbar-nav mr-auto', `role` = 'tablist',
+        tabs
       )
     )
   )
@@ -106,9 +130,12 @@ buildNavbar <- function(title) {
 #'
 #' @export
 tabPanel <- function(title, ..., value = title, icon = NULL) {
-  divTag <- div(class='row',
+  divTag <- div(class='tab-pane fade',
+                id = gsub('\\s', '', title),
                 title=title,
+                `role` = 'tabpanel',
+                `aria-labelledby` = paste0(gsub('\\s', '', title), '-tab'),
                 `data-value`=value,
                 `data-icon-class` = NULL,
-                ...)
+                div(class = 'row', ...))
 }

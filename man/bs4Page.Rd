@@ -6,6 +6,15 @@
 \usage{
 bs4Page(..., title = NULL, theme = NULL, color = "primary")
 }
+\arguments{
+\item{...}{A parameter}
+
+\item{title}{The title for the page}
+
+\item{theme}{A parameter}
+
+\item{color}{A parameter}
+}
 \description{
 Bootstrap Page
 }
