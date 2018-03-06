@@ -84,10 +84,19 @@ saiPage <- function(title,
 
   navItems <- buildNavbar(pageTitle, tabs, color)
 
+  # NOT SURE WHAT TO DO WITH THIS YET
+  # contentDiv <- div(class=className("container"))
+  # if (!is.null(header))
+  #   contentDiv <- tagAppendChild(contentDiv, div(class="row", header))
+  # contentDiv <- tagAppendChild(contentDiv, tabset$content)
+  # if (!is.null(footer))
+  #   contentDiv <- tagAppendChild(contentDiv, div(class="row", footer))
+
   # Build the page
   bs4Page(
     title = windowTitle,
     theme = theme,
+    header,
     tags$nav(class = class, navItems),
     tags$div(class = 'tab-content', tabs)
   )
