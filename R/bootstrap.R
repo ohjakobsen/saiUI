@@ -1,8 +1,11 @@
+#' @import htmltools
+NULL
+
 #' Bootstrap Page
 #'
-#' @param ... A parameter
+#' @param ... The UI elements of the page.
 #' @param title The title for the page
-#' @param theme A parameter
+#' @param theme lternate Bootstrap 4 stylesheet.
 #'
 #' @export
 bs4Page <- function(..., title = NULL, theme = NULL) {
@@ -16,7 +19,7 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 
       list(...)
     ),
-    bs4Lib()
+    list(bs4Lib(), saiLib())
   )
 
 }
@@ -31,10 +34,18 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 #' @export
 bs4Lib <- function(theme = NULL) {
   htmlDependency('bootstrap', '4.0.0',
-    c(file = system.file('www', package = 'saiUI')),
-    script = c('bs4/js/bootstrap.min.js', 'js/saiUI.min.js'),
-    stylesheet = if (is.null(theme)) 'bs4/css/bootstrap.min.css',
+    c(file = system.file('www/bs4', package = 'saiUI')),
+    script = c('js/bootstrap.min.js'),
+    stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
     meta = list(viewport = "width=device-width, initial-scale=1")
+  )
+}
+
+saiLib <- function() {
+  htmlDependency('saiUI', '0.1.0',
+    c(file = system.file('www', package = 'saiUI')),
+    script = c('js/saiUI.min.js'),
+    stylesheet = c('css/saiUi.min.css')
   )
 }
 
@@ -90,11 +101,12 @@ saiPage <- function(title,
 #' @param ... UI elements to include on the sidebar
 #' @param width The width of the sidebar. For fluid layouts this is out of 12 total units;
 #'   for fixed layouts it is out of whatever the width of the sidebar's parent column is.
+#' @param color Background color for the sidebar.
 #'
 #' @export
-saiMenu <- function(..., width = 4) {
+saiMenu <- function(..., width = 4, color = 'light') {
 
-  div(class=paste0('col-sm-', width, ' bg-light'),
+  div(class=paste0('col-12 col-md-', width, ' bg-', color),
       tags$form(class='p-2',
                 ...)
       )
@@ -112,7 +124,7 @@ saiMenu <- function(..., width = 4) {
 #' @export
 saiMain <- function(..., width = 8) {
 
-  div(class=paste0('col-sm-', width),
+  div(class=paste0('col-12 col-md-', width),
       tags$section(class = 'p-2', ...)
       )
 
@@ -171,5 +183,251 @@ tabPanel <- function(title, ..., value = title, icon = NULL) {
                 `aria-labelledby` = paste0(gsub('\\s', '', title), '-tab'),
                 `data-value` = value,
                 `data-icon-class` = NULL,
-                div(class = 'row', ...))
+                ...)
 }
+
+#' @rdname tabPanel
+#' @export
+saiTab <- tabPanel
+
+#' Create a tabset panel
+#'
+#' Create a tabset that contains \code{\link{tabPanel}} elements. Tabsets are
+#' useful for dividing output into multiple independently viewable sections.
+#'
+#' @param ... \code{\link{tabPanel}} elements to include in the tabset
+#' @param id If provided, you can use \code{input$}\emph{\code{id}} in your
+#'   server logic to determine which of the current tabs is active. The value
+#'   will correspond to the \code{value} argument that is passed to
+#'   \code{\link{tabPanel}}.
+#' @param selected The \code{value} (or, if none was supplied, the \code{title})
+#'   of the tab that should be selected by default. If \code{NULL}, the first
+#'   tab will be selected.
+#' @param type Use "tabs" for the standard look; Use "pills" for a more plain
+#'   look where tabs are selected using a background fill color.
+#' @param position This argument is deprecated; it has been discontinued in
+#'   Bootstrap 3.
+#' @return A tabset that can be passed to \code{\link{mainPanel}}
+#'
+#' @seealso \code{\link{tabPanel}}, \code{\link{updateTabsetPanel}}
+#'
+#' @examples
+#' # Show a tabset that includes a plot, summary, and
+#' # table view of the generated distribution
+#' mainPanel(
+#'   tabsetPanel(
+#'     tabPanel("Plot", plotOutput("plot")),
+#'     tabPanel("Summary", verbatimTextOutput("summary")),
+#'     tabPanel("Table", tableOutput("table"))
+#'   )
+#' )
+#' @export
+tabsetPanel <- function(...,
+                        id = NULL,
+                        selected = NULL,
+                        type = c("tabs", "pills"),
+                        position = NULL) {
+  if (!is.null(position)) {
+    shinyDeprecated(msg = paste("tabsetPanel: argument 'position' is deprecated;",
+                                "it has been discontinued in Bootstrap 3."),
+                    version = "0.10.2.2")
+  }
+
+  if (!is.null(id))
+    selected <- restoreInput(id = id, default = selected)
+
+  # build the tabset
+  tabs <- list(...)
+  type <- match.arg(type)
+
+  tabset <- buildTabset(tabs, paste0("nav nav-", type), NULL, id, selected)
+
+  # create the content
+  first <- tabset$navList
+  second <- tabset$content
+
+  # create the tab div
+  tags$div(class = "tabbable", first, second)
+}
+
+buildTabset <- function(tabs, ulClass, textFilter = NULL,
+                        id = NULL, selected = NULL) {
+
+  # This function proceeds in two phases. First, it scans over all the items
+  # to find and mark which tab should start selected. Then it actually builds
+  # the tab nav and tab content lists.
+
+  # Mark an item as selected
+  markSelected <- function(x) {
+    attr(x, "selected") <- TRUE
+    x
+  }
+
+  # Returns TRUE if an item is selected
+  isSelected <- function(x) {
+    isTRUE(attr(x, "selected", exact = TRUE))
+  }
+
+  # Returns TRUE if a list of tab items contains a selected tab, FALSE
+  # otherwise.
+  containsSelected <- function(tabs) {
+    any(vapply(tabs, isSelected, logical(1)))
+  }
+
+  # Take a pass over all tabs, and mark the selected tab.
+  foundSelectedItem <- FALSE
+  findAndMarkSelected <- function(tabs, selected) {
+    lapply(tabs, function(divTag) {
+      if (foundSelectedItem) {
+        # If we already found the selected tab, no need to keep looking
+
+      } else if (is.character(divTag)) {
+        # Strings don't represent selectable items
+
+      } else if (inherits(divTag, "shiny.navbarmenu")) {
+        # Navbar menu
+        divTag$tabs <- findAndMarkSelected(divTag$tabs, selected)
+
+      } else {
+        # Regular tab item
+        if (is.null(selected)) {
+          # If selected tab isn't specified, mark first available item
+          # as selected.
+          foundSelectedItem <<- TRUE
+          divTag <- markSelected(divTag)
+
+        } else {
+          # If selected tab is specified, check for a match
+          tabValue <- divTag$attribs$`data-value` %OR% divTag$attribs$title
+          if (identical(selected, tabValue)) {
+            foundSelectedItem <<- TRUE
+            divTag <- markSelected(divTag)
+          }
+        }
+      }
+
+      return(divTag)
+    })
+  }
+
+
+  # Append an optional icon to an aTag
+  appendIcon <- function(aTag, iconClass) {
+    if (!is.null(iconClass)) {
+      # for font-awesome we specify fixed-width
+      if (grepl("fa-", iconClass, fixed = TRUE))
+        iconClass <- paste(iconClass, "fa-fw")
+      aTag <- tagAppendChild(aTag, icon(name = NULL, class = iconClass))
+    }
+    aTag
+  }
+
+  # Build the tabset
+  build <- function(tabs, ulClass, textFilter = NULL, id = NULL) {
+    # add tab input sentinel class if we have an id
+    if (!is.null(id))
+      ulClass <- paste(ulClass, "shiny-tab-input")
+
+    tabNavList <- tags$ul(class = ulClass, id = id)
+    tabContent <- tags$div(class = "tab-content")
+    # tabsetId <- p_randomInt(1000, 10000)
+    tabsetId <- 1000 + sample(9000, 1) - 1
+    tabId <- 1
+
+    buildItem <- function(divTag) {
+      # check for text; pass it to the textFilter or skip it if there is none
+      if (is.character(divTag)) {
+        if (!is.null(textFilter)) {
+          tabNavList <<- tagAppendChild(tabNavList, textFilter(divTag))
+        }
+
+      } else if (inherits(divTag, "shiny.navbarmenu")) {
+
+        # create the a tag
+        aTag <- tags$a(href="#",
+                       class="dropdown-toggle",
+                       `data-toggle`="dropdown")
+
+        # add optional icon
+        aTag <- appendIcon(aTag, divTag$iconClass)
+
+        # add the title and caret
+        aTag <- tagAppendChild(aTag, divTag$title)
+        aTag <- tagAppendChild(aTag, tags$b(class="caret"))
+
+        # build the dropdown list element
+        liTag <- tags$li(class = "dropdown", aTag)
+
+        # text filter for separators
+        textFilter <- function(text) {
+          if (grepl("^\\-+$", text))
+            tags$li(class="divider")
+          else
+            tags$li(class="dropdown-header", text)
+        }
+
+        # build the child tabset
+        tabset <- build(divTag$tabs, "dropdown-menu", textFilter)
+        liTag <- tagAppendChild(liTag, tabset$navList)
+
+        # If this navbar menu contains a selected item, mark it as active
+        if (containsSelected(divTag$tabs)) {
+          liTag$attribs$class <- paste(liTag$attribs$class, "active")
+        }
+
+        tabNavList <<- tagAppendChild(tabNavList, liTag)
+        # don't add a standard tab content div, rather add the list of tab
+        # content divs that are contained within the tabset
+        tabContent <<- tagAppendChildren(tabContent,
+                                         list = tabset$content$children)
+
+      } else {
+        # Standard navbar item
+        # compute id and assign it to the div
+        thisId <- paste("tab", tabsetId, tabId, sep="-")
+        divTag$attribs$id <- thisId
+        tabId <<- tabId + 1
+
+        tabValue <- divTag$attribs$`data-value`
+
+        # create the a tag
+        aTag <- tags$a(href=paste("#", thisId, sep=""),
+                       class = 'nav-link',
+                       `data-toggle` = "tab",
+                       `data-value` = tabValue)
+
+        # append optional icon
+        aTag <- appendIcon(aTag, divTag$attribs$`data-icon-class`)
+
+        # add the title
+        aTag <- tagAppendChild(aTag, divTag$attribs$title)
+
+        # create the li tag
+        liTag <- tags$li(class = 'nav-item', aTag)
+
+        # If selected, set appropriate classes on li tag and div tag.
+        if (isSelected(divTag)) {
+          liTag$children[[1]]$attribs$class <- 'nav-link active'
+          divTag$attribs$class <- "tab-pane active"
+        }
+
+        divTag$attribs$title <- NULL
+
+        # append the elements to our lists
+        tabNavList <<- tagAppendChild(tabNavList, liTag)
+        tabContent <<- tagAppendChild(tabContent, divTag)
+      }
+    }
+
+    lapply(tabs, buildItem)
+    list(navList = tabNavList, content = tabContent)
+  }
+
+  # Finally, actually invoke the functions to do the processing.
+  tabs <- findAndMarkSelected(tabs, selected)
+  build(tabs, ulClass, textFilter, id)
+}
+
+#' @rdname tabsetPanel
+#' @export
+saiTabset <- tabsetPanel

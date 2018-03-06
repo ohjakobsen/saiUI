@@ -2,9 +2,12 @@
 % Please edit documentation in R/bootstrap.R
 \name{tabPanel}
 \alias{tabPanel}
+\alias{saiTab}
 \title{Create a tab panel}
 \usage{
 tabPanel(title, ..., value = title, icon = NULL)
+
+saiTab(title, ..., value = title, icon = NULL)
 }
 \arguments{
 \item{title}{Display title for tab.}

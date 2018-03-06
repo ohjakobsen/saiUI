@@ -18,13 +18,14 @@ ui <- saiPage(
   title = 'Test av UI', color = 'dark',
 
   tabPanel(title = 'Histogram',
-    saiMenu(
-      selectInput('test', 'Test', choices = c('A', 'B'), selected = 'A')
-    ),
-    saiMain(
-      h2('Old Faithful plot'),
-      plotOutput('distPlot')
-    )
+    sidebarLayout(
+      saiMenu(color = 'white',
+        selectInput('test', 'Test', choices = c('A', 'B'), selected = 'A')
+      ),
+      saiMain(
+        h2('Old Faithful plot'),
+        plotOutput('distPlot')
+      ))
   ),
   tabPanel(
     title = 'Table',
@@ -35,7 +36,18 @@ ui <- saiPage(
   ),
   tabPanel(
     title = 'Content',
-    div(class = 'col-12', h2('This is Tab 3'))
+    div(class = 'col-12 p-3',
+      tabsetPanel(type = 'tabs',
+      tabPanel(title = 'One',
+        p('One')
+      ),
+      tabPanel(title = 'Two',
+        p('Two')
+      ),
+      tabPanel(title = 'Three',
+        p('Three')
+      )
+    ))
   )
 
 )

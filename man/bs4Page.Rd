@@ -7,11 +7,11 @@
 bs4Page(..., title = NULL, theme = NULL)
 }
 \arguments{
-\item{...}{A parameter}
+\item{...}{The UI elements of the page.}
 
 \item{title}{The title for the page}
 
-\item{theme}{A parameter}
+\item{theme}{lternate Bootstrap 4 stylesheet.}
 }
 \description{
 Bootstrap Page

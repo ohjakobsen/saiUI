@@ -4,13 +4,15 @@
 \alias{saiMenu}
 \title{SAI menu}
 \usage{
-saiMenu(..., width = 4)
+saiMenu(..., width = 4, color = "light")
 }
 \arguments{
 \item{...}{UI elements to include on the sidebar}
 
 \item{width}{The width of the sidebar. For fluid layouts this is out of 12 total units;
 for fixed layouts it is out of whatever the width of the sidebar's parent column is.}
+
+\item{color}{Background color for the sidebar.}
 }
 \description{
 Create a sidebar panel containing input controls.
