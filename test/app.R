@@ -31,6 +31,7 @@ ui <- saiPage(
     title = 'Table',
     div(class = 'col-12',
       h2('This is Tab 2'),
+      p(span(class = 'oi oi-pulse')),
       dataTableOutput('dt')
     )
   ),

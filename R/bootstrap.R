@@ -19,7 +19,7 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 
       list(...)
     ),
-    list(bs4Lib(), saiLib())
+    list(bs4Lib(), saiLib(), oiLib())
   )
 
 }
@@ -46,6 +46,13 @@ saiLib <- function() {
     c(file = system.file('www', package = 'saiUI')),
     script = c('js/saiUI.min.js'),
     stylesheet = c('css/saiUi.min.css')
+  )
+}
+
+oiLib <- function() {
+  htmlDependency('open-iconic', '1.1.0',
+    c(file = system.file('www/oi', package = 'saiUI')),
+    stylesheet = c('css/open-iconic-bootstrap.min.css')
   )
 }
 
