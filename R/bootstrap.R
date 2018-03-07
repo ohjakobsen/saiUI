@@ -146,6 +146,20 @@ saiMain <- function(..., width = 8) {
 
 }
 
+#' Single column layout
+#'
+#' @param ... UI elements to include in the layout
+#' @param max.width The maximum width of the container i pixels. Default 1080.
+#'
+#' @export
+singleLayout <- function(..., max.width = FALSE) {
+
+  div(class = 'row',
+      div(class = 'mx-1 my-auto', style = 'max-width: 1080px;', ...)
+      )
+
+}
+
 buildNavbar <- function(title, tabs, color = 'primary') {
 
   i <- 1
@@ -202,7 +216,7 @@ saiTab <- function(title, ..., value = title, icon = NULL, hidden = FALSE) {
                 ...)
 }
 
-#' @rdname tabPanel
+#' @rdname saiTab
 #' @export
 tabPanel <- saiTab
 
@@ -266,7 +280,7 @@ saiTabset <- function(...,
   tags$div(class = "tabbable", first, second)
 }
 
-#' @rdname tabsetPanel
+#' @rdname saiTabset
 #' @export
 tabsetPanel <- saiTabset
 
@@ -312,7 +326,6 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
         # Regular tab item
         if (is.null(selected)) {
           # If selected tab isn't specified, mark first available item
-          # as selected.
           foundSelectedItem <<- TRUE
           divTag <- markSelected(divTag)
 
@@ -329,7 +342,6 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
       return(divTag)
     })
   }
-
 
   # Append an optional icon to an aTag
   appendIcon <- function(aTag, iconClass) {
@@ -350,7 +362,6 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
 
     tabNavList <- tags$ul(class = ulClass, id = id)
     tabContent <- tags$div(class = "tab-content")
-    # tabsetId <- p_randomInt(1000, 10000)
     tabsetId <- 1000 + sample(9000, 1) - 1
     tabId <- 1
 
@@ -364,9 +375,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
       } else if (inherits(divTag, "shiny.navbarmenu")) {
 
         # create the a tag
-        aTag <- tags$a(href="#",
-                       class="dropdown-toggle",
-                       `data-toggle`="dropdown")
+        aTag <- tags$a(href="#", class="dropdown-toggle", `data-toggle`="dropdown")
 
         # add optional icon
         aTag <- appendIcon(aTag, divTag$iconClass)
