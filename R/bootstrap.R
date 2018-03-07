@@ -191,7 +191,7 @@ buildNavbar <- function(title, tabs, color = 'primary') {
 #' @param icon Optional icon to appear on the tab.
 #'
 #' @export
-tabPanel <- function(title, ..., value = title, icon = NULL) {
+saiTab <- function(title, ..., value = title, icon = NULL, hidden = FALSE) {
   divTag <- div(class = 'tab-pane fade',
                 id = gsub('\\s', '', title),
                 title = title,
@@ -204,7 +204,7 @@ tabPanel <- function(title, ..., value = title, icon = NULL) {
 
 #' @rdname tabPanel
 #' @export
-saiTab <- tabPanel
+tabPanel <- saiTab
 
 #' Create a tabset panel
 #'
@@ -238,11 +238,11 @@ saiTab <- tabPanel
 #'   )
 #' )
 #' @export
-tabsetPanel <- function(...,
-                        id = NULL,
-                        selected = NULL,
-                        type = c("tabs", "pills"),
-                        position = NULL) {
+saiTabset <- function(...,
+                      id = NULL,
+                      selected = NULL,
+                      type = c('tabs', 'pills'),
+                      position = NULL) {
   if (!is.null(position)) {
     shinyDeprecated(msg = paste("tabsetPanel: argument 'position' is deprecated;",
                                 "it has been discontinued in Bootstrap 3."),
@@ -265,6 +265,10 @@ tabsetPanel <- function(...,
   # create the tab div
   tags$div(class = "tabbable", first, second)
 }
+
+#' @rdname tabsetPanel
+#' @export
+tabsetPanel <- saiTabset
 
 buildTabset <- function(tabs, ulClass, textFilter = NULL,
                         id = NULL, selected = NULL) {
@@ -443,7 +447,3 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
   tabs <- findAndMarkSelected(tabs, selected)
   build(tabs, ulClass, textFilter, id)
 }
-
-#' @rdname tabsetPanel
-#' @export
-saiTabset <- tabsetPanel
