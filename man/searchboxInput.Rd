@@ -4,15 +4,18 @@
 \alias{searchboxInput}
 \title{Searchbox input}
 \usage{
-searchboxInput(inputId, value = "", button = "Search", placeholder = NULL)
+searchboxInput(inputId, value = "", placeholder = NULL, button = "Search",
+  color = "success")
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
 
-\item{button}{A character string to display as the text for the search button.}
-
 \item{placeholder}{A character string giving the user a hint as to what can be entered into the
 control.}
+
+\item{button}{A character string to display as the text for the search button.}
+
+\item{color}{Button color.}
 }
 \description{
 Searchbox input

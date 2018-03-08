@@ -1,4 +1,5 @@
 var searchboxInputBinding = new Shiny.InputBinding();
+
 $.extend(searchboxInputBinding, {
   find: function(scope) {
   	return $(scope).find('.searchbox');
@@ -16,11 +17,12 @@ $.extend(searchboxInputBinding, {
   	el.value = value;
   },
   subscribe: function(el, callback) {
-    $(el).on('keyup.searchboxInputBinding input.searchboxInputBinding', function(event) {
+    // removed input.searchboxInputBinding from on
+    $(el).on('keyup.searchboxInputBinding', function(event) {
       callback(true);
     });
     $(el).on('change.searchboxInputBinding', function(event) {
-      callback(true);
+      callback();
     });
   },
   unsubscribe: function(el) {
@@ -35,7 +37,6 @@ $.extend(searchboxInputBinding, {
     }*/
 
     if (data.hasOwnProperty('placeholder')) {
-      // why [0] ??
       el.placeholder = data.placeholder;
     }
 
@@ -54,4 +55,5 @@ $.extend(searchboxInputBinding, {
   	};
   }
 });
-Shiny.inputBindings.register(searchboxInputBinding, 'shiny.searchboxInput');
+Shiny.inputBindings.register(searchboxInputBinding, 'saiUI.searchboxInput');
+Shiny.inputBindings.setPriority('saiUI.searchboxInput', 10);
