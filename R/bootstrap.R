@@ -155,7 +155,7 @@ saiMain <- function(..., width = 8) {
 singleLayout <- function(..., max.width = FALSE) {
 
   div(class = 'row',
-      div(class = 'mx-1 my-auto', style = 'max-width: 1080px;', ...)
+      div(class = 'my-1 mx-auto', style = 'max-width: 1080px;', ...)
       )
 
 }
