@@ -44,7 +44,7 @@ bs4Lib <- function(theme = NULL) {
 saiLib <- function() {
   htmlDependency('saiUI', '0.1.0',
     c(file = system.file('www', package = 'saiUI')),
-    script = c('js/saiUI.min.js'),
+    script = c('js/saiUI.min.js', 'js/bindings.js'),
     stylesheet = c('css/saiUi.min.css')
   )
 }
@@ -149,14 +149,14 @@ saiMain <- function(..., width = 8) {
 #' Single column layout
 #'
 #' @param ... UI elements to include in the layout
-#' @param max.width The maximum width of the container i pixels. Default 1080.
+#' @param width The maximum width of the container i pixels. Default 1080.
 #'
 #' @export
-singleLayout <- function(..., max.width = FALSE) {
+singleLayout <- function(..., width = 1080) {
 
-  div(class = 'row mx-lg', style = 'width: 1080px; max-width: 100%;',
+  div(class = 'mw-100 mx-auto', style = paste0('width: ', width, 'px'), div(class = 'row',
       div(class = 'col-12', ...)
-      )
+      ))
 
 }
 
@@ -455,4 +455,26 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
   # Finally, actually invoke the functions to do the processing.
   tabs <- findAndMarkSelected(tabs, selected)
   build(tabs, ulClass, textFilter, id)
+}
+
+#' Searchbox input
+#' 
+#' @param inputId The \code{input} slot that will be used to access the value.
+#' @param button A character string to display as the text for the search button.
+#' @param placeholder A character string giving the user a hint as to what can be entered into the
+#'   control.
+#' 
+#' @export
+searchboxInput <- function(inputId, value = '', button = 'Search', placeholder = NULL) {
+  
+  value <- shiny::restoreInput(id = inputId, default = value)
+  
+  div(class = "form-group shiny-input-container",
+      tags$form(class = 'form-inline px-1 my-2', style = 'width: 100%;',
+                tags$input(id = inputId, type="text", class="form-control searchbox mr-1", value = value,
+                           style = 'flex-grow: 1; width: auto;', placeholder = placeholder),
+                tags$button(class = 'btn btn-outline-success', `type` = 'submit', button)
+      )
+  )
+  
 }

@@ -4,12 +4,12 @@
 \alias{singleLayout}
 \title{Single column layout}
 \usage{
-singleLayout(..., max.width = FALSE)
+singleLayout(..., width = 1080)
 }
 \arguments{
 \item{...}{UI elements to include in the layout}
 
-\item{max.width}{The maximum width of the container i pixels. Default 1080.}
+\item{width}{The maximum width of the container i pixels. Default 1080.}
 }
 \description{
 Single column layout
