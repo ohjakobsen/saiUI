@@ -154,8 +154,8 @@ saiMain <- function(..., width = 8) {
 #' @export
 singleLayout <- function(..., max.width = FALSE) {
 
-  div(class = 'row',
-      div(class = 'col-12 my-1 mx-auto', style = 'width: 1080px; max-width: 100%;', ...)
+  div(class = 'row mx-lg', style = 'width: 1080px; max-width: 100%;',
+      div(class = 'col-12', ...)
       )
 
 }
