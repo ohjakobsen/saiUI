@@ -1,4 +1,4 @@
-#' Adds the content of www to shinyWidgets/
+#' Adds the content of www to saiUI/
 #'
 #' @importFrom shiny addResourcePath
 #'

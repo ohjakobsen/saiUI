@@ -270,14 +270,14 @@ saiTabset <- function(...,
   tabs <- list(...)
   type <- match.arg(type)
 
-  tabset <- buildTabset(tabs, paste0("nav nav-", type), NULL, id, selected)
+  tabset <- buildTabset(tabs, paste0('nav nav-', type, ' my-2'), NULL, id, selected)
 
   # create the content
   first <- tabset$navList
   second <- tabset$content
 
   # create the tab div
-  tags$div(class = "tabbable", first, second)
+  tags$div(class = 'tabbable', first, second)
 }
 
 #' @rdname saiTabset
@@ -407,8 +407,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
         tabNavList <<- tagAppendChild(tabNavList, liTag)
         # don't add a standard tab content div, rather add the list of tab
         # content divs that are contained within the tabset
-        tabContent <<- tagAppendChildren(tabContent,
-                                         list = tabset$content$children)
+        tabContent <<- tagAppendChildren(tabContent, list = tabset$content$children)
 
       } else {
         # Standard navbar item
@@ -474,11 +473,11 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
 
   value <- shiny::restoreInput(id = inputId, default = value)
 
-  div(class = "form-group shiny-input-container",
-      tags$form(class = 'form-inline px-1 my-2', style = 'width: 100%;',
-                tags$input(id = inputId, type="text", class="form-control searchbox mr-1", value = value,
-                           style = 'flex-grow: 1; width: auto;', placeholder = placeholder),
-                tags$button(class = paste0('btn btn-outline-', color), button)
+  div(class = 'form-group shiny-input-container',
+    tags$form(class = 'form-inline px-1 my-2', style = 'width: 100%;',
+      tags$input(id = inputId, type="text", class="form-control searchbox mr-1", value = value,
+                 style = 'flex-grow: 1; width: auto;', placeholder = placeholder),
+      tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-outline-', color), button)
       )
   )
 
