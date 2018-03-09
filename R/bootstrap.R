@@ -44,7 +44,7 @@ bs4Lib <- function(theme = NULL) {
 saiLib <- function() {
   htmlDependency('saiUI', '0.1.0',
     c(file = system.file('www', package = 'saiUI')),
-    script = c('js/saiUI.min.js'),
+    script = c('js/saiUI.min.js', 'js/bindings.js'),
     stylesheet = c('css/saiUi.min.css')
   )
 }
@@ -149,14 +149,14 @@ saiMain <- function(..., width = 8) {
 #' Single column layout
 #'
 #' @param ... UI elements to include in the layout
-#' @param max.width The maximum width of the container i pixels. Default 1080.
+#' @param width The maximum width of the container i pixels. Default 1080.
 #'
 #' @export
-singleLayout <- function(..., max.width = FALSE) {
+singleLayout <- function(..., width = 1080) {
 
-  div(class = 'row',
-      div(class = 'my-1 mx-auto', style = 'max-width: 1080px;', ...)
-      )
+  div(class = 'mw-100 mx-auto', style = paste0('width: ', width, 'px'), div(class = 'row',
+      div(class = 'col-12', ...)
+      ))
 
 }
 
@@ -270,14 +270,14 @@ saiTabset <- function(...,
   tabs <- list(...)
   type <- match.arg(type)
 
-  tabset <- buildTabset(tabs, paste0("nav nav-", type), NULL, id, selected)
+  tabset <- buildTabset(tabs, paste0('nav nav-', type, ' my-2'), NULL, id, selected)
 
   # create the content
   first <- tabset$navList
   second <- tabset$content
 
   # create the tab div
-  tags$div(class = "tabbable", first, second)
+  tags$div(class = 'tabbable', first, second)
 }
 
 #' @rdname saiTabset
@@ -407,8 +407,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
         tabNavList <<- tagAppendChild(tabNavList, liTag)
         # don't add a standard tab content div, rather add the list of tab
         # content divs that are contained within the tabset
-        tabContent <<- tagAppendChildren(tabContent,
-                                         list = tabset$content$children)
+        tabContent <<- tagAppendChildren(tabContent, list = tabset$content$children)
 
       } else {
         # Standard navbar item
@@ -455,4 +454,31 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
   # Finally, actually invoke the functions to do the processing.
   tabs <- findAndMarkSelected(tabs, selected)
   build(tabs, ulClass, textFilter, id)
+}
+
+#' Searchbox input
+#'
+#' @param inputId The \code{input} slot that will be used to access the value.
+#' @param placeholder A character string giving the user a hint as to what can be entered into the
+#'   control.
+#' @param button A character string to display as the text for the search button.
+#' @param color Button color.
+#'
+#' @export
+searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Search', color = 'success') {
+
+  # TODO: Make use os the actual button
+  # Adding type = 'submit' cancels all reactive values until the submit button is pressed
+  # We need to find a more elegant solution (add JS-event?)
+
+  value <- shiny::restoreInput(id = inputId, default = value)
+
+  div(class = 'form-group shiny-input-container',
+    tags$form(class = 'form-inline px-1 my-2', style = 'width: 100%;',
+      tags$input(id = inputId, type="text", class="form-control searchbox mr-1", value = value,
+                 style = 'flex-grow: 1; width: auto;', placeholder = placeholder),
+      tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-outline-', color), button)
+      )
+  )
+
 }
