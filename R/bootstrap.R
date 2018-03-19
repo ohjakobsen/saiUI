@@ -5,7 +5,7 @@ NULL
 #'
 #' @param ... The UI elements of the page.
 #' @param title The title for the page
-#' @param theme lternate Bootstrap 4 stylesheet.
+#' @param theme Alternate Bootstrap 4 stylesheet.
 #'
 #' @export
 bs4Page <- function(..., title = NULL, theme = NULL) {
@@ -44,7 +44,7 @@ bs4Lib <- function(theme = NULL) {
 saiLib <- function() {
   htmlDependency('saiUI', '0.1.0',
     c(file = system.file('www', package = 'saiUI')),
-    script = c('js/saiUI.min.js', 'js/bindings.js'),
+    script = c('js/saiUI.min.js', 'js/bindings.min.js'),
     stylesheet = c('css/saiUi.min.css')
   )
 }
@@ -105,7 +105,7 @@ saiPage <- function(title,
     theme = theme,
     header,
     tags$nav(class = class, navItems),
-    tags$div(class = 'tab-content', tabs)
+    tags$div(class = 'tab-content', id = id, tabs)
   )
 
 }
