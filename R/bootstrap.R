@@ -104,7 +104,7 @@ saiPage <- function(title,
     title = windowTitle,
     theme = theme,
     header,
-    tags$nav(class = class, navItems),
+    tags$nav(class = class, id = 'pagenav', navItems),
     tags$div(class = 'tab-content', id = id, tabs)
   )
 

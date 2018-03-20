@@ -1,5 +1,6 @@
 # Adds utilities that are used in various functions
 # Several are copied from \code{shiny}
+
 `%OR%` <- function(x, y) {
   if (is.null(x) || isTRUE(is.na(x)))
     y
