@@ -11,7 +11,7 @@ bs4Page(..., title = NULL, theme = NULL)
 
 \item{title}{The title for the page}
 
-\item{theme}{lternate Bootstrap 4 stylesheet.}
+\item{theme}{Alternate Bootstrap 4 stylesheet.}
 }
 \description{
 Bootstrap Page

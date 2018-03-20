@@ -57,3 +57,58 @@ $.extend(searchboxInputBinding, {
 });
 Shiny.inputBindings.register(searchboxInputBinding, 'saiUI.searchboxInput');
 Shiny.inputBindings.setPriority('saiUI.searchboxInput', 10);
+
+var navbarTabInputBinding = new Shiny.InputBinding();
+$.extend(navbarTabInputBinding, {
+  find: function(scope) {
+    return $(scope).find('#pagenav');
+  },
+  getValue: function(el) {
+    var anchor = $(el).find('li:not(.dropdown).active').children('a');
+    if (anchor.length === 1)
+      return this._getTabName(anchor);
+
+    return null;
+  },
+  setValue: function(el, value) {
+    var self = this;
+    var success = false;
+    if (value) {
+      var anchors = $(el).find('li:not(.dropdown)').children('a');
+      anchors.each(function() {
+        if (self._getTabName($(this)) === value) {
+          console.log('anchor');
+          $(this).tab('show');
+          success = true;
+          return false; // Break out of each()
+        }
+        return true;
+      });
+    }
+    if (!success) {
+      // This is to handle the case where nothing is selected, e.g. the last tab
+      // was removed using removeTab.
+      $(el).trigger("change");
+    }
+  },
+  getState: function(el) {
+    return { value: this.getValue(el) };
+  },
+  receiveMessage: function(el, data) {
+    if (data.hasOwnProperty('value'))
+      this.setValue(el, data.value);
+  },
+  subscribe: function(el, callback) {
+    $(el).on('change shown.navbarTabInputBinding shown.bs.tab.navbarTabInputBinding', function(event) {
+      callback();
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off('.bootstrapTabInputBinding');
+  },
+  _getTabName: function(anchor) {
+    return anchor.attr('data-value') || anchor.text();
+  }
+});
+Shiny.inputBindings.register(navbarTabInputBinding, 'saiUI.navbarTabInput');
+Shiny.inputBindings.setPriority('saiUI.navbarTabInput', 10);
