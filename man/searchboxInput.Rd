@@ -5,7 +5,7 @@
 \title{Searchbox input}
 \usage{
 searchboxInput(inputId, value = "", placeholder = NULL, button = "Search",
-  color = "success")
+  color = "success", size = c("normal", "sm", "lg"))
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -17,7 +17,10 @@ control.}
 
 \item{button}{A character string to display as the text for the search button.}
 
-\item{color}{Button color.}
+\item{color}{A character string giving the color of the search button.}
+
+\item{size}{A character string giving the size of the input. Valid options are \code{normal},
+\code{sm} and \code{lg}. Defaults to \code{normal}}
 }
 \description{
 Searchbox input

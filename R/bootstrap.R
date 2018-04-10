@@ -466,22 +466,30 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
 #' @param placeholder A character string giving the user a hint as to what can be entered into the
 #'   control.
 #' @param button A character string to display as the text for the search button.
-#' @param color Button color.
+#' @param color A character string giving the color of the search button.
+#' @param size A character string giving the size of the input. Valid options are \code{normal},
+#'   \code{sm} and \code{lg}. Defaults to \code{normal}
 #'
 #' @export
-searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Search', color = 'success') {
+searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Search', color = 'success',
+                           size = c('normal', 'sm', 'lg')) {
 
   # TODO: Make use os the actual button
   # Adding type = 'submit' cancels all reactive values until the submit button is pressed
   # We need to find a more elegant solution (add JS-event?)
+  
+  size <- list(
+    form = ifelse(size %in% c('lg', 'sm'), paste0(' form-control-', size), ''),
+    btn = ifelse(size %in% c('lg', 'sm'), paste0(' btn-', size), '')
+  )
 
   value <- shiny::restoreInput(id = inputId, default = value)
 
   div(class = 'form-group shiny-input-container',
     tags$form(class = 'form-inline px-1 my-2', style = 'width: 100%;',
-      tags$input(id = inputId, type="text", class="form-control searchbox mr-1", value = value,
-                 style = 'flex-grow: 1; width: auto;', placeholder = placeholder),
-      tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-outline-', color), button)
+      tags$input(id = inputId, type="text", class = paste0('form-control', size$form,' searchbox mr-1'),
+                 value = value, style = 'flex-grow: 1; width: auto;', placeholder = placeholder),
+      tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-outline-', color, size$btn), button)
       )
   )
 
