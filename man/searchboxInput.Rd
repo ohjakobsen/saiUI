@@ -10,6 +10,8 @@ searchboxInput(inputId, value = "", placeholder = NULL, button = "Search",
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
 
+\item{value}{A character string with the default value of the search box}
+
 \item{placeholder}{A character string giving the user a hint as to what can be entered into the
 control.}
 
