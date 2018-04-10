@@ -36,7 +36,7 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 bs4Lib <- function(theme = NULL) {
   htmlDependency('bootstrap', '4.0.0',
     c(file = system.file('www/bs4', package = 'saiUI')),
-    script = c('js/bootstrap.min.js'),
+    script = c('js/popper.min.js', 'js/bootstrap.min.js'),
     stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
     meta = list(viewport = "width=device-width, initial-scale=1")
   )
