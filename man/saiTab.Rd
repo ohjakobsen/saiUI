@@ -17,6 +17,8 @@ tabPanel(title, ..., value = title, icon = NULL, hidden = FALSE)
 \item{value}{The value that should be sent when \code{tabsetPanel} reports that this tab is selected.}
 
 \item{icon}{Optional icon to appear on the tab.}
+
+\item{hidden}{Boolean value. Should the tab be hidden from the menu? Defalts to \code{FALSE}}
 }
 \description{
 Create a tab panel that can be included within a \code{tabsetPanel}. Overrides default Shiny

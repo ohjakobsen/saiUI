@@ -1,7 +1,7 @@
 Package: saiUI
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
+Title: Bootstrap 4 layout for Shiny apps
+Version: 0.1.2
 Author: Ove Haugland Jakobsen
 Maintainer: Ove Haugland Jakobsen <ohj@mac.comt>
 Description: More about what it does (maybe more than one line)

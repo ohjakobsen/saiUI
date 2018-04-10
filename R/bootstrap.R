@@ -1,4 +1,5 @@
 #' @import htmltools
+#' @importFrom shiny restoreInput icon
 NULL
 
 #' Bootstrap Page
@@ -105,7 +106,8 @@ saiPage <- function(title,
     theme = theme,
     header,
     tags$nav(class = class, id = 'pagenav', navItems),
-    tags$div(class = 'tab-content', id = id, tabs)
+    tags$div(class = 'tab-content', id = id, tabs),
+    footer
   )
 
 }
@@ -172,7 +174,7 @@ buildNavbar <- function(title, tabs, color = 'primary') {
 
     list(
       tags$li(class='nav-item px-1',
-        a(id = paste0(gsub('\\s', '', t$attribs$title), '-tab'), class = class,
+        a(id = paste0(gsub('\\s', '', t$attribs$title), '-tab'), class = class, `data-value` = t$attribs$`data-value`,
           href = paste0('#', gsub('\\s', '', t$attribs$title)), `data-toggle` = 'pill', t$attribs$title,
           `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$title))
       )
@@ -203,6 +205,7 @@ buildNavbar <- function(title, tabs, color = 'primary') {
 #' @param ... UI elements to include within the tab.
 #' @param value The value that should be sent when \code{tabsetPanel} reports that this tab is selected.
 #' @param icon Optional icon to appear on the tab.
+#' @param hidden Boolean value. Should the tab be hidden from the menu? Defalts to \code{FALSE}
 #'
 #' @export
 saiTab <- function(title, ..., value = title, icon = NULL, hidden = FALSE) {
@@ -257,11 +260,11 @@ saiTabset <- function(...,
                       selected = NULL,
                       type = c('tabs', 'pills'),
                       position = NULL) {
-  if (!is.null(position)) {
-    shinyDeprecated(msg = paste("tabsetPanel: argument 'position' is deprecated;",
-                                "it has been discontinued in Bootstrap 3."),
-                    version = "0.10.2.2")
-  }
+  # if (!is.null(position)) {
+  #   shinyDeprecated(msg = paste("tabsetPanel: argument 'position' is deprecated;",
+  #                               "it has been discontinued in Bootstrap 3."),
+  #                   version = "0.10.2.2")
+  # }
 
   if (!is.null(id))
     selected <- restoreInput(id = id, default = selected)
@@ -459,6 +462,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
 #' Searchbox input
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
+#' @param value A character string with the default value of the search box
 #' @param placeholder A character string giving the user a hint as to what can be entered into the
 #'   control.
 #' @param button A character string to display as the text for the search button.
