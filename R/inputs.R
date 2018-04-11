@@ -24,3 +24,12 @@ actionButton <- function(inputId, label, color = 'primary', icon = NULL, width =
               ...
   )
 }
+
+dropdownSelect <- function(inputId, label, color = '', icon = NULL, width = NULL, ...,
+                           choices = c(), selected = c(), multiple = FALSE) {
+  
+  selected <- restoreInput(id = inputId, default = selected)
+  
+  
+  
+}
