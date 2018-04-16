@@ -20,7 +20,7 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 
       list(...)
     ),
-    list(bs4Lib(), saiLib(), oiLib())
+    saiLib()
   )
 
 }
@@ -33,27 +33,23 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 #' @param theme Alternate Bootstrap 4 stylesheet.
 #'
 #' @export
-bs4Lib <- function(theme = NULL) {
-  htmlDependency('bootstrap', '4.0.0',
-    c(file = system.file('www/bs4', package = 'saiUI')),
-    script = c('js/popper.min.js', 'js/bootstrap.min.js'),
-    stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
-    meta = list(viewport = "width=device-width, initial-scale=1")
-  )
-}
-
-saiLib <- function() {
-  htmlDependency('saiUI', '0.1.0',
-    c(file = system.file('www', package = 'saiUI')),
-    script = c('js/saiUI.min.js', 'js/bindings.min.js'),
-    stylesheet = c('css/saiUi.min.css')
-  )
-}
-
-oiLib <- function() {
-  htmlDependency('open-iconic', '1.1.0',
-    c(file = system.file('www/oi', package = 'saiUI')),
-    stylesheet = c('css/open-iconic-bootstrap.min.css')
+saiLib <- function(theme = NULL) {
+  list(
+    htmlDependency('bootstrap', '4.0.0',
+      c(file = system.file('www/bs4', package = 'saiUI')),
+      script = c('js/popper.min.js', 'js/bootstrap.min.js'),
+      stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
+      meta = list(viewport = "width=device-width, initial-scale=1")
+    ),
+    htmlDependency('saiUI', '0.1.3',
+      c(file = system.file('www', package = 'saiUI')),
+      script = c('js/saiUI.min.js', 'js/bindings.min.js'),
+      stylesheet = c('css/saiUI.min.css')
+    ),
+    htmlDependency('open-iconic', '1.1.0',
+      c(file = system.file('www/oi', package = 'saiUI')),
+      stylesheet = c('css/open-iconic-bootstrap.min.css')
+    )
   )
 }
 
