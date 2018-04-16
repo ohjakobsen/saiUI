@@ -5,7 +5,8 @@
 \title{Searchbox input}
 \usage{
 searchboxInput(inputId, value = "", placeholder = NULL, button = "Search",
-  color = "success", size = c("normal", "sm", "lg"))
+  color = c("success", "primary", "secondary", "danger", "warning", "light",
+  "dark"), size = c("normal", "sm", "lg"))
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

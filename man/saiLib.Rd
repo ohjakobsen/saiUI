@@ -4,7 +4,7 @@
 \alias{saiLib}
 \title{Bootstrap Libraries}
 \usage{
-saiLib(themes = NULL)
+saiLib(theme = NULL)
 }
 \arguments{
 \item{theme}{Alternate Bootstrap 4 stylesheet.}

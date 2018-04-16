@@ -121,9 +121,8 @@ saiPage <- function(title,
 saiMenu <- function(..., width = 4, color = 'light') {
 
   div(class=paste0('col-12 col-md-', width, ' bg-', color),
-      tags$form(class='p-2',
-                ...)
-      )
+      tags$form(...)
+  )
 
 }
 
@@ -139,23 +138,58 @@ saiMenu <- function(..., width = 4, color = 'light') {
 saiMain <- function(..., width = 8) {
 
   div(class=paste0('col-12 col-md-', width),
-      tags$section(class = 'p-2', ...)
+      tags$section(...)
       )
 
 }
 
 #' Single column layout
 #'
-#' @param ... UI elements to include in the layout
-#' @param width The maximum width of the container i pixels. Default 1080.
+#' Create a single coloumn responsive layout. This function should be used together with
+#' \code{\link{saiPage}}.
 #'
+#' @param ... UI elements to include in the layout
+#' @param fluid \code{TRUE} to use a fluid layout (100% width on all devices), or \code{FALSE}
+#'   to use a responsive layout. Defalts to \code{FALSE}
+#' @param width Deprecated.
+#'
+#' @examples
+#' # Simple "Hello world" example
+#' saiPage(
+#'   title = "Demo page",
+#'   tabPanel(
+#'     singlePage(h1("Hello world"))
+#'   )
+#' )
 #' @export
-singleLayout <- function(..., width = 1080) {
+singleLayout <- function(..., fluid = FALSE, width = 1080) {
 
-  div(class = 'mw-100 mx-auto', style = paste0('width: ', width, 'px'), div(class = 'row',
-      div(class = 'col-12', ...)
-      ))
+  class <- ifelse(fluid, 'container-fluid', 'container')
+  
+  div(class = class, div(class = 'row',
+    div(class = 'col-12', ...)
+  ))
 
+}
+
+#' Sidebar layout
+#' 
+#' @param menu The \code{\link{saiMenu}} containing input controls
+#' @param main The \code{\link{saiMain}} containing outputs
+#' @param position The position of the menu relative to the main area
+#' @param fluid \code{TRUE} to use a fluid layout (100% width on all devices), or \code{FALSE}
+#'   to use a responsive layout. Defalts to \code{TRUE}
+#' 
+#' @export
+sidebarLayout <- function(menu, main, position = c('left', 'right'), fluid = TRUE) {
+  
+  # TODO: Add handler for `position`
+  class <- ifelse(fluid, 'container-fluid', 'container')
+  
+  div(class = class,
+    div(class = 'row', menu, main)
+  )
+  
 }
 
 buildNavbar <- function(title, tabs, color = 'primary') {
@@ -292,13 +326,13 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
 
   # Mark an item as selected
   markSelected <- function(x) {
-    attr(x, "selected") <- TRUE
+    attr(x, 'selected') <- TRUE
     x
   }
 
   # Returns TRUE if an item is selected
   isSelected <- function(x) {
-    isTRUE(attr(x, "selected", exact = TRUE))
+    isTRUE(attr(x, 'selected', exact = TRUE))
   }
 
   # Returns TRUE if a list of tab items contains a selected tab, FALSE
@@ -360,7 +394,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
       ulClass <- paste(ulClass, "shiny-tab-input")
 
     tabNavList <- tags$ul(class = ulClass, id = id)
-    tabContent <- tags$div(class = "tab-content")
+    tabContent <- tags$div(class = 'tab-content')
     tabsetId <- 1000 + sample(9000, 1) - 1
     tabId <- 1
 
@@ -420,7 +454,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
         # create the a tag
         aTag <- tags$a(href=paste("#", thisId, sep=""),
                        class = 'nav-link',
-                       `data-toggle` = "tab",
+                       `data-toggle` = 'tab',
                        `data-value` = tabValue)
 
         # append optional icon
@@ -467,10 +501,11 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
 #'   \code{sm} and \code{lg}. Defaults to \code{normal}
 #'
 #' @export
-searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Search', color = 'success',
+searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Search',
+                           color = c('success', 'primary', 'secondary', 'danger', 'warning', 'light', 'dark'),
                            size = c('normal', 'sm', 'lg')) {
 
-  # TODO: Make use os the actual button
+  # TODO: Make use of the actual button
   # Adding type = 'submit' cancels all reactive values until the submit button is pressed
   # We need to find a more elegant solution (add JS-event?)
   
@@ -482,9 +517,9 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
   value <- shiny::restoreInput(id = inputId, default = value)
 
   div(class = 'form-group shiny-input-container',
-    tags$form(class = 'form-inline px-1 my-2', style = 'width: 100%;',
-      tags$input(id = inputId, type="text", class = paste0('form-control', size$form,' searchbox mr-1'),
-                 value = value, style = 'flex-grow: 1; width: auto;', placeholder = placeholder),
+    tags$form(class = 'form-inline searchbox px-1 my-2', style = 'width: 100%;',
+      tags$input(id = inputId, type="text", class = paste0('form-control', size$form,' mr-1'),
+                 value = value, placeholder = placeholder),
       tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-outline-', color, size$btn), button)
       )
   )

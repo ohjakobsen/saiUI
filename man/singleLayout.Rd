@@ -4,13 +4,26 @@
 \alias{singleLayout}
 \title{Single column layout}
 \usage{
-singleLayout(..., width = 1080)
+singleLayout(..., fluid = FALSE, width = 1080)
 }
 \arguments{
 \item{...}{UI elements to include in the layout}
 
-\item{width}{The maximum width of the container i pixels. Default 1080.}
+\item{fluid}{\code{TRUE} to use a fluid layout (100% width on all devices), or \code{FALSE}
+to use a responsive layout. Defalts to \code{FALSE}}
+
+\item{width}{Deprecated.}
 }
 \description{
-Single column layout
+Create a single coloumn responsive layout. This function should be used together with
+\code{\link{saiPage}}.
+}
+\examples{
+# Simple "Hello world" example
+saiPage(
+  title = "Demo page",
+  tabPanel(
+    singlePage(h1("Hello world"))
+  )
+)
 }
