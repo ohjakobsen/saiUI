@@ -7,9 +7,10 @@ NULL
 #' @param ... The UI elements of the page.
 #' @param title The title for the page
 #' @param theme Alternate Bootstrap 4 stylesheet.
+#' @param deps Additional dependencies to add to the page.
 #'
 #' @export
-bs4Page <- function(..., title = NULL, theme = NULL) {
+bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL) {
 
   attachDependencies(
     tagList(
@@ -20,7 +21,7 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 
       list(...)
     ),
-    saiLib()
+    saiLib(theme, deps)
   )
 
 }
@@ -31,17 +32,18 @@ bs4Page <- function(..., title = NULL, theme = NULL) {
 #' components in a web page
 #'
 #' @param theme Alternate Bootstrap 4 stylesheet.
+#' @param deps Additional dependencies to add to the page.
 #'
 #' @export
-saiLib <- function(theme = NULL) {
-  list(
+saiLib <- function(theme = NULL, deps = NULL) {
+  r <- list(
     htmlDependency('bootstrap', '4.0.0',
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
       stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
       meta = list(viewport = "width=device-width, initial-scale=1")
     ),
-    htmlDependency('saiUI', '0.1.3',
+    htmlDependency('saiUI', '0.2.0',
       c(file = system.file('www', package = 'saiUI')),
       script = c('js/saiUI.min.js', 'js/bindings.min.js'),
       stylesheet = c('css/saiUI.min.css')
@@ -51,6 +53,8 @@ saiLib <- function(theme = NULL) {
       stylesheet = c('css/open-iconic-bootstrap.min.css')
     )
   )
+  if (!is.null(deps)) r <- c(r, deps)
+  return(r)
 }
 
 #' SAI page element
@@ -160,7 +164,7 @@ saiMain <- function(..., width = 8) {
 #' saiPage(
 #'   title = "Demo page",
 #'   tabPanel(
-#'     singlePage(h1("Hello world"))
+#'     singleLayout(h1("Hello world"))
 #'   )
 #' )
 #' @export

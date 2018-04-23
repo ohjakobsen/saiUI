@@ -23,7 +23,7 @@ Create a single coloumn responsive layout. This function should be used together
 saiPage(
   title = "Demo page",
   tabPanel(
-    singlePage(h1("Hello world"))
+    singleLayout(h1("Hello world"))
   )
 )
 }

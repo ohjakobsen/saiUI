@@ -9,15 +9,19 @@
 #' @param ... Named attributes to be applied to the button or link.
 #'
 #' @export
-actionButton <- function(inputId, label, color = 'primary', icon = NULL, width = NULL, ...) {
+actionButton <- function(inputId, label, color = 'primary', icon = NULL, width = NULL,
+                         size = c('normal', 'sm', 'lg'), ...) {
 
   value <- restoreInput(id = inputId, default = NULL)
   color <- paste0('btn-', color)
+  size <- match.arg(size)
+  
+  size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
 
   tags$button(id = inputId,
               # style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
               type = 'button',
-              class = paste('btn', color, 'action-button'),
+              class = paste('btn', size, color, 'action-button'),
               `data-val` = value,
               list(label),
               # list(validateIcon(icon), label),

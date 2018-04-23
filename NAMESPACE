@@ -2,6 +2,9 @@
 
 export(actionButton)
 export(bs4Page)
+export(dashboardFilter)
+export(dashboardPanel)
+export(saiDashboard)
 export(saiLib)
 export(saiMain)
 export(saiMenu)

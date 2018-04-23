@@ -4,10 +4,12 @@
 \alias{saiLib}
 \title{Bootstrap Libraries}
 \usage{
-saiLib(theme = NULL)
+saiLib(theme = NULL, deps = NULL)
 }
 \arguments{
 \item{theme}{Alternate Bootstrap 4 stylesheet.}
+
+\item{deps}{Additional dependencies to add to the page.}
 }
 \description{
 This function returns a set of web dependencies necessary for using Bootstrap
