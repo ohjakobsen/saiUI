@@ -17,13 +17,14 @@ actionButton <- function(inputId, label, color = 'primary', icon = NULL, width =
   size <- match.arg(size)
   
   size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
+  icon <- ifelse(is.null(icon), '', paste0('<i class="oi oi-', icon, '"></i> '))
 
   tags$button(id = inputId,
               # style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
               type = 'button',
               class = paste('btn', size, color, 'action-button'),
               `data-val` = value,
-              list(label),
+              list(HTML(icon), label),
               # list(validateIcon(icon), label),
               ...
   )

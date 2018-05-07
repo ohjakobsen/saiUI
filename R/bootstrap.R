@@ -126,7 +126,7 @@ saiPage <- function(title,
 #' @export
 saiMenu <- function(..., width = 4, color = 'light') {
 
-  div(class=paste0('col-12 col-md-', width, ' bg-', color),
+  div(class=paste0('col-12 col-md-', width, ' pt-2 bg-', color),
       tags$form(...)
   )
 
@@ -143,7 +143,7 @@ saiMenu <- function(..., width = 4, color = 'light') {
 #' @export
 saiMain <- function(..., width = 8) {
 
-  div(class=paste0('col-12 col-md-', width),
+  div(class=paste0('col-12 col-md-', width, ' pt-2'),
       tags$section(...)
       )
 
@@ -195,6 +195,8 @@ sidebarLayout <- function(menu, main, position = c('left', 'right'), fluid = TRU
   
   div(class = class,
     div(class = 'row', menu, main)
+    # TODO: Verify code
+    # div(class = 'row', ifelse(position == 'left', list(main, menu), list(menu, main)))
   )
   
 }
