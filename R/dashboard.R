@@ -65,16 +65,18 @@ saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle 
 #' 
 #' @details This function creates a dashboard panel for outputting results from R functions.
 #'   Icons can be:
-#'   * \code{dashboard}
-#'   * \code{bar-chart}
-#'   * \code{graph}
-#'   * \code{map-marker}
-#'   * \code{people}
-#'   * \code{pulse}
-#'   * \code{list}
-#'   * \code{bolt}
-#'   * \code{dollar}
-#'   * \code{cog}
+#'   \itemize{
+#'   \item{\code{dashboard}}
+#'   \item{\code{bar-chart}}
+#'   \item{\code{graph}}
+#'   \item{\code{map-marker}}
+#'   \item{\code{people}}
+#'   \item{\code{pulse}}
+#'   \item{\code{list}}
+#'   \item{\code{bolt}}
+#'   \item{\code{dollar}}
+#'   \item{\code{cog}}
+#'   }
 #' 
 #' @export
 dashboardPanel <- function(title, ..., id = title, value = title, icon = 'dashboard') {
