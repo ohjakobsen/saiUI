@@ -5,7 +5,7 @@
 \title{Action button}
 \usage{
 actionButton(inputId, label, color = "primary", icon = NULL, width = NULL,
-  ...)
+  size = c("normal", "sm", "lg"), ...)
 }
 \arguments{
 \item{inputId}{The input slot that will be used to access the value.}
