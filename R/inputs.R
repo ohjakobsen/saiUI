@@ -7,6 +7,7 @@
 #' @param outline Should the button be an outline button? Default value FALSE.
 #' @param icon An optional icon to appear on the button.
 #' @param width The width of the input, e.g. \code{'400px'}, or \code{'100\%'}
+#' @param size The size of the button.
 #' @param ... Named attributes to be applied to the button or link.
 #'
 #' @export
