@@ -6,12 +6,10 @@ $.extend(searchboxInputBinding, {
   },
   getId: function(el) {
   	// return InputBinding.prototype.getId.call(this, el) || el.name;
-  	// console.log($(el).attr('id'));
   	return $(el).attr('id');
   },
   getValue: function(el) {
-    // console.log(el.value);
-  	return el.value;
+    return el.value;
   },
   setValue: function(el, value) {
   	el.value = value;

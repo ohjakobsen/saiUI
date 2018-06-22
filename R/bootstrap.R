@@ -94,22 +94,23 @@ saiPage <- function(title,
 
   navItems <- buildNavbar(pageTitle, tabs, color)
 
-  # NOT SURE WHAT TO DO WITH THIS YET
-  # contentDiv <- div(class=className("container"))
-  # if (!is.null(header))
-  #   contentDiv <- tagAppendChild(contentDiv, div(class="row", header))
-  # contentDiv <- tagAppendChild(contentDiv, tabset$content)
-  # if (!is.null(footer))
-  #   contentDiv <- tagAppendChild(contentDiv, div(class="row", footer))
-
+  pageTabs <- div(class = 'tab-content', id = id, tabs)
+  
+  pageBody <- div(class = 'page')
+  if (!is.null(header)) pageBody <- tagAppendChild(pageBody, div(class = 'header', header))
+  # pageBody <- tagAppendChild(pageBody, div(class = 'row', pageTabs))
+  pageBody <- tagAppendChild(pageBody, pageTabs)
+  if (!is.null(footer)) pageBody <- tagAppendChild(pageBody, div(class = 'footer small', footer))
+  
   # Build the page
   bs4Page(
     title = windowTitle,
     theme = theme,
-    header,
+    # header,
     tags$nav(class = class, id = 'pagenav', navItems),
-    tags$div(class = 'tab-content', id = id, tabs),
-    footer
+    pageBody
+    # tags$div(class = 'tab-content', id = id, tabs),
+    # footer
   )
 
 }
@@ -125,8 +126,12 @@ saiPage <- function(title,
 #'
 #' @export
 saiMenu <- function(..., width = 4, color = 'light') {
+  
+  text_color <- ifelse(!(color %in% c('light', 'white', 'info')), 'text-white', '')
+  color <- paste0('bg-', color)
+  width <- paste0('col-md-', width)
 
-  div(class=paste0('col-12 col-md-', width, ' pt-2 bg-', color),
+  div(class=paste('col-12', width, color, text_color, 'pt-2'),
       tags$form(...)
   )
 
@@ -147,6 +152,44 @@ saiMain <- function(..., width = 8) {
       tags$section(...)
       )
 
+}
+
+#' Header text
+#' 
+#' Add a text message above the content area on \code{\link{saiPage}}
+#' 
+#' @param ... The text to include in the header
+#' @param color The background color for the text. Must be a valid Bootstrap 4 color
+#' 
+#' @export
+headerContent <- function(..., color = 'primary') {
+  
+  text_color <- ifelse(!(color %in% c('light', 'white', 'info')), 'text-white', '')
+  color <- paste0('bg-', color)
+  
+  div(class = paste(color, text_color, 'clearfix'),
+      p(class = 'p-2 m-0', ...)
+  )
+  
+}
+
+#' Footer text
+#' 
+#' Add a text message below the content area on \code{\link{saiPage}}
+#' 
+#' @param ... The text to include in the footer
+#' @param color The background color for the text. Must be a valid Bootstrap 4 color
+#' 
+#' @export
+footerContent <- function(..., color = 'light') {
+  
+  text_color <- ifelse(!(color %in% c('light', 'white', 'info')), 'text-white', '')
+  color <- paste0('bg-', color)
+  
+  div(class = paste(color, text_color, 'fixed-bottom clearfix'),
+      p(class = 'p-2 m-0', ...)
+  )
+  
 }
 
 #' Single column layout

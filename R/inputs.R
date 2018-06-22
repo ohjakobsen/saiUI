@@ -107,6 +107,8 @@ dropdownSelect <- function(inputId, label, color = '', icon = NULL, width = NULL
   
   selected <- restoreInput(id = inputId, default = selected)
   
+  # TODO: Implement function
+  # TODO: Add documentation
   
   
 }
