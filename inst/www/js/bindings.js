@@ -75,7 +75,7 @@ $.extend(navbarTabInputBinding, {
       var anchors = $(el).find('li:not(.dropdown)').children('a');
       anchors.each(function() {
         if (self._getTabName($(this)) === value) {
-          console.log('anchor');
+          // console.log('anchor');
           $(this).tab('show');
           success = true;
           return false; // Break out of each()
@@ -110,3 +110,44 @@ $.extend(navbarTabInputBinding, {
 });
 Shiny.inputBindings.register(navbarTabInputBinding, 'saiUI.navbarTabInput');
 Shiny.inputBindings.setPriority('saiUI.navbarTabInput', 10);
+
+var toggleButtonInputBinding = new Shiny.InputBinding();
+
+$.extend(toggleButtonInputBinding, {
+  find: function(scope) {
+    return $(scope).find('button.toggle');
+  },
+  getId: function(el) {
+    return $(el).attr('id');
+  },
+  getValue: function(el) {
+    // console.log(Boolean(el.value == 'true'));
+    // return el.value;
+    // Return a boolean value
+    return Boolean(el.value == 'true');
+  },
+  setValue: function(el, value) {
+    console.log('triggered!');
+    var self = this;
+    if (value) {
+      console.log(value);
+    }
+  },
+  subscribe: function(el, callback) {
+    $(el).on('click.toggleButtonInputBinding', function(event) {
+      callback();
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off('button.toggle');
+  },
+  getRatePolicy: function() {
+    return {
+    	policy: 'debounce',
+    	delay: 100
+  	};
+  }
+});
+
+Shiny.inputBindings.register(toggleButtonInputBinding, 'saiUI.toggleButton');
+Shiny.inputBindings.setPriority('saiUI.toggleButton', 10);

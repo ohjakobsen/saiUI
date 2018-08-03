@@ -103,6 +103,8 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
   
 }
 
+#' Dropdown select
+#' 
 dropdownSelect <- function(inputId, label, color = '', icon = NULL, width = NULL, ...,
                            choices = c(), selected = c(), multiple = FALSE) {
   
@@ -112,4 +114,45 @@ dropdownSelect <- function(inputId, label, color = '', icon = NULL, width = NULL
   # TODO: Add documentation
   
   
+}
+
+#' Toggle button
+#' 
+#' Creates a button that can be toggled on and off. Returns a \code{TRUE} value when the
+#' button is pressed and a \code{FALSE} value when the button is not pressed. Defaults to
+#' not pressed (not active).
+#' 
+#' @param inputId The input slot that will be used to access the value.
+#' @param label The contents of the button or link.
+#' @param color Alternate Bootstrap 4 stylesheet.
+#' @param outline Should the button be an outline button? Default value \code{FALSE}.
+#' @param size The size of the button.
+#' @param active Should the button be active on initalization? Default value \code{FALSE}.
+#' 
+#' @export
+toggleButton <- function(inputId, label, color = 'primary', outline = FALSE,
+                         size = c('normal', 'sm', 'lg'), active = FALSE) {
+  
+  outline <- ifelse(outline, 'outline-', '')
+  color <- paste0('btn-', outline, color)
+  size <- match.arg(size)
+  size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
+  # active <- ifelse(active, 'active', '')
+  
+  div(class = 'form-group shiny-input-container',
+    tags$button(
+      id = inputId,
+      class = paste('toggle btn', size, color, ifelse(active, 'active', '')),
+      `data-toggle` = 'button',
+      `aria-pressed` = ifelse(active, 'true', 'false'),
+      `autocomplete` = 'off',
+      value = ifelse(active, 'true', 'false'),
+      label
+    )
+  )
+  
+}
+
+updateToggleButton <- function() {
+  # Add
 }

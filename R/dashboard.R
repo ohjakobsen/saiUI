@@ -4,7 +4,7 @@
 #' @param ... Elements
 #' @param color A string indicating the color of the top navigation
 #' @param brand A string indicating the brand for the page
-#' @param windowTitle Title
+#' @param windowTitle The title that should be displayed by the browser window.
 #' 
 #' @export
 saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle = title) {

@@ -16,7 +16,7 @@ saiDashboard(title, ..., color = "dark", brand = title,
 
 \item{brand}{A string indicating the brand for the page}
 
-\item{windowTitle}{Title}
+\item{windowTitle}{The title that should be displayed by the browser window.}
 }
 \description{
 Dashboard page
