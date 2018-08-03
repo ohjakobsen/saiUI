@@ -86,7 +86,7 @@ $.extend(navbarTabInputBinding, {
     if (!success) {
       // This is to handle the case where nothing is selected, e.g. the last tab
       // was removed using removeTab.
-      $(el).trigger("change");
+      $(el).trigger('change');
     }
   },
   getState: function(el) {
@@ -121,16 +121,25 @@ $.extend(toggleButtonInputBinding, {
     return $(el).attr('id');
   },
   getValue: function(el) {
-    // console.log(Boolean(el.value == 'true'));
-    // return el.value;
     // Return a boolean value
     return Boolean(el.value == 'true');
   },
   setValue: function(el, value) {
-    console.log('triggered!');
     var self = this;
     if (value) {
       console.log(value);
+    }
+  },
+  receiveMessage: function(el, data) {
+    if (data.hasOwnProperty('value') && data.value !== null) {
+      // Get the old value
+      var old = Boolean(el.value == 'true')
+      // If new value is not equal to the old value, trigger a click event
+      if (data.value != old) {
+        $(el).trigger('click');
+      }
+    } else if (data.hasOwnProperty('change') && data.value !== null) {
+      $(el).trigger('click');
     }
   },
   subscribe: function(el, callback) {

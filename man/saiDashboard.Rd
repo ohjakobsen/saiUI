@@ -8,9 +8,9 @@ saiDashboard(title, ..., color = "dark", brand = title,
   windowTitle = title)
 }
 \arguments{
-\item{title}{Title}
+\item{title}{The title for the page.}
 
-\item{...}{Elements}
+\item{...}{The UI elements of the page.}
 
 \item{color}{A string indicating the color of the top navigation}
 
@@ -19,5 +19,8 @@ saiDashboard(title, ..., color = "dark", brand = title,
 \item{windowTitle}{The title that should be displayed by the browser window.}
 }
 \description{
-Dashboard page
+Create a dashboard page that can be used with \code{\link{dashboardPanel}}s.
+}
+\seealso{
+\code{\link{dashboardPanel}}
 }

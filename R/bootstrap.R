@@ -5,7 +5,7 @@ NULL
 #' Bootstrap Page
 #'
 #' @param ... The UI elements of the page.
-#' @param title The title for the page
+#' @param title The title for the page.
 #' @param theme Alternate Bootstrap 4 stylesheet.
 #' @param deps Additional dependencies to add to the page.
 #'
@@ -43,7 +43,7 @@ saiLib <- function(theme = NULL, deps = NULL) {
       stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
       meta = list(viewport = "width=device-width, initial-scale=1")
     ),
-    htmlDependency('saiUI', '0.2.0',
+    htmlDependency('saiUI', '0.3.0',
       c(file = system.file('www', package = 'saiUI')),
       script = c('js/saiUI.min.js', 'js/bindings.min.js'),
       stylesheet = c('css/saiUI.min.css')

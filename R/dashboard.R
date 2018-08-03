@@ -1,10 +1,14 @@
 #' Dashboard page
 #' 
-#' @param title Title
-#' @param ... Elements
+#' Create a dashboard page that can be used with \code{\link{dashboardPanel}}s.
+#' 
+#' @param title The title for the page.
+#' @param ... The UI elements of the page.
 #' @param color A string indicating the color of the top navigation
 #' @param brand A string indicating the brand for the page
 #' @param windowTitle The title that should be displayed by the browser window.
+#' 
+#' @seealso \code{\link{dashboardPanel}}
 #' 
 #' @export
 saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle = title) {
@@ -31,7 +35,7 @@ saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle 
                     div(class = 'tab-content', tabs))
   
   deps <- list(htmlDependency(
-    'dashboard', '0.2.0',
+    'dashboard', '0.3.0',
     c(file = system.file('www', package = 'saiUI')),
     stylesheet = c('css/dashboard.min.css')
   ))
@@ -104,7 +108,6 @@ dashboardFilter <- function() {
 }
 
 # Build functions for dashboard layout
-
 buildDashboardNav <- function(tabs) {
   
   # icons <- c('dashboard', 'bar-chart', 'list', 'pulse', 'people', 'graph', 'cog', 'clock', 'bolt', 'dollar')

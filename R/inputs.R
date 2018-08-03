@@ -153,6 +153,23 @@ toggleButton <- function(inputId, label, color = 'primary', outline = FALSE,
   
 }
 
-updateToggleButton <- function() {
-  # Add
+#' Update Toggle Button
+#' 
+#' Change the state of the toggle button on the client.
+#' 
+#' If both \code{value} and \code{change} is given, \code{value} is given priority.
+#' If neither \code{value} nor \code{change} is given, \code{change} is assumed.
+#' 
+#' @param session The \code{session} object passed to function given to \code{shinyServer}.
+#' @param inputIde The id of the input object.
+#' @param value Optional. The new value of the button.
+#' @param change Optional. If the current value should be changed.
+#' 
+#' @export
+updateToggleButton <- function(session, inputId, value = NULL, change = NULL) {
+  if (is.null(value) && is.null(change)) change <- TRUE
+  if (!is.null(value) && !is.null(change))
+    change <- NULL
+  message <- list(value = value, change = change)
+  session$sendInputMessage(inputId, message)
 }
