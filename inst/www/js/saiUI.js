@@ -16,6 +16,22 @@ $(document).ready(function() {
 
   });
 
+  $('.dropdown-item').on('click', function() {
+
+    // Check if multiple choices are allowed
+    var multi = $(this).parent().prev('button').attr('data-multiple') === 'true';
+
+    // If only a single value is allowed, deselect all siblings
+    if (!multi) $(this).siblings().removeClass('active');
+
+    // Toggle active class on or off
+    $(this).toggleClass('active');
+
+    // Trigger a change event to update Shiny
+    $(this).closest('.dropdownmenu').trigger('change');
+
+  });
+
 });
 
 })(jQuery);

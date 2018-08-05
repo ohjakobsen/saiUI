@@ -9,11 +9,11 @@ updateToggleButton(session, inputId, value = NULL, change = NULL)
 \arguments{
 \item{session}{The \code{session} object passed to function given to \code{shinyServer}.}
 
+\item{inputId}{The id of the input object.}
+
 \item{value}{Optional. The new value of the button.}
 
 \item{change}{Optional. If the current value should be changed.}
-
-\item{inputIde}{The id of the input object.}
 }
 \description{
 Change the state of the toggle button on the client.

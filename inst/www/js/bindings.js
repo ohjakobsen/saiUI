@@ -138,7 +138,7 @@ $.extend(toggleButtonInputBinding, {
       if (data.value != old) {
         $(el).trigger('click');
       }
-    } else if (data.hasOwnProperty('change') && data.value !== null) {
+    } else if (data.hasOwnProperty('change') && data.change !== null) {
       $(el).trigger('click');
     }
   },
@@ -160,3 +160,35 @@ $.extend(toggleButtonInputBinding, {
 
 Shiny.inputBindings.register(toggleButtonInputBinding, 'saiUI.toggleButton');
 Shiny.inputBindings.setPriority('saiUI.toggleButton', 10);
+
+var dropdownMenuInputBinding = new Shiny.InputBinding();
+
+$.extend(dropdownMenuInputBinding, {
+  find: function(scope) {
+    return $(scope).find('.dropdownmenu');
+  },
+  getId: function(el) {
+    return $(el).attr('id');
+  },
+  getValue: function(el) {
+    // Get values of all active items and return an array
+    var vals = $(el).find('a.dropdown-item.active').map(function() {
+      return $(this).text();
+    }).get();
+    return vals;
+  },
+  receiveMessage: function(el, data) {
+    // TODO: Implement function!
+  },
+  subscribe: function(el, callback) {
+    $(el).on('change.dropdownMenuInputBinding', function(event) {
+      callback();
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off();
+  }
+});
+
+Shiny.inputBindings.register(dropdownMenuInputBinding, 'saiUI.dropdownMenu');
+Shiny.inputBindings.setPriority('saiUI.dropdownMenu', 10);

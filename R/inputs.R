@@ -105,6 +105,7 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
 
 #' Dropdown select
 #' 
+#' @export
 dropdownSelect <- function(inputId, label, color = '', icon = NULL, width = NULL, ...,
                            choices = c(), selected = c(), multiple = FALSE) {
   
@@ -113,6 +114,27 @@ dropdownSelect <- function(inputId, label, color = '', icon = NULL, width = NULL
   # TODO: Implement function
   # TODO: Add documentation
   
+  items <- lapply(choices, function(i) {
+    class <- ifelse(i %in% selected, 'dropdown-item active', 'dropdown-item')
+    a(class = class, href = '#', i)
+  })
+  
+  div(
+    class = 'dropdown dropdownmenu',
+    id = inputId,
+    tags$button(
+      class = 'btn btn-secondary dropdown-toggle',
+      type = 'button',
+      `data-toggle` = 'dropdown',
+      `data-multiple` = ifelse(multiple, 'true', 'false'),
+      `aria-haspopup` = 'true',
+      `aria-expanded` = 'false',
+      label
+    ),
+    div(
+      class = 'dropdown-menu', items
+    )
+  )
   
 }
 
@@ -161,7 +183,7 @@ toggleButton <- function(inputId, label, color = 'primary', outline = FALSE,
 #' If neither \code{value} nor \code{change} is given, \code{change} is assumed.
 #' 
 #' @param session The \code{session} object passed to function given to \code{shinyServer}.
-#' @param inputIde The id of the input object.
+#' @param inputId The id of the input object.
 #' @param value Optional. The new value of the button.
 #' @param change Optional. If the current value should be changed.
 #' 
