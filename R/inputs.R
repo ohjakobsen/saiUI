@@ -103,16 +103,35 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
   
 }
 
-#' Dropdown select
+#' Dropdown menu
+#' 
+#' @param inputId The \code{input} slot that will be used to access the value.
+#' @param label The text on the dropdown menu button.
+#' @param icon Optional icon shown before the label.
+#' @param choices List of values to select from.
+#' @param selected The initially selected value.
+#' @param multiple Is selection of multiple items allowed?
+#' @param color A character string giving the color of the search button.
+#' @param outline Should the button be an outline button? Default value \code{TRUE}.
+#' @param size A character string giving the size of the input. Valid options are \code{normal},
+#'   \code{sm} and \code{lg}. Defaults to \code{normal}
+#' @param direction The direction of the menu. Default value \code{'up'}.
 #' 
 #' @export
-dropdownSelect <- function(inputId, label, color = '', icon = NULL, width = NULL, ...,
-                           choices = c(), selected = c(), multiple = FALSE) {
+dropdownMenu <- function(inputId, label, icon = NULL, choices, selected = NULL, multiple = FALSE,
+                           color = c('primary', 'secondary', 'success', 'danger', 'warning', 'light', 'dark'),
+                           outline = FALSE, size = c('normal', 'sm', 'lg'),
+                           direction = c('down', 'right', 'up', 'left')) {
   
   selected <- restoreInput(id = inputId, default = selected)
   
-  # TODO: Implement function
-  # TODO: Add documentation
+  outline <- ifelse(outline, 'outline-', '')
+  color <- match.arg(color)
+  size <- match.arg(size)
+  size <- ifelse(size %in% c('lg', 'sm'), paste0(' btn-', size), '')
+  direction <- ifelse(direction != 'down', paste0('drop', direction), '')
+  
+  # TODO: Implement icon
   
   items <- lapply(choices, function(i) {
     class <- ifelse(i %in% selected, 'dropdown-item active', 'dropdown-item')
@@ -120,10 +139,11 @@ dropdownSelect <- function(inputId, label, color = '', icon = NULL, width = NULL
   })
   
   div(
-    class = 'dropdown dropdownmenu',
+    class = paste('dropdown dropdownmenu', direction),
     id = inputId,
     tags$button(
-      class = 'btn btn-secondary dropdown-toggle',
+      class = paste0('dropdown-toggle btn btn-', outline, color, size),
+      # class = 'btn btn-secondary dropdown-toggle',
       type = 'button',
       `data-toggle` = 'dropdown',
       `data-multiple` = ifelse(multiple, 'true', 'false'),
