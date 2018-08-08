@@ -4,7 +4,7 @@
 \alias{toggleButton}
 \title{Toggle button}
 \usage{
-toggleButton(inputId, label, color = "primary", outline = FALSE,
+toggleButton(inputId, label, color = "primary", outline = TRUE,
   size = c("normal", "sm", "lg"), active = FALSE)
 }
 \arguments{
@@ -14,7 +14,7 @@ toggleButton(inputId, label, color = "primary", outline = FALSE,
 
 \item{color}{Alternate Bootstrap 4 stylesheet.}
 
-\item{outline}{Should the button be an outline button? Default value \code{FALSE}.}
+\item{outline}{Should the button be an outline button? Default value \code{TRUE}.}
 
 \item{size}{The size of the button.}
 

@@ -1,14 +1,10 @@
 #' Action button
+#' 
+#' @inherit shiny::actionButton
 #'
-#' @param inputId The input slot that will be used to access the value.
-#' @param label The contents of the button or link–usually a text label, but you
-#'   could also use any other HTML, like an image.
 #' @param color Alternate Bootstrap 4 stylesheet.
-#' @param outline Should the button be an outline button? Default value FALSE.
-#' @param icon An optional icon to appear on the button.
-#' @param width The width of the input, e.g. \code{'400px'}, or \code{'100\%'}
+#' @param outline Should the button be an outline button? Default value \code{FALSE}.
 #' @param size The size of the button.
-#' @param ... Named attributes to be applied to the button or link.
 #'
 #' @export
 actionButton <- function(inputId, label, color = 'primary', outline = FALSE, icon = NULL,
@@ -33,16 +29,13 @@ actionButton <- function(inputId, label, color = 'primary', outline = FALSE, ico
   )
 }
 
-#' Download button
+#' Create a download button or link
 #'
-#' @param outputId The input slot that will be used to access the value.
-#' @param label The contents of the button or link–usually a text label, but you
-#'   could also use any other HTML, like an image.
+#' @inherit shiny::downloadButton
+#'
 #' @param color Alternate Bootstrap 4 stylesheet.
 #' @param outline Should the button be an outline button? Default value FALSE.
-#' @param class Optional CSS classes.
 #' @param size The size of the button.
-#' @param ... Named attributes to be applied to the button or link.
 #'
 #' @export
 downloadButton <- function(outputId, label = 'Download', color = 'primary', outline = FALSE,
@@ -63,6 +56,49 @@ downloadButton <- function(outputId, label = 'Download', color = 'primary', outl
                  download = NA,
                  list(HTML(icon), label),
                  ...)
+}
+
+#' File Upload Control
+#' 
+#' Create a file upload control that can be used to upload one or more files. This function
+#' is masked from \code{shiny}.
+#' 
+#' @inherit shiny::fileInput
+#' 
+#' @export
+fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = NULL,
+                      buttonLabel = NULL, placeholder = 'Choose file') {
+  
+  inputTag <- tags$input(
+    id = inputId,
+    class = 'custom-file-input',
+    name = inputId,
+    type = 'file'
+  )
+  
+  if (multiple) inputTag$attribs$multiple <- 'multiple'
+  if (length(accept) > 0)
+    inputTag$attribs$accept <- paste(accept, collapse=',')
+  
+  div(
+    class = 'custom-file input-group',
+    inputTag,
+    tags$label(
+      class = 'custom-file-label',
+      `for` = inputId,
+      placeholder
+    ),
+    tags$input(
+      class = 'custom-file-placeholder d-none',
+      type = 'text'
+    ),
+    tags$div(
+      id = paste(inputId, '_progress', sep=''),
+      class = 'progress progress-striped active shiny-file-input-progress',
+      tags$div(class = 'progress-bar')
+    )
+  )
+  
 }
 
 #' Searchbox input
@@ -143,7 +179,6 @@ dropdownMenu <- function(inputId, label, icon = NULL, choices, selected = NULL, 
     id = inputId,
     tags$button(
       class = paste0('dropdown-toggle btn btn-', outline, color, size),
-      # class = 'btn btn-secondary dropdown-toggle',
       type = 'button',
       `data-toggle` = 'dropdown',
       `data-multiple` = ifelse(multiple, 'true', 'false'),
@@ -167,12 +202,12 @@ dropdownMenu <- function(inputId, label, icon = NULL, choices, selected = NULL, 
 #' @param inputId The input slot that will be used to access the value.
 #' @param label The contents of the button or link.
 #' @param color Alternate Bootstrap 4 stylesheet.
-#' @param outline Should the button be an outline button? Default value \code{FALSE}.
+#' @param outline Should the button be an outline button? Default value \code{TRUE}.
 #' @param size The size of the button.
 #' @param active Should the button be active on initalization? Default value \code{FALSE}.
 #' 
 #' @export
-toggleButton <- function(inputId, label, color = 'primary', outline = FALSE,
+toggleButton <- function(inputId, label, color = 'primary', outline = TRUE,
                          size = c('normal', 'sm', 'lg'), active = FALSE) {
   
   outline <- ifelse(outline, 'outline-', '')

@@ -2,27 +2,30 @@
 % Please edit documentation in R/inputs.R
 \name{downloadButton}
 \alias{downloadButton}
-\title{Download button}
+\title{Create a download button or link}
 \usage{
 downloadButton(outputId, label = "Download", color = "primary",
   outline = FALSE, class = NULL, size = c("normal", "sm", "lg"), ...)
 }
 \arguments{
-\item{outputId}{The input slot that will be used to access the value.}
+\item{outputId}{The name of the output slot that the \code{downloadHandler}
+is assigned to.}
 
-\item{label}{The contents of the button or link–usually a text label, but you
-could also use any other HTML, like an image.}
+\item{label}{The label that should appear on the button.}
 
 \item{color}{Alternate Bootstrap 4 stylesheet.}
 
 \item{outline}{Should the button be an outline button? Default value FALSE.}
 
-\item{class}{Optional CSS classes.}
+\item{class}{Additional CSS classes to apply to the tag, if any.}
 
 \item{size}{The size of the button.}
 
-\item{...}{Named attributes to be applied to the button or link.}
+\item{...}{Other arguments to pass to the container tag function.}
 }
 \description{
-Download button
+Create a download button or link
+}
+\seealso{
+\code{\link{downloadHandler}}
 }
