@@ -36,10 +36,10 @@
 }
 
 .btn-pill {
-  padding: .15rem .3rem;
-  font-size: .5rem;
+  padding: .3rem .6rem;
+  font-size: .7rem;
   font-weight: 700;
   line-height: 1;
   border-radius: 1rem;
-  margin-right: .2rem;
+  margin-right: .3rem;
 }
