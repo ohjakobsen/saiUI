@@ -18,3 +18,9 @@
 `%.%` <- function(x, y) {
   paste(x, y, sep='')
 }
+
+firstChoice <- function(choices) {
+  if (length(choices) == 0L) return()
+  choice <- choices[[1]]
+  if (is.list(choice)) firstChoice(choice) else choice
+}

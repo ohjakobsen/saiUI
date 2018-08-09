@@ -52,6 +52,36 @@ $(document).ready(function() {
 
   });
 
+  $('body').on('click', '.slicer-input', function() {
+    var multi = $(this).parent('.slicer').attr('multiple')
+    if (typeof multi === typeof undefined || multi === false) {
+      // Check if button is active. Return if true
+      var active = $(this).hasClass('active');
+      if (active)
+        return;
+      else {
+        // Toggle button state
+        $(this).toggleClass('active');
+        // Set aria-pressed value
+        var pressed = (this.getAttribute('aria-pressed') === 'true');
+        this.setAttribute('aria-pressed', !pressed);
+        // Deactivate all other siblings
+        $(this).siblings().removeClass('active');
+        // Trigger a change event on the parent element
+        $(this).parent('.slicer').trigger('change');
+      }
+    } else {
+      // Toggle button state
+      $(this).toggleClass('active');
+      // Set aria-pressed value
+      var pressed = (this.getAttribute('aria-pressed') === 'true');
+      this.setAttribute('aria-pressed', !pressed);
+      // Trigger a change event on the parent element
+      $(this).parent('.slicer').trigger('change');
+    }
+    // console.log(this.className.split(/\s+/));
+  });
+
 });
 
 })(jQuery);

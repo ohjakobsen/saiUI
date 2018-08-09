@@ -34,3 +34,12 @@
   flex-grow: 1;
   width: 12rem;
 }
+
+.btn-pill {
+  padding: .15rem .3rem;
+  font-size: .5rem;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 1rem;
+  margin-right: .2rem;
+}

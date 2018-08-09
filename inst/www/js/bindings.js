@@ -192,3 +192,33 @@ $.extend(dropdownMenuInputBinding, {
 
 Shiny.inputBindings.register(dropdownMenuInputBinding, 'saiUI.dropdownMenu');
 Shiny.inputBindings.setPriority('saiUI.dropdownMenu', 10);
+
+var slicerInputBinding = new Shiny.InputBinding();
+
+$.extend(slicerInputBinding, {
+  find: function(scope) {
+    return $(scope).find('.slicer');
+  },
+  getId: function(el) {
+    return $(el).attr('id');
+  },
+  getValue: function(el) {
+    // Get values of all active items and return an array
+    var vals = $(el).find('.slicer-input.active').map(function() {
+      return $(this).text();
+    }).get();
+    if (vals.length === 0) return '';
+    return vals;
+  },
+  subscribe: function(el, callback) {
+    $(el).on('change.slicerInputBinding', function(event) {
+      callback();
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off();
+  }
+})
+
+Shiny.inputBindings.register(slicerInputBinding, 'saiUI.slicerInput');
+Shiny.inputBindings.setPriority('saiUI.slicerInput', 10);

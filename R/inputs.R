@@ -250,3 +250,44 @@ updateToggleButton <- function(session, inputId, value = NULL, change = NULL) {
   message <- list(value = value, change = change)
   session$sendInputMessage(inputId, message)
 }
+
+#' Slicer Input
+#' 
+#' Create a slicer -- a set of buttons that can act as a filter for a dataset.
+#' 
+#' @inheritParams toggleButton
+#' @param choices A list of choices to select from. Each choice will be displayed as a button.
+#' @param selected A single value or a vector of values that will be initially selected.
+#' @param multiple Is selection of multiple items allowed?
+#' 
+#' @return A list control that can be added to a UI definition.
+#' 
+#' @export
+slicerInput <- function(inputId, label, choices, selected = NULL,
+                        color = c('success', 'primary', 'secondary', 'danger', 'warning', 'light', 'dark'),
+                        outline = TRUE, multiple = FALSE) {
+  
+  if (is.null(selected) && !multiple)
+    selected <- firstChoice(choices)
+  else if (!multiple)
+    selected <- firstChoice(selected)
+  
+  html <- lapply(choices, function(btn) {
+    active <- ifelse(btn %in% selected, 'active', '')
+    tags$button(
+      class = paste('btn btn-pill btn-outline-primary slicer-input', active),
+      `aria-pressed` = ifelse(active == 'active', 'true', 'false'),
+      btn)
+  })
+  
+  divTag <- tags$div(
+    id = inputId,
+    class = 'input-group slicer',
+    html
+  )
+  
+  if (multiple) divTag$attribs$multiple = 'multiple'
+  
+  return(divTag)
+  
+}
