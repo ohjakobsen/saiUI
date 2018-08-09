@@ -155,7 +155,8 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
 #' 
 #' @export
 dropdownMenu <- function(inputId, label, icon = NULL, choices, selected = NULL, multiple = FALSE,
-                           color = c('primary', 'secondary', 'success', 'danger', 'warning', 'light', 'dark'),
+                           color = c('primary', 'secondary', 'success', 'danger', 'warning',
+                                     'info', 'light', 'dark'),
                            outline = FALSE, size = c('normal', 'sm', 'lg'),
                            direction = c('down', 'right', 'up', 'left')) {
   
@@ -264,25 +265,33 @@ updateToggleButton <- function(session, inputId, value = NULL, change = NULL) {
 #' 
 #' @export
 slicerInput <- function(inputId, label, choices, selected = NULL,
-                        color = c('success', 'primary', 'secondary', 'danger', 'warning', 'light', 'dark'),
+                        color = c('success', 'primary', 'secondary', 'danger', 'warning', 'info', 'light', 'dark'),
                         outline = TRUE, multiple = FALSE) {
+  
+  # TODO: Add label or not? If yes, how?
+  # TODO: Add select all/deselect all option?
+  # TODO: Add reset option?
   
   if (is.null(selected) && !multiple)
     selected <- firstChoice(choices)
   else if (!multiple)
     selected <- firstChoice(selected)
   
+  color <- match.arg(color)
+  outline <- ifelse(outline, 'outline-', '')
+  color <- paste0('btn-', outline, color)
+  
   html <- lapply(choices, function(btn) {
     active <- ifelse(btn %in% selected, 'active', '')
     tags$button(
-      class = paste('btn btn-pill btn-outline-primary slicer-input', active),
+      class = paste('slicer-input btn btn-pill', color, active),
       `aria-pressed` = ifelse(active == 'active', 'true', 'false'),
       btn)
   })
   
   divTag <- tags$div(
     id = inputId,
-    class = 'input-group slicer',
+    class = 'input-group slicer mb-1',
     html
   )
   
