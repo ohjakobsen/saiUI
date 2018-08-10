@@ -53,7 +53,7 @@ $(document).ready(function() {
   });
 
   $('body').on('click', '.slicer-input', function() {
-    var multi = $(this).parent('.slicer').attr('multiple')
+    var multi = $(this).closest('.slicer').attr('multiple')
     if (typeof multi === typeof undefined || multi === false) {
       // Check if button is active. Return if true
       var active = $(this).hasClass('active');
@@ -77,7 +77,7 @@ $(document).ready(function() {
       var pressed = (this.getAttribute('aria-pressed') === 'true');
       this.setAttribute('aria-pressed', !pressed);
       // Trigger a change event on the parent element
-      $(this).parent('.slicer').trigger('change');
+      $(this).closest('.slicer').trigger('change');
     }
     // console.log(this.className.split(/\s+/));
   });
