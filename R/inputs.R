@@ -292,7 +292,7 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
   divTag <- tags$div(
     id = inputId,
     class = 'input-group slicer mb-1',
-    html
+    p(html)
   )
   
   if (multiple) divTag$attribs$multiple = 'multiple'
