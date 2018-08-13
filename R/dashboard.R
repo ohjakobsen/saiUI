@@ -7,11 +7,14 @@
 #' @param color A string indicating the color of the top navigation
 #' @param brand A string indicating the brand for the page
 #' @param windowTitle The title that should be displayed by the browser window.
+#' @param header Tag or list of tags to display on top of page.
+#' @param footer Tag or list of tags to display on the botton of the page.
 #' 
 #' @seealso \code{\link{dashboardPanel}}
 #' 
 #' @export
-saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle = title) {
+saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle = title,
+                         header = NULL, footer = NULL) {
   
   pageTitle <- title
   
@@ -44,13 +47,15 @@ saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle 
     title = windowTitle,
     theme = NULL,
     deps = deps,
+    header,
     topNav,
     div(class = 'container-fluid',
       div(class = 'row',
         navItems,
         contentDiv
       )
-    )
+    ),
+    footer
   )
   
 }
@@ -110,6 +115,7 @@ dashboardFilter <- function() {
 # Build functions for dashboard layout
 buildDashboardNav <- function(tabs) {
   
+  # TODO: Fix in IE11 (brand not showing b/c of fixed positioning)
   # icons <- c('dashboard', 'bar-chart', 'list', 'pulse', 'people', 'graph', 'cog', 'clock', 'bolt', 'dollar')
   i <- 1
   

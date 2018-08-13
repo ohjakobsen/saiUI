@@ -6,8 +6,8 @@
 \usage{
 dropdownMenu(inputId, label, icon = NULL, choices, selected = NULL,
   multiple = FALSE, color = c("primary", "secondary", "success", "danger",
-  "warning", "light", "dark"), outline = FALSE, size = c("normal", "sm",
-  "lg"), direction = c("down", "right", "up", "left"))
+  "warning", "info", "light", "dark"), outline = FALSE, size = c("normal",
+  "sm", "lg"), direction = c("down", "right", "up", "left"))
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

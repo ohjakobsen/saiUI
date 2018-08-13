@@ -5,7 +5,7 @@
 \title{Slicer Input}
 \usage{
 slicerInput(inputId, label, choices, selected = NULL, color = c("success",
-  "primary", "secondary", "danger", "warning", "light", "dark"),
+  "primary", "secondary", "danger", "warning", "info", "light", "dark"),
   outline = TRUE, multiple = FALSE)
 }
 \arguments{
