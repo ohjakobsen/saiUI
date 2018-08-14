@@ -211,6 +211,8 @@ dropdownMenu <- function(inputId, label, icon = NULL, choices, selected = NULL, 
 toggleButton <- function(inputId, label, color = 'primary', outline = TRUE,
                          size = c('normal', 'sm', 'lg'), active = FALSE) {
   
+  # active <- restoreInput(id = inputId, default = active)
+  
   outline <- ifelse(outline, 'outline-', '')
   color <- paste0('btn-', outline, color)
   size <- match.arg(size)
@@ -271,6 +273,8 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
   # TODO: Add label or not? If yes, how?
   # TODO: Add select all/deselect all option?
   # TODO: Add reset option?
+  
+  selected <- restoreInput(id = inputId, default = selected)
   
   if (is.null(selected) && !multiple)
     selected <- firstChoice(choices)
