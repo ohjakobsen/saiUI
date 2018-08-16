@@ -1,4 +1,4 @@
-#' Action button
+#' Create an action button
 #' 
 #' @inherit shiny::actionButton
 #'
@@ -101,7 +101,7 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
   
 }
 
-#' Searchbox input
+#' Create a searchbox input
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
 #' @param value A character string with the default value of the search box
@@ -127,26 +127,26 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
     btn = ifelse(size %in% c('lg', 'sm'), paste0(' btn-', size), '')
   )
   
-  value <- shiny::restoreInput(id = inputId, default = value)
+  value <- restoreInput(id = inputId, default = value)
   
-  div(class = 'form-group shiny-input-container',
-      tags$form(class = 'form-inline searchbox px-1 my-2', style = 'width: 100%;',
+  div(class = 'form-group shiny-input-container d-flex',
+      tags$form(class = 'form-inline searchbox px-1 my-2 w-100',
                 tags$input(id = inputId, type = 'text', class = paste0('form-control', size$form, ' mr-1'),
-                           value = value, placeholder = placeholder),
+                           value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')),
                 tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-', outline, color, size$btn), button)
       )
   )
   
 }
 
-#' Dropdown menu
+#' Create a dropdown menu for inputs
 #' 
 #' @param inputId The \code{input} slot that will be used to access the value.
 #' @param label The text on the dropdown menu button.
-#' @param icon Optional icon shown before the label.
 #' @param choices List of values to select from.
 #' @param selected The initially selected value.
 #' @param multiple Is selection of multiple items allowed?
+#' @param icon Optional icon shown before the label.
 #' @param color A character string giving the color of the search button.
 #' @param outline Should the button be an outline button? Default value \code{TRUE}.
 #' @param size A character string giving the size of the input. Valid options are \code{normal},
@@ -154,7 +154,7 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
 #' @param direction The direction of the menu. Default value \code{'up'}.
 #' 
 #' @export
-dropdownMenu <- function(inputId, label, icon = NULL, choices, selected = NULL, multiple = FALSE,
+dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FALSE, icon = NULL,
                            color = c('primary', 'secondary', 'success', 'danger', 'warning',
                                      'info', 'light', 'dark'),
                            outline = FALSE, size = c('normal', 'sm', 'lg'),
@@ -276,6 +276,8 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
   
   selected <- restoreInput(id = inputId, default = selected)
   
+  # if (!multiple && selectall) selectall <- FALSE
+  
   if (is.null(selected) && !multiple)
     selected <- firstChoice(choices)
   else if (!multiple)
@@ -296,8 +298,11 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
   divTag <- tags$div(
     id = inputId,
     class = 'input-group slicer mb-1',
-    p(html)
+    p(class = 'w-100 mb-1', html)
   )
+  
+  # divTag <- tagAppendChild(
+  #   divTag, p(class = 'w-100 mb-1', tags$button(class = 'btn btn-sm btn-secondary', 'Select all')))
   
   if (multiple) divTag$attribs$multiple = 'multiple'
   

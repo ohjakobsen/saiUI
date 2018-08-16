@@ -2,7 +2,7 @@
 % Please edit documentation in R/inputs.R
 \name{searchboxInput}
 \alias{searchboxInput}
-\title{Searchbox input}
+\title{Create a searchbox input}
 \usage{
 searchboxInput(inputId, value = "", placeholder = NULL, button = "Search",
   color = c("success", "primary", "secondary", "danger", "warning", "light",
@@ -26,5 +26,5 @@ control.}
 \code{sm} and \code{lg}. Defaults to \code{normal}}
 }
 \description{
-Searchbox input
+Create a searchbox input
 }

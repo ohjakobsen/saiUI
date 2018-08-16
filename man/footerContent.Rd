@@ -2,7 +2,7 @@
 % Please edit documentation in R/bootstrap.R
 \name{footerContent}
 \alias{footerContent}
-\title{Footer text}
+\title{Add content to page footer}
 \usage{
 footerContent(..., color = "light")
 }

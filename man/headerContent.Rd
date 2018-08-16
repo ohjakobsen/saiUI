@@ -2,7 +2,7 @@
 % Please edit documentation in R/bootstrap.R
 \name{headerContent}
 \alias{headerContent}
-\title{Header text}
+\title{Add content to page header}
 \usage{
 headerContent(..., color = "primary")
 }

@@ -2,10 +2,10 @@
 % Please edit documentation in R/inputs.R
 \name{dropdownMenu}
 \alias{dropdownMenu}
-\title{Dropdown menu}
+\title{Create a dropdown menu for inputs}
 \usage{
-dropdownMenu(inputId, label, icon = NULL, choices, selected = NULL,
-  multiple = FALSE, color = c("primary", "secondary", "success", "danger",
+dropdownMenu(inputId, label, choices, selected = NULL, multiple = FALSE,
+  icon = NULL, color = c("primary", "secondary", "success", "danger",
   "warning", "info", "light", "dark"), outline = FALSE, size = c("normal",
   "sm", "lg"), direction = c("down", "right", "up", "left"))
 }
@@ -14,13 +14,13 @@ dropdownMenu(inputId, label, icon = NULL, choices, selected = NULL,
 
 \item{label}{The text on the dropdown menu button.}
 
-\item{icon}{Optional icon shown before the label.}
-
 \item{choices}{List of values to select from.}
 
 \item{selected}{The initially selected value.}
 
 \item{multiple}{Is selection of multiple items allowed?}
+
+\item{icon}{Optional icon shown before the label.}
 
 \item{color}{A character string giving the color of the search button.}
 
@@ -32,5 +32,5 @@ dropdownMenu(inputId, label, icon = NULL, choices, selected = NULL,
 \item{direction}{The direction of the menu. Default value \code{'up'}.}
 }
 \description{
-Dropdown menu
+Create a dropdown menu for inputs
 }

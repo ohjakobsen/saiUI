@@ -2,7 +2,7 @@
 % Please edit documentation in R/inputs.R
 \name{actionButton}
 \alias{actionButton}
-\title{Action button}
+\title{Create an action button}
 \usage{
 actionButton(inputId, label, color = "primary", outline = FALSE,
   icon = NULL, width = NULL, size = c("normal", "sm", "lg"), ...)
@@ -27,7 +27,7 @@ see \code{\link{validateCssUnit}}.}
 \item{...}{Named attributes to be applied to the button or link.}
 }
 \description{
-Action button
+Create an action button
 }
 \seealso{
 \code{\link{observeEvent}} and \code{\link{eventReactive}}

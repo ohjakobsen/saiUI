@@ -103,7 +103,7 @@ saiPage <- function(title,
 
   navItems <- buildNavbar(pageTitle, tabs, tabselect, color)
 
-  pageTabs <- div(class = 'tab-content', id = id, tabs)
+  pageTabs <- div(class = 'tab-content', id = id, role = 'main', tabs)
   
   pageBody <- div(class = 'page')
   if (!is.null(header)) pageBody <- tagAppendChild(pageBody, div(class = 'header', header))
@@ -163,7 +163,7 @@ saiMain <- function(..., width = 8) {
 
 }
 
-#' Header text
+#' Add content to page header
 #' 
 #' Add a text message above the content area on \code{\link{saiPage}}
 #' 
@@ -182,7 +182,7 @@ headerContent <- function(..., color = 'primary') {
   
 }
 
-#' Footer text
+#' Add content to page footer
 #' 
 #' Add a text message below the content area on \code{\link{saiPage}}
 #' 
@@ -209,7 +209,6 @@ footerContent <- function(..., color = 'light') {
 #' @param ... UI elements to include in the layout
 #' @param fluid \code{TRUE} to use a fluid layout (100% width on all devices), or \code{FALSE}
 #'   to use a responsive layout. Defalts to \code{FALSE}
-#' @param width Deprecated.
 #'
 #' @examples
 #' # Simple "Hello world" example
@@ -220,7 +219,7 @@ footerContent <- function(..., color = 'light') {
 #'   )
 #' )
 #' @export
-singleLayout <- function(..., fluid = FALSE, width = 1080) {
+singleLayout <- function(..., fluid = FALSE) {
 
   class <- ifelse(fluid, 'container-fluid mt-1', 'container mt-1')
   
@@ -241,14 +240,16 @@ singleLayout <- function(..., fluid = FALSE, width = 1080) {
 #' @export
 sidebarLayout <- function(menu, main, position = c('left', 'right'), fluid = TRUE) {
   
-  # TODO: Add handler for `position`
   position <- match.arg(position)
   class <- ifelse(fluid, 'container-fluid', 'container')
   
+  if (position == 'left')
+    divTag <- div(class = 'row', menu, main)
+  else if (position == 'right')
+    divTag <- div(class = 'row', main, menu)
+  
   div(class = class,
-    div(class = 'row', menu, main)
-    # TODO: Verify code
-    # div(class = 'row', ifelse(position == 'left', list(main, menu), list(menu, main)))
+    divTag
   )
   
 }
