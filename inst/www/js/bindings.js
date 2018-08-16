@@ -61,10 +61,13 @@ $.extend(navbarTabInputBinding, {
   find: function(scope) {
     return $(scope).find('#pagenav');
   },
+  getId: function(el) {
+    return $(el).attr('id');
+  },
   getValue: function(el) {
-    var anchor = $(el).find('li:not(.dropdown).active').children('a');
+    var anchor = $(el).find('li:not(.dropdown) > a.active');
     if (anchor.length === 1)
-      return this._getTabName(anchor);
+      return $(anchor).attr('data-value');
 
     return null;
   },
@@ -74,8 +77,7 @@ $.extend(navbarTabInputBinding, {
     if (value) {
       var anchors = $(el).find('li:not(.dropdown)').children('a');
       anchors.each(function() {
-        if (self._getTabName($(this)) === value) {
-          // console.log('anchor');
+        if ($(this).attr('data-value') === value) {
           $(this).tab('show');
           success = true;
           return false; // Break out of each()
@@ -207,7 +209,7 @@ $.extend(slicerInputBinding, {
     var vals = $(el).find('.slicer-input.active').map(function() {
       return $(this).text();
     }).get();
-    if (vals.length === 0) return '';
+    if (vals.length === 0) return null;
     return vals;
   },
   subscribe: function(el, callback) {

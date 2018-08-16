@@ -8,12 +8,14 @@ NULL
 #' @param title The title for the page.
 #' @param theme Alternate Bootstrap 4 stylesheet.
 #' @param deps Additional dependencies to add to the page.
+#' @param lang The language of the page.
 #'
 #' @export
-bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL) {
+bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en') {
 
   attachDependencies(
     tagList(
+      tags$html(lang = lang),
       if (!is.null(title)) tags$head(tags$title(title)),
       if (!is.null(theme)) {
         tags$head(tags$link(rel="stylesheet", type="text/css", href = theme))
@@ -37,7 +39,7 @@ bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL) {
 #' @export
 saiLib <- function(theme = NULL, deps = NULL) {
   r <- list(
-    htmlDependency('bootstrap', '4.0.0',
+    htmlDependency('bootstrap', '4.1.0',
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
       stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
@@ -70,6 +72,7 @@ saiLib <- function(theme = NULL, deps = NULL) {
 #' @param theme Alternate Bootstrap 4 stylesheet.
 #' @param color Color for the navbar. Supports all Bootstrap 4 colors.
 #' @param windowTitle The title that should be displayed by the browser window.
+#' @param lang The language of the page that is added to the top level \code{html} element.
 #'
 #' @export
 saiPage <- function(title,
@@ -80,19 +83,25 @@ saiPage <- function(title,
                     footer = NULL,
                     theme = NULL,
                     color = 'primary',
-                    windowTitle = title) {
+                    windowTitle = title,
+                    lang = 'en') {
 
   pageTitle <- title
-
   tabs <- list(...)
-  tabs[[1]]$attribs$class <- 'tab-pane fade show active'
-  # lapply(tabs, function(t) print(t$attribs))
+  selected <- restoreInput('pagenav', default = selected)
+  
+  if (!is.null(selected))
+    tabselect <- which(sapply(tabs, function(t) t$attribs$id) == selected)
+  else
+    tabselect <- 1
+  
+  tabs[[tabselect]]$attribs$class <- 'tab-pane fade show active'
 
   class = paste0(
     'navbar navbar-expand-lg ', ifelse(color == 'light', 'navbar-light', 'navbar-dark'), ' bg-', color
   )
 
-  navItems <- buildNavbar(pageTitle, tabs, color)
+  navItems <- buildNavbar(pageTitle, tabs, tabselect, color)
 
   pageTabs <- div(class = 'tab-content', id = id, tabs)
   
@@ -106,10 +115,10 @@ saiPage <- function(title,
   bs4Page(
     title = windowTitle,
     theme = theme,
+    lang = lang,
     # header,
     tags$nav(class = class, id = 'pagenav', navItems),
     pageBody
-    # tags$div(class = 'tab-content', id = id, tabs),
     # footer
   )
 
@@ -131,7 +140,7 @@ saiMenu <- function(..., width = 4, color = 'light') {
   color <- paste0('bg-', color)
   width <- paste0('col-md-', width)
 
-  div(class=paste('col-12', width, color, text_color, 'pt-2'),
+  div(class = paste('col-12', width, color, text_color, 'pt-2'),
       tags$form(...)
   )
 
@@ -148,7 +157,7 @@ saiMenu <- function(..., width = 4, color = 'light') {
 #' @export
 saiMain <- function(..., width = 8) {
 
-  div(class=paste0('col-12 col-md-', width, ' pt-2'),
+  div(class = paste0('col-12 col-md-', width, ' pt-2'),
       tags$section(...)
       )
 
@@ -213,7 +222,7 @@ footerContent <- function(..., color = 'light') {
 #' @export
 singleLayout <- function(..., fluid = FALSE, width = 1080) {
 
-  class <- ifelse(fluid, 'container-fluid', 'container')
+  class <- ifelse(fluid, 'container-fluid mt-1', 'container mt-1')
   
   div(class = class, div(class = 'row',
     div(class = 'col-12', ...)
@@ -244,21 +253,21 @@ sidebarLayout <- function(menu, main, position = c('left', 'right'), fluid = TRU
   
 }
 
-buildNavbar <- function(title, tabs, color = 'primary') {
+buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
 
   i <- 1
   tabs <- lapply(tabs, function(t) {
 
-    class <- ifelse(i == 1, 'nav-link active', 'nav-link')
+    class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
     class <- paste0(class, ' btn btn-', color)
-    selected <- ifelse(i == 1, 'true', 'false')
+    selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
 
     list(
       tags$li(class='nav-item px-1',
-        a(id = paste0(gsub('\\s', '', t$attribs$title), '-tab'), class = class, `data-value` = t$attribs$`data-value`,
-          href = paste0('#', gsub('\\s', '', t$attribs$title)), `data-toggle` = 'pill', t$attribs$title,
-          `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$title))
+        a(id = paste0(gsub('\\s', '', t$attribs$id), '-tab'), class = class, `data-value` = t$attribs$id,
+          href = paste0('#', gsub('\\s', '', t$attribs$id)), `data-toggle` = 'pill', t$attribs$title,
+          `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$id))
       )
     )
 
@@ -266,9 +275,11 @@ buildNavbar <- function(title, tabs, color = 'primary') {
 
   list(
     tags$a(class='navbar-brand', href='#', title),
-    HTML('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#shinyNavbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-         </button>'),
+    tags$button(
+      class = 'navbar-toggler', type = 'button', `data-toggle` = 'collapse', `data-target` = '#shinyNavbar',
+      `aria-controls` = 'shinyNavbar', `aria-expanded` = FALSE, `aria-label` = 'Toggle navigation',
+      span(class = 'navbar-toggler-icon')
+    ),
     tags$div(id = 'shinyNavbar', class='collapse navbar-collapse',
       tags$ul(class='nav nav-pills navbar-nav mr-auto', `role` = 'tablist',
         tabs
@@ -291,14 +302,12 @@ buildNavbar <- function(title, tabs, color = 'primary') {
 #'
 #' @export
 saiTab <- function(title, ..., value = title, icon = NULL, hidden = FALSE) {
-  divTag <- div(class = 'tab-pane fade',
-                id = gsub('\\s', '', title),
-                title = title,
-                `role` = 'tabpanel',
-                `aria-labelledby` = paste0(gsub('\\s', '', title), '-tab'),
-                `data-value` = value,
-                `data-icon-class` = NULL,
-                ...)
+  value <- tolower(gsub(' ', '', value, fixed = TRUE))
+  divTag <- div(
+    class = 'tab-pane fade', id = value, title = title, `role` = 'tabpanel',
+    `aria-labelledby` = (paste0(value, '-tab')), `data-value` = value,
+    `data-icon-class` = NULL, ...
+    )
 }
 
 #' @rdname saiTab

@@ -5,7 +5,8 @@
 \title{SAI page element}
 \usage{
 saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
-  footer = NULL, theme = NULL, color = "primary", windowTitle = title)
+  footer = NULL, theme = NULL, color = "primary", windowTitle = title,
+  lang = "en")
 }
 \arguments{
 \item{title}{The title to display in the navbar.}
@@ -25,6 +26,8 @@ saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
 \item{color}{Color for the navbar. Supports all Bootstrap 4 colors.}
 
 \item{windowTitle}{The title that should be displayed by the browser window.}
+
+\item{lang}{The language of the page that is added to the top level \code{html} element.}
 }
 \description{
 This functions builds the actual HTML page.
