@@ -5,19 +5,26 @@
 \title{Dashboard page}
 \usage{
 saiDashboard(title, ..., color = "dark", brand = title,
-  windowTitle = title)
+  windowTitle = title, header = NULL, footer = NULL)
 }
 \arguments{
-\item{title}{Title}
+\item{title}{The title for the page.}
 
-\item{...}{Elements}
+\item{...}{The UI elements of the page.}
 
 \item{color}{A string indicating the color of the top navigation}
 
 \item{brand}{A string indicating the brand for the page}
 
-\item{windowTitle}{Title}
+\item{windowTitle}{The title that should be displayed by the browser window.}
+
+\item{header}{Tag or list of tags to display on top of page.}
+
+\item{footer}{Tag or list of tags to display on the botton of the page.}
 }
 \description{
-Dashboard page
+Create a dashboard page that can be used with \code{\link{dashboardPanel}}s.
+}
+\seealso{
+\code{\link{dashboardPanel}}
 }

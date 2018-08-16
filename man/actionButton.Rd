@@ -2,25 +2,41 @@
 % Please edit documentation in R/inputs.R
 \name{actionButton}
 \alias{actionButton}
-\title{Action button}
+\title{Create an action button}
 \usage{
-actionButton(inputId, label, color = "primary", icon = NULL, width = NULL,
-  size = c("normal", "sm", "lg"), ...)
+actionButton(inputId, label, color = "primary", outline = FALSE,
+  icon = NULL, width = NULL, size = c("normal", "sm", "lg"), ...)
 }
 \arguments{
-\item{inputId}{The input slot that will be used to access the value.}
+\item{inputId}{The \code{input} slot that will be used to access the value.}
 
-\item{label}{The contents of the button or link–usually a text label, but you
-could also use any other HTML, like an image.}
+\item{label}{The contents of the button or link--usually a text label, but
+you could also use any other HTML, like an image.}
 
 \item{color}{Alternate Bootstrap 4 stylesheet.}
 
-\item{icon}{An optional icon to appear on the button.}
+\item{outline}{Should the button be an outline button? Default value \code{FALSE}.}
 
-\item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'}}
+\item{icon}{An optional \code{\link{icon}} to appear on the button.}
+
+\item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'};
+see \code{\link{validateCssUnit}}.}
+
+\item{size}{The size of the button.}
 
 \item{...}{Named attributes to be applied to the button or link.}
 }
 \description{
-Action button
+Create an action button
+}
+\seealso{
+\code{\link{observeEvent}} and \code{\link{eventReactive}}
+
+Other input elements: \code{\link{checkboxGroupInput}},
+  \code{\link{checkboxInput}}, \code{\link{dateInput}},
+  \code{\link{dateRangeInput}}, \code{\link{fileInput}},
+  \code{\link{numericInput}}, \code{\link{passwordInput}},
+  \code{\link{radioButtons}}, \code{\link{selectInput}},
+  \code{\link{sliderInput}}, \code{\link{submitButton}},
+  \code{\link{textAreaInput}}, \code{\link{textInput}}
 }

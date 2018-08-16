@@ -4,16 +4,18 @@
 \alias{bs4Page}
 \title{Bootstrap Page}
 \usage{
-bs4Page(..., title = NULL, theme = NULL, deps = NULL)
+bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en")
 }
 \arguments{
 \item{...}{The UI elements of the page.}
 
-\item{title}{The title for the page}
+\item{title}{The title for the page.}
 
 \item{theme}{Alternate Bootstrap 4 stylesheet.}
 
 \item{deps}{Additional dependencies to add to the page.}
+
+\item{lang}{The language of the page.}
 }
 \description{
 Bootstrap Page

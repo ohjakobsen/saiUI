@@ -2,11 +2,11 @@
 % Please edit documentation in R/inputs.R
 \name{searchboxInput}
 \alias{searchboxInput}
-\title{Searchbox input}
+\title{Create a searchbox input}
 \usage{
 searchboxInput(inputId, value = "", placeholder = NULL, button = "Search",
   color = c("success", "primary", "secondary", "danger", "warning", "light",
-  "dark"), size = c("normal", "sm", "lg"))
+  "dark"), outline = TRUE, size = c("normal", "sm", "lg"))
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -20,9 +20,11 @@ control.}
 
 \item{color}{A character string giving the color of the search button.}
 
+\item{outline}{Should the button be an outline button? Default value TRUE.}
+
 \item{size}{A character string giving the size of the input. Valid options are \code{normal},
 \code{sm} and \code{lg}. Defaults to \code{normal}}
 }
 \description{
-Searchbox input
+Create a searchbox input
 }

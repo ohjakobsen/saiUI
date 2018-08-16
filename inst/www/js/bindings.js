@@ -6,12 +6,10 @@ $.extend(searchboxInputBinding, {
   },
   getId: function(el) {
   	// return InputBinding.prototype.getId.call(this, el) || el.name;
-  	// console.log($(el).attr('id'));
   	return $(el).attr('id');
   },
   getValue: function(el) {
-    // console.log(el.value);
-  	return el.value;
+    return el.value;
   },
   setValue: function(el, value) {
   	el.value = value;
@@ -63,10 +61,13 @@ $.extend(navbarTabInputBinding, {
   find: function(scope) {
     return $(scope).find('#pagenav');
   },
+  getId: function(el) {
+    return $(el).attr('id');
+  },
   getValue: function(el) {
-    var anchor = $(el).find('li:not(.dropdown).active').children('a');
+    var anchor = $(el).find('li:not(.dropdown) > a.active');
     if (anchor.length === 1)
-      return this._getTabName(anchor);
+      return $(anchor).attr('data-value');
 
     return null;
   },
@@ -76,8 +77,7 @@ $.extend(navbarTabInputBinding, {
     if (value) {
       var anchors = $(el).find('li:not(.dropdown)').children('a');
       anchors.each(function() {
-        if (self._getTabName($(this)) === value) {
-          console.log('anchor');
+        if ($(this).attr('data-value') === value) {
           $(this).tab('show');
           success = true;
           return false; // Break out of each()
@@ -88,7 +88,7 @@ $.extend(navbarTabInputBinding, {
     if (!success) {
       // This is to handle the case where nothing is selected, e.g. the last tab
       // was removed using removeTab.
-      $(el).trigger("change");
+      $(el).trigger('change');
     }
   },
   getState: function(el) {
@@ -112,3 +112,115 @@ $.extend(navbarTabInputBinding, {
 });
 Shiny.inputBindings.register(navbarTabInputBinding, 'saiUI.navbarTabInput');
 Shiny.inputBindings.setPriority('saiUI.navbarTabInput', 10);
+
+var toggleButtonInputBinding = new Shiny.InputBinding();
+
+$.extend(toggleButtonInputBinding, {
+  find: function(scope) {
+    return $(scope).find('button.toggle');
+  },
+  getId: function(el) {
+    return $(el).attr('id');
+  },
+  getValue: function(el) {
+    // Return a boolean value
+    return Boolean(el.value == 'true');
+  },
+  setValue: function(el, value) {
+    var self = this;
+    if (value) {
+      console.log(value);
+    }
+  },
+  receiveMessage: function(el, data) {
+    if (data.hasOwnProperty('value') && data.value !== null) {
+      // Get the old value
+      var old = Boolean(el.value == 'true')
+      // If new value is not equal to the old value, trigger a click event
+      if (data.value != old) {
+        $(el).trigger('click');
+      }
+    } else if (data.hasOwnProperty('change') && data.change !== null) {
+      $(el).trigger('click');
+    }
+  },
+  subscribe: function(el, callback) {
+    $(el).on('click.toggleButtonInputBinding', function(event) {
+      callback();
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off('button.toggle');
+  },
+  getRatePolicy: function() {
+    return {
+    	policy: 'debounce',
+    	delay: 100
+  	};
+  }
+});
+
+Shiny.inputBindings.register(toggleButtonInputBinding, 'saiUI.toggleButton');
+Shiny.inputBindings.setPriority('saiUI.toggleButton', 10);
+
+var dropdownMenuInputBinding = new Shiny.InputBinding();
+
+$.extend(dropdownMenuInputBinding, {
+  find: function(scope) {
+    return $(scope).find('.dropdownmenu');
+  },
+  getId: function(el) {
+    return $(el).attr('id');
+  },
+  getValue: function(el) {
+    // Get values of all active items and return an array
+    var vals = $(el).find('a.dropdown-item.active').map(function() {
+      return $(this).text();
+    }).get();
+    return vals;
+  },
+  receiveMessage: function(el, data) {
+    // TODO: Implement function!
+  },
+  subscribe: function(el, callback) {
+    $(el).on('change.dropdownMenuInputBinding', function(event) {
+      callback();
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off();
+  }
+});
+
+Shiny.inputBindings.register(dropdownMenuInputBinding, 'saiUI.dropdownMenu');
+Shiny.inputBindings.setPriority('saiUI.dropdownMenu', 10);
+
+var slicerInputBinding = new Shiny.InputBinding();
+
+$.extend(slicerInputBinding, {
+  find: function(scope) {
+    return $(scope).find('.slicer');
+  },
+  getId: function(el) {
+    return $(el).attr('id');
+  },
+  getValue: function(el) {
+    // Get values of all active items and return an array
+    var vals = $(el).find('.slicer-input.active').map(function() {
+      return $(this).text();
+    }).get();
+    if (vals.length === 0) return null;
+    return vals;
+  },
+  subscribe: function(el, callback) {
+    $(el).on('change.slicerInputBinding', function(event) {
+      callback();
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off();
+  }
+})
+
+Shiny.inputBindings.register(slicerInputBinding, 'saiUI.slicerInput');
+Shiny.inputBindings.setPriority('saiUI.slicerInput', 10);

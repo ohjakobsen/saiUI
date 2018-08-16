@@ -1,11 +1,11 @@
 Package: saiUI
 Type: Package
 Title: Bootstrap 4 layout for Shiny apps
-Version: 0.2.0
+Version: 0.3.0
 Author: Ove Haugland Jakobsen
 Maintainer: Ove Haugland Jakobsen <ohj@mac.comt>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: A package to replace the sidebar layout from the Shiny package with modern Bootstrap 4 elements.
+    Adds additional functions and layout elements to Shiny apps.
 License: GPL-3
 Depends:
     R (>= 3.4.0),
