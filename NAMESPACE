@@ -2,6 +2,8 @@
 
 export(actionButton)
 export(bs4Page)
+export(cardGroup)
+export(dashboardCard)
 export(dashboardFilter)
 export(dashboardPanel)
 export(downloadButton)
