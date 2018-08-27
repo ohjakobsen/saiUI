@@ -298,7 +298,10 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
   divTag <- tags$div(
     id = inputId,
     class = 'input-group slicer mb-1',
-    p(class = 'w-100 mb-1', html)
+    list(
+      tags$label(class = 'control-label', `for` = inputId, label),
+      p(class = 'w-100 mb-1', html)
+    )
   )
   
   # divTag <- tagAppendChild(
