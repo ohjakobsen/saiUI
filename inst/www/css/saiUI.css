@@ -2,7 +2,7 @@
   width: auto !important;
 }
 
-.control-label {
+.control-label, .form-input > label {
   font-weight: bolder;
 }
 

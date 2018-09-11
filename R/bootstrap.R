@@ -551,3 +551,17 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
   tabs <- findAndMarkSelected(tabs, selected)
   build(tabs, ulClass, textFilter, id)
 }
+
+#' Create a help text element
+#' 
+#' @inherit shiny::helpText
+#' 
+#' @param small Should the text be smaller?
+#' 
+#' @export
+helpText <- function(..., small = FALSE) {
+  if (small)
+    span(class = 'text-muted small', ...)
+  else
+    span(class = 'text-muted', ...)
+}
