@@ -4,13 +4,16 @@
 \alias{saiDashboard}
 \title{Dashboard page}
 \usage{
-saiDashboard(title, ..., color = "dark", brand = title,
+saiDashboard(title, ..., selected = NULL, color = "dark", brand = title,
   windowTitle = title, header = NULL, footer = NULL)
 }
 \arguments{
 \item{title}{The title for the page.}
 
 \item{...}{The UI elements of the page.}
+
+\item{selected}{The \code{value} of the panel that should be selected by default.
+If \code{NULL}, the first panel will be selected.}
 
 \item{color}{A string indicating the color of the top navigation}
 

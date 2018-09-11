@@ -4,6 +4,8 @@
 #' 
 #' @param title The title for the page.
 #' @param ... The UI elements of the page.
+#' @param selected The \code{value} of the panel that should be selected by default.
+#'   If \code{NULL}, the first panel will be selected.
 #' @param color A string indicating the color of the top navigation
 #' @param brand A string indicating the brand for the page
 #' @param windowTitle The title that should be displayed by the browser window.
@@ -13,15 +15,20 @@
 #' @seealso \code{\link{dashboardPanel}}
 #' 
 #' @export
-saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle = title,
-                         header = NULL, footer = NULL) {
+saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = title,
+                         windowTitle = title, header = NULL, footer = NULL) {
   
   pageTitle <- title
+  
+  if (nchar(tools::file_ext(brand)) > 0)
+    brandTag <- a(class = 'navbar-brand', href = '#', img(src = brand, height = '30'))
+  else
+    brandTag <- a(class = 'navbar-brand', href = '#', brand)
   
   topNav <- tags$nav(
     class = paste0('navbar navbar-dark sticky-top bg-', color, ' flex-md-nowrap p-0'),
     div(id = 'sidebarHeader', class = 'col-sm-3 col-md-2 mr-0',
-      a(class = 'navbar-brand', href = '#', brand),
+      brandTag,
       tags$button(
         class = 'navbar-toggler', `data-toggle` = 'collapse', `data-target` = '#mainnav',
         `aira-controls` = 'mainnav', `aria-expanded` = 'false', `aria-label` = 'Toggle navigation',
@@ -31,8 +38,17 @@ saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle 
   )
   
   tabs <- list(...)
-  tabs[[1]]$attribs$class <- 'tab-pane fade show active'
-  navItems <- buildDashboardNav(tabs)
+  
+  selected <- restoreInput('pagenav', default = selected)
+  
+  if (!is.null(selected))
+    tabselect <- which(sapply(tabs, function(t) t$attribs$id) == selected)
+  else
+    tabselect <- 1
+  
+  tabs[[tabselect]]$attribs$class <- 'tab-pane fade show active'
+  
+  navItems <- buildDashboardNav(tabs, tabselect)
   
   contentDiv <- div(class = 'col-md-9 ml-sm-auto col-lg-10 pt-3 px-4',
                     div(class = 'tab-content', tabs))
@@ -85,18 +101,20 @@ saiDashboard <- function(title, ..., color = 'dark', brand = title, windowTitle 
 #'   \item{\code{bolt}}
 #'   \item{\code{dollar}}
 #'   \item{\code{cog}}
+#'   \item{\code{star}}
 #'   }
 #' 
 #' @export
-dashboardPanel <- function(title, ..., id = title, value = title, icon = 'dashboard') {
+dashboardPanel <- function(title, ..., id = title, value = id, icon = 'dashboard') {
   
   # if (is.null(icon)) icon <- 'dashboard'
+  id <- tolower(gsub(' ', '', id, fixed = TRUE))
   
   divTag <- div(class = 'tab-pane fade',
-                id = gsub('\\s', '', id),
+                id = id,
                 title = title,
                 `role` = 'tabpanel',
-                `aria-labelledby` = paste0(gsub('\\s', '', title), '-tab'),
+                `aria-labelledby` = paste0(id, '-tab'),
                 `data-value` = value,
                 `data-icon-class` = icon,
                 ...)
@@ -113,7 +131,7 @@ dashboardFilter <- function() {
 }
 
 # Build functions for dashboard layout
-buildDashboardNav <- function(tabs) {
+buildDashboardNav <- function(tabs, tabselect) {
   
   # TODO: Fix in IE11 (brand not showing b/c of fixed positioning)
   # icons <- c('dashboard', 'bar-chart', 'list', 'pulse', 'people', 'graph', 'cog', 'clock', 'bolt', 'dollar')
@@ -122,8 +140,8 @@ buildDashboardNav <- function(tabs) {
   tabs <- lapply(tabs, function(t) {
     
     icon <- HTML(paste0('<i class="oi oi-', t$attribs$`data-icon-class`, '"></i>'))
-    class <- ifelse(i == 1, 'nav-link active', 'nav-link')
-    selected <- ifelse(i == 1, 'true', 'false')
+    class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
+    selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
     # print(t$attribs)
     
@@ -145,5 +163,100 @@ buildDashboardNav <- function(tabs) {
       )
     )
   )
+  
+}
+
+#' Create an information panel
+#' 
+#' Creates a Bootstrap card. The card can be used to highlight content on a page. Can be used
+#' together with \code{\link{cardGroup}}.
+#' 
+#' If you do not want cards with equal height and width, you can use \code{shiny}'s
+#' \code{fluidRow} and \code{column} functions to create a responsive grid layout where
+#' each card will be rendered individually.
+#' 
+#' @param ... The elements that should go into the card body
+#' @param header Header
+#' @param footer Footer
+#' @param color Color
+#' @param classes Optional additional CSS classes
+#' 
+#' @examples
+#' # Create a page with three linked cards
+#' saiDashboard(
+#'   dashboardPandel(title = "Demo card deck",
+#'     cardGroup(type = "deck",
+#'       dashboardCard(header = "I'm a card", "This is the body"),
+#'       dashboardCard(header = "I'm a different card", "This is the body"),
+#'       dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
+#'     )
+#'   )
+#' )
+#' 
+#' # Create a page with three individual cards 
+#' saiDashboard(
+#'   dashboardPanel(title = "demo",
+#'     fluidRow(
+#'       column(width = 4,
+#'         dashboardCard(header = "I'm a card", "This is the body")
+#'       ),
+#'       column(width = 4,
+#'         dashboardCard(header = "I'm a different card", "This is the body")
+#'       ),
+#'       column(width = 4,
+#'         dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
+#'       )
+#'     )
+#'   )
+#' )
+#' 
+#' @seealso \code{\link{saiDashboard}} \code{\link{dashboardPanel}} \code{\link{cardGroup}}
+#' 
+#' @export
+dashboardCard <- function(..., header = NULL, footer = NULL, color = NULL, classes = NULL) {
+  
+  if (is.null(color))
+    class <- 'card'
+  else if (color == 'light')
+    class <- 'card bg-light'
+  else
+    class <- paste0('card text-white bg-', color)
+  
+  if (length(classes) > 1) classes <- paste(classes, collapse = ' ')
+  if (!is.null(classes)) class <- paste(class, classes)
+  
+  divTag <- div(class = class)
+  
+  # Add elements to card
+  if (!is.null(header)) divTag <- tagAppendChild(divTag, div(class = 'card-header', header))
+  divTag <- tagAppendChild(divTag, div(class = 'card-body', ...))
+  if (!is.null(footer)) divTag <- tagAppendChild(divTag, div(class = 'card-footer', footer))
+  
+  divTag
+  
+}
+
+#' Create a group of two or more \code{\link{dashboardCard}}s
+#' 
+#' Create a group of two or more \code{\link{dashboardCard}}s. Two types of groups are
+#' supported; \code{group} and \code{deck}. See details.
+#' 
+#' The cards the the group will be of equal height and fill the full width on big screen devices.
+#' The cards are responsive. When the \code{type} is set to \code{group}, the cards are grouped
+#' together with no space between them. Headers and footers will automatically line up. When the
+#' \code{type} is set to \code{deck} the cards will be set to equal width and height, but will
+#' show as individual cards.
+#' 
+#' @param ... Two or more \code{\link{dashboardCard}}s to go into the group.
+#' @param type The type of card group. Can be either \code{group} or \code{deck}.
+#' 
+#' @seealso \code{\link{dashboardCard}}
+#' 
+#' @export
+cardGroup <- function(..., type = c('group', 'deck')) {
+  
+  type <- match.arg(type)
+  
+  div(class = paste0('card-', type), ...)
   
 }

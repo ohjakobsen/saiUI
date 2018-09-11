@@ -1,3 +1,12 @@
+saiUI 0.3.1
+===============
+
+* `saiDashboard` now supports restore feature i `shiny`
+* Ability to select a different default panel in `saiDashboard` with the `selected` parameter
+* New functions `dashboardCard` and `cardGroup` to create Bootstrap style cards and group of cards. See the [Bootstrap documentation](https://getbootstrap.com/docs/4.1/components/card/)
+* Tabs in navbar on `saiPage` can now be hidden by default
+* Wrapper for `helpText` with update to BS4 (class `help-block` deprecated in BS4)
+
 saiUI 0.3.0
 ===============
 

@@ -4,7 +4,7 @@
 \alias{dashboardPanel}
 \title{Dashboard panel}
 \usage{
-dashboardPanel(title, ..., id = title, value = title, icon = "dashboard")
+dashboardPanel(title, ..., id = title, value = id, icon = "dashboard")
 }
 \arguments{
 \item{title}{The title for the dashboard}
@@ -36,5 +36,6 @@ This function creates a dashboard panel for outputting results from R functions.
   \item{\code{bolt}}
   \item{\code{dollar}}
   \item{\code{cog}}
+  \item{\code{star}}
   }
 }

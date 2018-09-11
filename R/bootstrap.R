@@ -263,9 +263,10 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
     class <- paste0(class, ' btn btn-', color)
     selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
-
+    style <- ifelse(t$attribs$`aria-hidden`, 'display: none;', '')
+    
     list(
-      tags$li(class='nav-item px-1',
+      tags$li(class='nav-item px-1', style = style,
         a(id = paste0(gsub('\\s', '', t$attribs$id), '-tab'), class = class, `data-value` = t$attribs$id,
           href = paste0('#', gsub('\\s', '', t$attribs$id)), `data-toggle` = 'pill', t$attribs$title,
           `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$id))
@@ -307,7 +308,7 @@ saiTab <- function(title, ..., value = title, icon = NULL, hidden = FALSE) {
   divTag <- div(
     class = 'tab-pane fade', id = value, title = title, `role` = 'tabpanel',
     `aria-labelledby` = (paste0(value, '-tab')), `data-value` = value,
-    `data-icon-class` = NULL, ...
+    `data-icon-class` = NULL, `aria-hidden` = hidden, ...
     )
 }
 
@@ -549,4 +550,18 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
   # Finally, actually invoke the functions to do the processing.
   tabs <- findAndMarkSelected(tabs, selected)
   build(tabs, ulClass, textFilter, id)
+}
+
+#' Create a help text element
+#' 
+#' @inherit shiny::helpText
+#' 
+#' @param small Should the text be smaller?
+#' 
+#' @export
+helpText <- function(..., small = FALSE) {
+  if (small)
+    span(class = 'text-muted small', ...)
+  else
+    span(class = 'text-muted', ...)
 }
