@@ -63,12 +63,12 @@ $(document).ready(function() {
         // Toggle button state
         $(this).toggleClass('active');
         // Set aria-pressed value
-        var pressed = (this.getAttribute('aria-pressed') === 'true');
-        this.setAttribute('aria-pressed', !pressed);
+        this.setAttribute('aria-pressed', 'true');
         // Deactivate all other siblings
         $(this).siblings().removeClass('active');
+        $(this).siblings().attr('aria-pressed', 'false');
         // Trigger a change event on the parent element
-        $(this).parent('.slicer').trigger('change');
+        $(this).closest('.slicer').trigger('change');
       }
     } else {
       // Toggle button state
