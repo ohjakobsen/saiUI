@@ -207,7 +207,7 @@ $.extend(slicerInputBinding, {
   getValue: function(el) {
     // Get values of all active items and return an array
     var vals = $(el).find('.slicer-input.active').map(function() {
-      return $(this).text();
+      return $(this).attr('data-value');
     }).get();
     if (vals.length === 0) return null;
     return vals;

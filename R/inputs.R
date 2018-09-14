@@ -287,12 +287,14 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
   outline <- ifelse(outline, 'outline-', '')
   color <- paste0('btn-', outline, color)
   
-  html <- lapply(choices, function(btn) {
+  if (is.null(names(choices))) names(choices) <- choices
+  
+  html <- mapply(choices, names(choices), SIMPLIFY = FALSE, FUN = function(btn, label) {
     active <- ifelse(btn %in% selected, 'active', '')
     tags$button(
-      class = paste('slicer-input btn btn-pill', color, active),
+      class = paste('slicer-input btn btn-pill', color, active), `data-value` = btn,
       `aria-pressed` = ifelse(active == 'active', 'true', 'false'),
-      btn)
+      label)
   })
   
   divTag <- tags$div(
@@ -303,7 +305,6 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
       p(class = 'w-100 mb-1', html)
     )
   )
-  
   # divTag <- tagAppendChild(
   #   divTag, p(class = 'w-100 mb-1', tags$button(class = 'btn btn-sm btn-secondary', 'Select all')))
   
