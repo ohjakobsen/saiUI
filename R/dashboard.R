@@ -184,7 +184,7 @@ buildDashboardNav <- function(tabs, tabselect) {
 #' @examples
 #' # Create a page with three linked cards
 #' saiDashboard(
-#'   dashboardPandel(title = "Demo card deck",
+#'   dashboardPanel(title = "Demo card deck",
 #'     cardGroup(type = "deck",
 #'       dashboardCard(header = "I'm a card", "This is the body"),
 #'       dashboardCard(header = "I'm a different card", "This is the body"),
