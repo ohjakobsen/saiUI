@@ -3,6 +3,8 @@
 export(actionButton)
 export(bs4Page)
 export(cardGroup)
+export(cardNav)
+export(cardNavItem)
 export(dashboardCard)
 export(dashboardFilter)
 export(dashboardPanel)

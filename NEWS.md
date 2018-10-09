@@ -1,3 +1,9 @@
+saiUI 0.3.3
+===============
+
+* New functions `cardNav` and `cardNavItem` to support cards with Bootstrap's nav component in the header
+* Minor bugfixes for the documentation
+
 saiUI 0.3.2
 ===============
 
