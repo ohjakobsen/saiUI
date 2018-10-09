@@ -260,3 +260,79 @@ cardGroup <- function(..., type = c('group', 'deck')) {
   div(class = paste0('card-', type), ...)
   
 }
+
+#' Card with navigation
+#' 
+#' Create a card with several \code{\link{cardNavItem}}s the user can navigate to. See details.
+#' 
+#' @param navId The ID of the card
+#' @param ... One or more nav items of type \code{\link{cardNavItem}}
+#' 
+#' @examples
+#' # Build a card with three navigatable items
+#' cardNav(
+#'   navId = 'cardnav',
+#'   cardNavItem(cardId = 'first', title = 'First', 'Content of first tab'),
+#'   cardNavItem(cardId = 'second', title = 'Second', 'Content of second tab')
+#'   cardNavItem(cardId = 'third', title = 'Third', 'Content of third tab')
+#' )
+#' 
+#' @export
+cardNav <- function(navId, ...) {
+  
+  items <- list(...)
+  
+  # Combine IDs for nav and nav items
+  items <- lapply(items, function(el) {
+    orgId <- el$attribs$id
+    el$attribs$id <- paste(navId, orgId, sep = '-')
+    return(el)
+  })
+  
+  # Add active class to the first element
+  items[[1]]$attribs$class <- paste(items[[1]]$attribs$class, 'active show')
+  
+  # Build the card navigation list. The first element should be active
+  i <- 1
+  cardNav <- lapply(items, function(el) {
+    
+    id <- el$attribs$id
+    title <- el$attribs$`data-title`
+    class <- ifelse(i == 1, 'nav-link active', 'nav-link')
+    i <<- i + 1
+    
+    tags$li(
+      class = 'nav-item',
+      tags$a(class = class, `data-toggle` = 'tab', role = 'tab', href = paste0('#', id), title)
+    )
+    
+  })
+  
+  # Finally build the actual card output
+  div(class = 'card',
+    div(class = 'card-header',
+      tags$ul(
+        class = 'nav nav-tabs card-header-tabs', role = 'tablist',
+        cardNav
+      )
+    ),
+    div(class = 'card-body', div(class = 'tab-content', items))
+  )
+  
+}
+
+#' Item for card with navigation
+#' 
+#' Create a card item that can be included in a \code{\link{cardNav}}
+#' 
+#' @param cardId The ID for the card body
+#' @param ... UT elements to include within the card body
+#' 
+#' @seealso \code{\link{cardNav}}
+#' 
+#' @export
+cardNavItem <- function(cardId, title = cardId, ...) {
+  
+  div(class = 'tab-pane fade', id = cardId, `data-title` = title, ...)
+  
+}
