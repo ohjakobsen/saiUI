@@ -129,12 +129,14 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
   
   value <- restoreInput(id = inputId, default = value)
   
-  div(class = 'form-group shiny-input-container d-flex',
-      tags$form(class = 'form-inline searchbox px-1 my-2 w-100',
-                tags$input(id = inputId, type = 'text', class = paste0('form-control', size$form, ' mr-1'),
-                           value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')),
-                tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-', outline, color, size$btn), button)
-      )
+  div(
+    class = 'form-group shiny-input-container d-flex',
+    tags$form(
+      class = 'form-inline searchbox px-1 my-2 w-100',
+      tags$input(id = inputId, type = 'text', class = paste0('form-control', size$form, ' mr-1'),
+                 value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')),
+      tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-', outline, color, size$btn), button)
+    )
   )
   
 }
@@ -155,16 +157,17 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
 #' 
 #' @export
 dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FALSE, icon = NULL,
-                           color = c('primary', 'secondary', 'success', 'danger', 'warning',
-                                     'info', 'light', 'dark'),
-                           outline = FALSE, size = c('normal', 'sm', 'lg'),
-                           direction = c('down', 'right', 'up', 'left')) {
+                         color = c('primary', 'secondary', 'success', 'danger', 'warning',
+                                   'info', 'light', 'dark'),
+                         outline = FALSE, size = c('normal', 'sm', 'lg'),
+                         direction = c('down', 'right', 'up', 'left')) {
   
   selected <- restoreInput(id = inputId, default = selected)
   
   outline <- ifelse(outline, 'outline-', '')
   color <- match.arg(color)
   size <- match.arg(size)
+  direction <- match.arg(direction)
   size <- ifelse(size %in% c('lg', 'sm'), paste0(' btn-', size), '')
   direction <- ifelse(direction != 'down', paste0('drop', direction), '')
   
@@ -187,9 +190,7 @@ dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FA
       `aria-expanded` = 'false',
       label
     ),
-    div(
-      class = 'dropdown-menu', items
-    )
+    div(class = 'dropdown-menu', items)
   )
   
 }
@@ -294,7 +295,7 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
     tags$button(
       class = paste('slicer-input btn btn-pill', color, active), `data-value` = btn,
       `aria-pressed` = ifelse(active == 'active', 'true', 'false'),
-      label)
+      htmlEscape(label))
   })
   
   divTag <- tags$div(

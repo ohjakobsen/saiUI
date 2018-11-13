@@ -32,7 +32,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
       tags$button(
         class = 'navbar-toggler', `data-toggle` = 'collapse', `data-target` = '#mainnav',
         `aira-controls` = 'mainnav', `aria-expanded` = 'false', `aria-label` = 'Toggle navigation',
-        HTML('<span class="navbar-toggler-icon"></span>')
+        tags$span(class = 'navbar-toggler-icon')
       )
     )
   )
@@ -54,7 +54,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
                     div(class = 'tab-content', tabs))
   
   deps <- list(htmlDependency(
-    'dashboard', '0.3.0',
+    'dashboard', '0.4.0',
     c(file = system.file('www', package = 'saiUI')),
     stylesheet = c('css/dashboard.min.css')
   ))
