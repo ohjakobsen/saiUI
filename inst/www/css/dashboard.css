@@ -8,6 +8,11 @@ body {
   vertical-align: text-bottom;
 }
 
+#navlist i {
+  width: 1.2em;
+  text-align: center;
+}
+
 /*
  * Sidebar
  */
@@ -111,4 +116,11 @@ body {
 
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
+}
+
+/* Would any CSS file be complete without a bullshit hack for IE 10 and 11? */
+@media all and (-ms-high-contrast: none), (-ms-hig-contrast: active) {
+  #mainnav {
+    position: relative;
+  }
 }
