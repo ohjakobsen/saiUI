@@ -143,7 +143,6 @@ buildDashboardNav <- function(tabs, tabselect) {
     class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
     selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
-    # print(t$attribs)
     
     tags$li(class = 'nav-item',
       a(id = paste0(gsub('\\s', '', t$attribs$id), '-tab'), class = class,
@@ -155,10 +154,9 @@ buildDashboardNav <- function(tabs, tabselect) {
     
   })
   
-  # tags$nav(id = 'mainnav', class = 'col-md-2 d-none d-md-block bg-light sidebar',
   tags$nav(id = 'mainnav', class = 'col-md-2 d-md-block bg-light sidebar navbar-collapse collapse',
     div(id = 'pagenav', class = 'sidebar-sticky',
-      tags$ul(class = 'nav flex-column', role = 'tablist',
+      tags$ul(id = 'navlist', class = 'nav flex-column', role = 'tablist',
         tabs
       )
     )

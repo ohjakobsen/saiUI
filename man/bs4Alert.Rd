@@ -4,12 +4,14 @@
 \alias{bs4Alert}
 \title{Create alert in UI}
 \usage{
-bs4Alert(..., color = "primary", dismissable = FALSE)
+bs4Alert(..., color = "primary", icon = NULL, dismissable = FALSE)
 }
 \arguments{
 \item{...}{One or more HTML elements to show in the alert}
 
 \item{color}{The color of the alert}
+
+\item{icon}{Name of an icon from the Open Iconic library that should be shown before the text}
 
 \item{dismissable}{Should the user be allowed to dismiss the alert}
 }

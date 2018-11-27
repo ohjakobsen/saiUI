@@ -108,19 +108,25 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
 #' @param placeholder A character string giving the user a hint as to what can be entered into the
 #'   control.
 #' @param button A character string to display as the text for the search button.
+#' @param icon Name of an icon from the Open Iconic library instead of text.
 #' @param color A character string giving the color of the search button.
-#' @param outline Should the button be an outline button? Default value TRUE.
+#' @param outline Should the button be an outline button? Default value FALSE.
 #' @param size A character string giving the size of the input. Valid options are \code{normal},
 #'   \code{sm} and \code{lg}. Defaults to \code{normal}
 #'
 #' @export
-searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Search',
-                           color = c('success', 'primary', 'secondary', 'danger', 'warning', 'light', 'dark'),
-                           outline = TRUE, size = c('normal', 'sm', 'lg')) {
+searchboxInput <- function(inputId, value = '', placeholder = NULL, button = NULL, icon = NULL,
+                           color = c('primary', 'secondary', 'danger', 'warning', 'success', 'light', 'dark'),
+                           outline = FALSE, size = c('normal', 'sm', 'lg')) {
   
   outline <- ifelse(outline, 'outline-', '')
   color <- match.arg(color)
   size <- match.arg(size)
+  
+  if (is.null(button) & is.null(icon))
+    button <- 'Search'
+  if (is.null(button))
+    button <- tags$i(class = paste0('oi oi-', icon))
   
   size <- list(
     form = ifelse(size %in% c('lg', 'sm'), paste0(' form-control-', size), ''),
@@ -132,10 +138,13 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = 'Se
   div(
     class = 'form-group shiny-input-container d-flex',
     tags$form(
-      class = 'form-inline searchbox px-1 my-2 w-100',
-      tags$input(id = inputId, type = 'text', class = paste0('form-control', size$form, ' mr-1'),
-                 value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')),
-      tags$button(id = paste0(inputId, '-btn'), class = paste0('btn btn-', outline, color, size$btn), button)
+      class = 'input-group form-inline searchbox px-1 my-2 w-100',
+      tags$input(
+        id = inputId, type = 'text', class = paste0('form-control', size$form),
+        value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')),
+      tags$div(class = 'input-group-append', tags$button(
+        class = paste0('btn btn-', outline, color), type = 'button', button
+      ))
     )
   )
   
@@ -267,11 +276,9 @@ updateToggleButton <- function(session, inputId, value = NULL, change = NULL) {
 #' @return A list control that can be added to a UI definition.
 #' 
 #' @export
-slicerInput <- function(inputId, label, choices, selected = NULL,
-                        color = c('success', 'primary', 'secondary', 'danger', 'warning', 'info', 'light', 'dark'),
+slicerInput <- function(inputId, label, choices, selected = NULL, color = 'primary',
                         outline = TRUE, multiple = FALSE) {
   
-  # TODO: Add label or not? If yes, how?
   # TODO: Add select all/deselect all option?
   # TODO: Add reset option?
   
@@ -284,7 +291,7 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
   else if (!multiple)
     selected <- firstChoice(selected)
   
-  color <- match.arg(color)
+  # color <- match.arg(color)
   outline <- ifelse(outline, 'outline-', '')
   color <- paste0('btn-', outline, color)
   
@@ -302,7 +309,7 @@ slicerInput <- function(inputId, label, choices, selected = NULL,
     id = inputId,
     class = 'input-group slicer mb-1',
     list(
-      tags$label(class = 'control-label', `for` = inputId, label),
+      controlLabel(inputId, label),
       p(class = 'w-100 mb-1', html)
     )
   )

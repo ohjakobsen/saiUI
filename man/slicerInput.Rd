@@ -4,8 +4,7 @@
 \alias{slicerInput}
 \title{Slicer Input}
 \usage{
-slicerInput(inputId, label, choices, selected = NULL, color = c("success",
-  "primary", "secondary", "danger", "warning", "info", "light", "dark"),
+slicerInput(inputId, label, choices, selected = NULL, color = "primary",
   outline = TRUE, multiple = FALSE)
 }
 \arguments{
