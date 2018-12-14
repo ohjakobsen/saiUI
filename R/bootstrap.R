@@ -59,6 +59,19 @@ saiLib <- function(theme = NULL, deps = NULL) {
   return(r)
 }
 
+#' Create a simple Bootstrap page
+#' 
+#' @inheritParams bs4Page
+#' 
+#' @export
+singlePage <- function(title, ..., theme = NULL, lang = 'en') {
+  
+  bs4Page(
+    div(class = 'container-fluid', ...),
+    title = title, theme = theme, lang = lang)
+  
+}
+
 #' SAI page element
 #'
 #' This functions builds the actual HTML page.
@@ -98,7 +111,8 @@ saiPage <- function(title,
   tabs[[tabselect]]$attribs$class <- 'tab-pane fade show active'
 
   class = paste0(
-    'navbar navbar-expand-lg ', ifelse(color == 'light', 'navbar-light', 'navbar-dark'), ' bg-', color
+    'navbar navbar-expand-lg ',
+    ifelse(color == 'light', 'navbar-light', 'navbar-dark'), ' bg-', color
   )
 
   navItems <- buildNavbar(pageTitle, tabs, tabselect, color)

@@ -4,14 +4,21 @@
 #' 
 #' @param ... One or more HTML elements to show in the alert
 #' @param color The color of the alert
+#' @param icon Name of an icon from the Open Iconic library that should be shown before the text
 #' @param dismissable Should the user be allowed to dismiss the alert
 #' 
 #' @export
-bs4Alert <- function(..., color = 'primary', dismissable = FALSE) {
+bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
   
   classes <- paste0('alert alert-', color)
+  if (dismissable) classes <- paste(classes, 'alert-dismissible fade show')
   
-  divTag <- div(class = classes, ...)
+  if (!is.null(icon)) {
+    icon <- tags$i(class = paste0('oi oi-', icon))
+    classes <- paste(classes, 'alert-icon')
+  }
+  
+  divTag <- div(class = classes, role = 'alert', list(icon, ...))
   
   if (dismissable)
     divTag <- tagAppendChild(divTag, tags$button(
@@ -34,6 +41,8 @@ bs4Alert <- function(..., color = 'primary', dismissable = FALSE) {
 #' 
 #' @details 
 #' Supported aspect ratios are 16 by 9 (default), 4 by 3, 21 by 9 and 1 by 1.
+#' 
+#' @importFrom utils URLencode
 #' 
 #' @export
 bs4Embed <- function(src, type = c('iframe', 'video'), ratio = c(16, 9)) {

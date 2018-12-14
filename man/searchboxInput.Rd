@@ -4,10 +4,10 @@
 \alias{searchboxInput}
 \title{Create a searchbox input}
 \usage{
-searchboxInput(inputId, value = "", placeholder = NULL, button = NULL,
-  icon = NULL, color = c("primary", "secondary", "danger", "warning",
-  "success", "light", "dark"), outline = FALSE, size = c("normal", "sm",
-  "lg"))
+searchboxInput(inputId, value = "", placeholder = NULL,
+  button = NULL, icon = NULL, color = c("primary", "secondary",
+  "danger", "warning", "success", "light", "dark"), outline = FALSE,
+  size = c("normal", "sm", "lg"))
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

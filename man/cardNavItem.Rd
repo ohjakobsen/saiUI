@@ -9,6 +9,8 @@ cardNavItem(cardId, title = cardId, ...)
 \arguments{
 \item{cardId}{The ID for the card body}
 
+\item{title}{The title for the card. Defaults to the ID.}
+
 \item{...}{UT elements to include within the card body}
 }
 \description{

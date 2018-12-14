@@ -29,29 +29,27 @@ each card will be rendered individually.
 }
 \examples{
 # Create a page with three linked cards
-saiDashboard(
-  dashboardPanel(title = "Demo card deck",
-    cardGroup(type = "deck",
-      dashboardCard(header = "I'm a card", "This is the body"),
-      dashboardCard(header = "I'm a different card", "This is the body"),
-      dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
-    )
+dashboardPanel(
+  title = "Demo card deck",
+  cardGroup(type = "deck",
+    dashboardCard(header = "I'm a card", "This is the body"),
+    dashboardCard(header = "I'm a different card", "This is the body"),
+    dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
   )
 )
 
 # Create a page with three individual cards 
-saiDashboard(
-  dashboardPanel(title = "demo",
-    fluidRow(
-      column(width = 4,
-        dashboardCard(header = "I'm a card", "This is the body")
-      ),
-      column(width = 4,
-        dashboardCard(header = "I'm a different card", "This is the body")
-      ),
-      column(width = 4,
-        dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
-      )
+dashboardPanel(
+  title = "demo",
+  fluidRow(
+    column(width = 4,
+           dashboardCard(header = "I'm a card", "This is the body")
+    ),
+    column(width = 4,
+           dashboardCard(header = "I'm a different card", "This is the body")
+    ),
+    column(width = 4,
+           dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
     )
   )
 )

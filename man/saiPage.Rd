@@ -5,8 +5,8 @@
 \title{SAI page element}
 \usage{
 saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
-  footer = NULL, theme = NULL, color = "primary", windowTitle = title,
-  lang = "en")
+  footer = NULL, theme = NULL, color = "primary",
+  windowTitle = title, lang = "en")
 }
 \arguments{
 \item{title}{The title to display in the navbar.}

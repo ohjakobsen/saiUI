@@ -8,8 +8,8 @@
 saiTabset(..., id = NULL, selected = NULL, type = c("tabs", "pills"),
   position = NULL)
 
-tabsetPanel(..., id = NULL, selected = NULL, type = c("tabs", "pills"),
-  position = NULL)
+tabsetPanel(..., id = NULL, selected = NULL, type = c("tabs",
+  "pills"), position = NULL)
 }
 \arguments{
 \item{...}{\code{\link{tabPanel}} elements to include in the tabset}

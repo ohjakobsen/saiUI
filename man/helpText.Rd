@@ -15,5 +15,11 @@ helpText(..., small = FALSE)
 A help text element that can be added to a UI definition.
 }
 \description{
-Create a help text element
+Create help text which can be added to an input form to provide additional
+explanation or context.
+}
+\examples{
+helpText("Note: while the data view will show only",
+         "the specified number of observations, the",
+         "summary will be based on the full dataset.")
 }
