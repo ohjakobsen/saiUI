@@ -1,17 +1,22 @@
 Package: saiUI
 Type: Package
 Title: Bootstrap 4 layout for Shiny apps
-Version: 0.3.3
+Version: 0.4.0
 Author: Ove Haugland Jakobsen
 Maintainer: Ove Haugland Jakobsen <ohj@mac.comt>
 Description: A package to replace the sidebar layout from the Shiny package with modern Bootstrap 4 elements.
     Adds additional functions and layout elements to Shiny apps.
-License: GPL-3
+License: MIT | file LICENSE
 Depends:
     R (>= 3.4.0),
-    shiny (>= 1.0.5)
+    shiny (>= 1.1.0)
 Imports:
-    htmltools (>= 0.3.5)
+    htmltools (>= 0.3.5),
+    utils
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

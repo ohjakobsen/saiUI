@@ -27,7 +27,34 @@ see \code{\link{validateCssUnit}}.}
 \item{...}{Named attributes to be applied to the button or link.}
 }
 \description{
-Create an action button
+Creates an action button or link whose value is initially zero, and increments by one
+each time it is pressed.
+}
+\examples{
+## Only run examples in interactive R sessions
+if (interactive()) {
+
+ui <- fluidPage(
+  sliderInput("obs", "Number of observations", 0, 1000, 500),
+  actionButton("goButton", "Go!"),
+  plotOutput("distPlot")
+)
+
+server <- function(input, output) {
+  output$distPlot <- renderPlot({
+    # Take a dependency on input$goButton. This will run once initially,
+    # because the value changes from NULL to 0.
+    input$goButton
+
+    # Use isolate() to avoid dependency on input$obs
+    dist <- isolate(rnorm(input$obs))
+    hist(dist)
+  })
+}
+
+shinyApp(ui, server)
+
+}
 }
 \seealso{
 \code{\link{observeEvent}} and \code{\link{eventReactive}}
@@ -38,5 +65,6 @@ Other input elements: \code{\link{checkboxGroupInput}},
   \code{\link{numericInput}}, \code{\link{passwordInput}},
   \code{\link{radioButtons}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{submitButton}},
-  \code{\link{textAreaInput}}, \code{\link{textInput}}
+  \code{\link{textAreaInput}}, \code{\link{textInput}},
+  \code{\link{varSelectInput}}
 }

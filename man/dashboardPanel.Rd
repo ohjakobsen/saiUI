@@ -4,7 +4,8 @@
 \alias{dashboardPanel}
 \title{Dashboard panel}
 \usage{
-dashboardPanel(title, ..., id = title, value = id, icon = "dashboard")
+dashboardPanel(title, ..., id = title, value = id,
+  icon = "dashboard")
 }
 \arguments{
 \item{title}{The title for the dashboard}

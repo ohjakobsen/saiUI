@@ -4,8 +4,8 @@
 \alias{saiDashboard}
 \title{Dashboard page}
 \usage{
-saiDashboard(title, ..., selected = NULL, color = "dark", brand = title,
-  windowTitle = title, header = NULL, footer = NULL)
+saiDashboard(title, ..., selected = NULL, color = "dark",
+  brand = title, windowTitle = title, header = NULL, footer = NULL)
 }
 \arguments{
 \item{title}{The title for the page.}

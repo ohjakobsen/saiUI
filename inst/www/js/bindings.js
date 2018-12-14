@@ -29,11 +29,6 @@ $.extend(searchboxInputBinding, {
   receiveMessage: function(el, data) {
   	if (data.hasOwnProperty('value')) this.setValue(el, data.value);
 
-    /*if (data.hasOwnProperty('label')) {
-      console.log(el);
-      $(el).parent().find('label[for="' + data.id + '"]').text(data.label);
-    }*/
-
     if (data.hasOwnProperty('placeholder')) {
       el.placeholder = data.placeholder;
     }

@@ -4,9 +4,10 @@
 \alias{searchboxInput}
 \title{Create a searchbox input}
 \usage{
-searchboxInput(inputId, value = "", placeholder = NULL, button = "Search",
-  color = c("success", "primary", "secondary", "danger", "warning", "light",
-  "dark"), outline = TRUE, size = c("normal", "sm", "lg"))
+searchboxInput(inputId, value = "", placeholder = NULL,
+  button = NULL, icon = NULL, color = c("primary", "secondary",
+  "danger", "warning", "success", "light", "dark"), outline = FALSE,
+  size = c("normal", "sm", "lg"))
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -18,9 +19,11 @@ control.}
 
 \item{button}{A character string to display as the text for the search button.}
 
+\item{icon}{Name of an icon from the Open Iconic library instead of text.}
+
 \item{color}{A character string giving the color of the search button.}
 
-\item{outline}{Should the button be an outline button? Default value TRUE.}
+\item{outline}{Should the button be an outline button? Default value FALSE.}
 
 \item{size}{A character string giving the size of the input. Valid options are \code{normal},
 \code{sm} and \code{lg}. Defaults to \code{normal}}

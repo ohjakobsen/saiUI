@@ -4,10 +4,11 @@
 \alias{dropdownMenu}
 \title{Create a dropdown menu for inputs}
 \usage{
-dropdownMenu(inputId, label, choices, selected = NULL, multiple = FALSE,
-  icon = NULL, color = c("primary", "secondary", "success", "danger",
-  "warning", "info", "light", "dark"), outline = FALSE, size = c("normal",
-  "sm", "lg"), direction = c("down", "right", "up", "left"))
+dropdownMenu(inputId, label, choices, selected = NULL,
+  multiple = FALSE, icon = NULL, color = c("primary", "secondary",
+  "success", "danger", "warning", "info", "light", "dark"),
+  outline = FALSE, size = c("normal", "sm", "lg"),
+  direction = c("down", "right", "up", "left"))
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

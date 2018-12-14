@@ -45,7 +45,7 @@ saiLib <- function(theme = NULL, deps = NULL) {
       stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
       meta = list(viewport = "width=device-width, initial-scale=1")
     ),
-    htmlDependency('saiUI', '0.3.0',
+    htmlDependency('saiUI', '0.4.0',
       c(file = system.file('www', package = 'saiUI')),
       script = c('js/saiUI.min.js', 'js/bindings.min.js'),
       stylesheet = c('css/saiUI.min.css')
@@ -57,6 +57,19 @@ saiLib <- function(theme = NULL, deps = NULL) {
   )
   if (!is.null(deps)) r <- c(r, deps)
   return(r)
+}
+
+#' Create a simple Bootstrap page
+#' 
+#' @inheritParams bs4Page
+#' 
+#' @export
+singlePage <- function(title, ..., theme = NULL, lang = 'en') {
+  
+  bs4Page(
+    div(class = 'container-fluid', ...),
+    title = title, theme = theme, lang = lang)
+  
 }
 
 #' SAI page element
@@ -98,7 +111,8 @@ saiPage <- function(title,
   tabs[[tabselect]]$attribs$class <- 'tab-pane fade show active'
 
   class = paste0(
-    'navbar navbar-expand-lg ', ifelse(color == 'light', 'navbar-light', 'navbar-dark'), ' bg-', color
+    'navbar navbar-expand-lg ',
+    ifelse(color == 'light', 'navbar-light', 'navbar-dark'), ' bg-', color
   )
 
   navItems <- buildNavbar(pageTitle, tabs, tabselect, color)
@@ -116,10 +130,8 @@ saiPage <- function(title,
     title = windowTitle,
     theme = theme,
     lang = lang,
-    # header,
     tags$nav(class = class, id = 'pagenav', navItems),
     pageBody
-    # footer
   )
 
 }
@@ -158,8 +170,7 @@ saiMenu <- function(..., width = 4, color = 'light') {
 saiMain <- function(..., width = 8) {
 
   div(class = paste0('col-12 col-md-', width, ' pt-2'),
-      tags$section(...)
-      )
+      tags$section(...))
 
 }
 
@@ -177,8 +188,7 @@ headerContent <- function(..., color = 'primary') {
   color <- paste0('bg-', color)
   
   div(class = paste(color, text_color, 'clearfix'),
-      p(class = 'p-2 m-0', ...)
-  )
+      p(class = 'p-2 m-0', ...))
   
 }
 
@@ -196,8 +206,7 @@ footerContent <- function(..., color = 'light') {
   color <- paste0('bg-', color)
   
   div(class = paste(color, text_color, 'fixed-bottom clearfix'),
-      p(class = 'p-2 m-0', ...)
-  )
+      p(class = 'p-2 m-0', ...))
   
 }
 

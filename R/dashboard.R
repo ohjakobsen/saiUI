@@ -32,7 +32,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
       tags$button(
         class = 'navbar-toggler', `data-toggle` = 'collapse', `data-target` = '#mainnav',
         `aira-controls` = 'mainnav', `aria-expanded` = 'false', `aria-label` = 'Toggle navigation',
-        HTML('<span class="navbar-toggler-icon"></span>')
+        tags$span(class = 'navbar-toggler-icon')
       )
     )
   )
@@ -54,7 +54,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
                     div(class = 'tab-content', tabs))
   
   deps <- list(htmlDependency(
-    'dashboard', '0.3.0',
+    'dashboard', '0.4.0',
     c(file = system.file('www', package = 'saiUI')),
     stylesheet = c('css/dashboard.min.css')
   ))
@@ -143,7 +143,6 @@ buildDashboardNav <- function(tabs, tabselect) {
     class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
     selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
-    # print(t$attribs)
     
     tags$li(class = 'nav-item',
       a(id = paste0(gsub('\\s', '', t$attribs$id), '-tab'), class = class,
@@ -155,10 +154,9 @@ buildDashboardNav <- function(tabs, tabselect) {
     
   })
   
-  # tags$nav(id = 'mainnav', class = 'col-md-2 d-none d-md-block bg-light sidebar',
   tags$nav(id = 'mainnav', class = 'col-md-2 d-md-block bg-light sidebar navbar-collapse collapse',
     div(id = 'pagenav', class = 'sidebar-sticky',
-      tags$ul(class = 'nav flex-column', role = 'tablist',
+      tags$ul(id = 'navlist', class = 'nav flex-column', role = 'tablist',
         tabs
       )
     )
@@ -183,29 +181,27 @@ buildDashboardNav <- function(tabs, tabselect) {
 #' 
 #' @examples
 #' # Create a page with three linked cards
-#' saiDashboard(
-#'   dashboardPanel(title = "Demo card deck",
-#'     cardGroup(type = "deck",
-#'       dashboardCard(header = "I'm a card", "This is the body"),
-#'       dashboardCard(header = "I'm a different card", "This is the body"),
-#'       dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
-#'     )
+#' dashboardPanel(
+#'   title = "Demo card deck",
+#'   cardGroup(type = "deck",
+#'     dashboardCard(header = "I'm a card", "This is the body"),
+#'     dashboardCard(header = "I'm a different card", "This is the body"),
+#'     dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
 #'   )
 #' )
 #' 
 #' # Create a page with three individual cards 
-#' saiDashboard(
-#'   dashboardPanel(title = "demo",
-#'     fluidRow(
-#'       column(width = 4,
-#'         dashboardCard(header = "I'm a card", "This is the body")
-#'       ),
-#'       column(width = 4,
-#'         dashboardCard(header = "I'm a different card", "This is the body")
-#'       ),
-#'       column(width = 4,
-#'         dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
-#'       )
+#' dashboardPanel(
+#'   title = "demo",
+#'   fluidRow(
+#'     column(width = 4,
+#'            dashboardCard(header = "I'm a card", "This is the body")
+#'     ),
+#'     column(width = 4,
+#'            dashboardCard(header = "I'm a different card", "This is the body")
+#'     ),
+#'     column(width = 4,
+#'            dashboardCard(header = "I'm a red card", color = "danger", "This is the body")
 #'     )
 #'   )
 #' )
@@ -273,7 +269,7 @@ cardGroup <- function(..., type = c('group', 'deck')) {
 #' cardNav(
 #'   navId = 'cardnav',
 #'   cardNavItem(cardId = 'first', title = 'First', 'Content of first tab'),
-#'   cardNavItem(cardId = 'second', title = 'Second', 'Content of second tab')
+#'   cardNavItem(cardId = 'second', title = 'Second', 'Content of second tab'),
 #'   cardNavItem(cardId = 'third', title = 'Third', 'Content of third tab')
 #' )
 #' 
@@ -326,6 +322,7 @@ cardNav <- function(navId, ...) {
 #' Create a card item that can be included in a \code{\link{cardNav}}
 #' 
 #' @param cardId The ID for the card body
+#' @param title The title for the card. Defaults to the ID.
 #' @param ... UT elements to include within the card body
 #' 
 #' @seealso \code{\link{cardNav}}

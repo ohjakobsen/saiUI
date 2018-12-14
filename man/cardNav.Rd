@@ -19,7 +19,7 @@ Create a card with several \code{\link{cardNavItem}}s the user can navigate to. 
 cardNav(
   navId = 'cardnav',
   cardNavItem(cardId = 'first', title = 'First', 'Content of first tab'),
-  cardNavItem(cardId = 'second', title = 'Second', 'Content of second tab')
+  cardNavItem(cardId = 'second', title = 'Second', 'Content of second tab'),
   cardNavItem(cardId = 'third', title = 'Third', 'Content of third tab')
 )
 

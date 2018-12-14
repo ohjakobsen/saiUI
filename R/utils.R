@@ -24,3 +24,7 @@ firstChoice <- function(choices) {
   choice <- choices[[1]]
   if (is.list(choice)) firstChoice(choice) else choice
 }
+
+controlLabel <- function(controlName, label) {
+  label %AND% tags$label(class = "control-label", `for` = controlName, label)
+}
