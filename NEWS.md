@@ -1,3 +1,21 @@
+saiUI 0.4.0
+===============
+
+This release add new UI elements and functions to more easily use Bootstrap 4 features. In addition, we have added examples and documentation to the package.
+
+## Full changelog
+
+* New UI function `bs4Alert` to create Bootstrap 4 alerts.
+* New UI function `bs4Embed` to create responsive embeds using Bootstrap 4.
+* Added `singlePage` as an alternative to `fluidPage` for a simple Bootstrap 4 page without a navbar.
+* Improved layout of search button in `searchboxInput`.
+* New layout functions for flex rows and columns in Bootstrap 4.
+* Default color for `slicerInput` is now `primary`.
+* Update to Bootstrap 4.1.3
+* Update to Popper.js 1.14.6
+* Added example apps to `inst/examples`.
+* Added more documentation.
+
 saiUI 0.3.3
 ===============
 

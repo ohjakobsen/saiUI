@@ -1,17 +1,20 @@
 # Read me
 
-saiUI is an extension to Shiny that let's you create beautiful layouts with a great user experience using the [Bootstrap 4](https://getbootstrap.com) framework. The package includes two layouts for Shiny apps. `saiPage` is a replacement for the `navbarPage` in Shiny. `saiDashboard` is an alternative to the dashboard layout for the package shinydashboard.
+saiUI is an extension to Shiny that let's you create beautiful layouts with a great user experience using the [Bootstrap 4](https://getbootstrap.com) framework. The package replaces the Bootstrap 3 files with the new Bootstrap 4 framework. The package introduces new functions for creating user interfaces that are compatible with Bootstrap 4.
+
+There are three main layouts included in saiUI. `singlePage` creates a simple Bootstrap 4 layout with a fluid container. It is an alternative to `fluidPage` from the Shiny package. `saiPage` is meant as a replacement for `navbarPage` in Shiny. It is built so that you can convert a navbar page to Bootstrap 4 with minimal changes to the code. Because of this, saiUI is *not* compatible with `navbarPage`. The other layout -  `saiDashboard` - is an alternative to the dashboard layout for the package [shinydashboard](https://github.com/rstudio/shinydashboard) using a custom Bootstrap 4 layout.
 
 ## Usage
 
 ```r
-saiPage(title = 'saiPage',
+saiPage(
+  title = 'saiPage',
   sidebarLayout(
     saiMenu(
-      ## Sidebar items go here
+      # Sidebar items go here
     ),
     saiMain(
-      ## Output items go here
+      # Output items go here
     )
   )
 )
@@ -36,15 +39,15 @@ saiUI replaces Font Awesome with [Open Iconic](https://useiconic.com/open/). Ope
 
 ```r
 saiDashboard(
-  
+
   title = 'Title of page',
   brand = 'Brand',
   color = 'dark',
-  
+
   dashboardPanel(
     # Put elements in here
   )
-                   
+
 )
 ```
 
@@ -77,7 +80,9 @@ cardGroup(
 
 ## Bootstrap theme
 
-Bootstrap comes with the following colors:
+### Colors
+
+Bootstrap 4 comes with the following default colors:
 
 - `primary`
 - `secondary`
@@ -88,6 +93,10 @@ Bootstrap comes with the following colors:
 - `light`
 - `dark`
 
-These colors are available in most functions for UI elements, such as buttons, nav bars, cards and so forth.
+You can specify the color in most functions that create UI or input elements, such as buttons, nav bars, cards and so forth. Several standard inputs from the Shiny package have been masked to add extra arguments to adjust the appearance of the element.
+
+### Replace theme
 
 You can replace the default Bootstrap theme when you define the app UI function. `saiPage` includes the `theme` argument where you can specify a CSS file to be inlcuded instead of the default theme. The CSS file should be placed inside the `www` directory in your app. For more information on Bootstrap theming, see [this page](https://themes.getbootstrap.com).
+
+Your custom theme must be compatible with Bootstrap 4. If you want to use a Bootstrap 3 theme, you should use the default functions in Shiny.
