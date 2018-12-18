@@ -82,6 +82,10 @@ $(document).ready(function() {
     // console.log(this.className.split(/\s+/));
   });
 
+  $('.navbar-collapse ul > li > a').on('click', function(){
+    $('.navbar-collapse').collapse('hide');
+});
+
 });
 
 })(jQuery);
