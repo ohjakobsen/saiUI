@@ -10,10 +10,7 @@ ui <- saiPage(
   tabPanel('First tab',
     sidebarLayout(
       saiMenu(
-        sliderInput('bins', 'Number of bins', min = 1, max = 50, value = 30),
-        toggleButton('test', 'Click me!', active = TRUE),
-        actionButton('update', 'Update Toggle'),
-        searchboxInput('search', value = '', placeholder = 'Type your query here')
+        sliderInput('bins', 'Number of bins', min = 1, max = 50, value = 30)
       ),
       saiMain(
         plotOutput('distPlot')
