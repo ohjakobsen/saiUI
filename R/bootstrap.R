@@ -269,13 +269,12 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
   tabs <- lapply(tabs, function(t) {
 
     class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
-    class <- paste0(class, ' btn btn-', color)
     selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
     style <- ifelse(t$attribs$`aria-hidden`, 'display: none;', '')
     
     list(
-      tags$li(class='nav-item px-1', style = style,
+      tags$li(class='nav-item', style = style,
         a(id = paste0(gsub('\\s', '', t$attribs$id), '-tab'), class = class, `data-value` = t$attribs$id,
           href = paste0('#', gsub('\\s', '', t$attribs$id)), `data-toggle` = 'pill', t$attribs$title,
           `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$id))
@@ -288,11 +287,11 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
     tags$a(class='navbar-brand', href='#', title),
     tags$button(
       class = 'navbar-toggler', type = 'button', `data-toggle` = 'collapse', `data-target` = '#shinyNavbar',
-      `aria-controls` = 'shinyNavbar', `aria-expanded` = FALSE, `aria-label` = 'Toggle navigation',
+      `aria-controls` = 'shinyNavbar', `aria-expanded` = 'false', `aria-label` = 'Toggle navigation',
       span(class = 'navbar-toggler-icon')
     ),
     tags$div(id = 'shinyNavbar', class='collapse navbar-collapse',
-      tags$ul(class='nav nav-pills navbar-nav mr-auto', `role` = 'tablist',
+      tags$ul(class='nav navbar-nav mr-auto', `role` = 'tablist',
         tabs
       )
     )

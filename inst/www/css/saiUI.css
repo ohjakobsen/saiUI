@@ -6,6 +6,18 @@
   font-weight: bolder;
 }
 
+#pagenav {
+  padding: 0 1rem;
+}
+
+#pagenav .nav-item a {
+  padding: 1rem;
+}
+
+#pagenav .nav-item a.active, #pagenav .nav-item a:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
 .navbar-dark .navbar-toggler {
   border-color: transparent;
 }

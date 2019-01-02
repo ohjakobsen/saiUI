@@ -27,7 +27,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
   
   topNav <- tags$nav(
     class = paste0('navbar navbar-dark sticky-top bg-', color, ' flex-md-nowrap p-0'),
-    div(id = 'sidebarHeader', class = 'col-sm-3 col-md-2 mr-0',
+    div(id = 'sidebarHeader', class = 'col-lg-2 mr-0',
       brandTag,
       tags$button(
         class = 'navbar-toggler', `data-toggle` = 'collapse', `data-target` = '#mainnav',
@@ -50,7 +50,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
   
   navItems <- buildDashboardNav(tabs, tabselect)
   
-  contentDiv <- div(class = 'col-md-9 ml-sm-auto col-lg-10 pt-3 px-4',
+  contentDiv <- div(class = 'ml-lg-auto col-lg-10 pt-3 px-lg-4',
                     div(class = 'tab-content', tabs))
   
   deps <- list(htmlDependency(
@@ -154,7 +154,7 @@ buildDashboardNav <- function(tabs, tabselect) {
     
   })
   
-  tags$nav(id = 'mainnav', class = 'col-md-2 d-md-block bg-light sidebar navbar-collapse collapse',
+  tags$nav(id = 'mainnav', class = 'col-lg-2 d-lg-block bg-light sidebar navbar-collapse collapse',
     div(id = 'pagenav', class = 'sidebar-sticky',
       tags$ul(id = 'navlist', class = 'nav flex-column', role = 'tablist',
         tabs
