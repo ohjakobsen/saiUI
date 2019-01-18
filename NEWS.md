@@ -1,3 +1,12 @@
+saiUI 0.x.x
+===============
+
+* Update to Bootstrap 4.2.1.
+* New function `switchInput` that uses the new custom switch class in Bootstrap 4.2.
+* Better mobile support for dashboard pages.
+* Changed `color` argument to accept any value in inputs (to better support Bootstrap themes).
+* `id` can now be properly assigned to the navbar in `saiPage`
+
 saiUI 0.4.0
 ===============
 

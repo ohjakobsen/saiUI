@@ -29,6 +29,8 @@ saiPage(
 
 ## Notes
 
+saiUI depends on the Shiny package and will load it by default. Note that saiUI masks several functions from Shiny in order to make it easier to transition from Shiny to saiUI, and to avoid adding unnecessary function names for functions that do exactly the same as the Shiny equivalent, i.e. an `actionButton` should still be an `actionButton`.
+
 saiUI should be loaded *after* the Shiny package to avoid namespace conflicts. saiUI masks `tabPanel` and `tabsetPanel` so that you can convert your `navbarPage`-apps more easily. To avoid namespace conflicts with Shiny, you can use either `saiUI::tabPanel` and `saiUI::tabsetPanel` or `saiTab` and `saiTabset` to specify the saiUI-functions.
 
 saiUI should *not* be used together with [shinyWidgets](https://github.com/dreamRs/shinyWidgets) because of compatibility issues between Bootstrap 3 and 4.
@@ -100,3 +102,13 @@ You can specify the color in most functions that create UI or input elements, su
 You can replace the default Bootstrap theme when you define the app UI function. `saiPage` includes the `theme` argument where you can specify a CSS file to be inlcuded instead of the default theme. The CSS file should be placed inside the `www` directory in your app. For more information on Bootstrap theming, see [this page](https://themes.getbootstrap.com).
 
 Your custom theme must be compatible with Bootstrap 4. If you want to use a Bootstrap 3 theme, you should use the default functions in Shiny.
+
+## Copyright and license
+
+saiUI is copyright Riksrevisjonen. saiUI is released under the MIT license. The saiUI package is distributed with other open source projects:
+
+* [Bootstrap 4](https://getbootstrap.com)
+* [Popper.js](https://popper.js.org)
+* Open Iconic
+
+See more under [license](LICENCE.md).

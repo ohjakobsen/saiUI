@@ -5,8 +5,7 @@
 \title{Create a searchbox input}
 \usage{
 searchboxInput(inputId, value = "", placeholder = NULL,
-  button = NULL, icon = NULL, color = c("primary", "secondary",
-  "danger", "warning", "success", "light", "dark"), outline = FALSE,
+  button = NULL, icon = NULL, color = "primary", outline = FALSE,
   size = c("normal", "sm", "lg"))
 }
 \arguments{

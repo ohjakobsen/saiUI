@@ -101,7 +101,9 @@ saiPage <- function(title,
 
   pageTitle <- title
   tabs <- list(...)
-  selected <- restoreInput('pagenav', default = selected)
+  
+  if (!is.null(id))
+    selected <- restoreInput(id = id, default = selected)
   
   if (!is.null(selected))
     tabselect <- which(sapply(tabs, function(t) t$attribs$id) == selected)
@@ -111,7 +113,7 @@ saiPage <- function(title,
   tabs[[tabselect]]$attribs$class <- 'tab-pane fade show active'
 
   class = paste0(
-    'navbar navbar-expand-lg ',
+    'mainnav navpage navbar navbar-expand-lg ',
     ifelse(color == 'light', 'navbar-light', 'navbar-dark'), ' bg-', color
   )
 
@@ -121,7 +123,6 @@ saiPage <- function(title,
   
   pageBody <- div(class = 'page')
   if (!is.null(header)) pageBody <- tagAppendChild(pageBody, div(class = 'header', header))
-  # pageBody <- tagAppendChild(pageBody, div(class = 'row', pageTabs))
   pageBody <- tagAppendChild(pageBody, pageTabs)
   if (!is.null(footer)) pageBody <- tagAppendChild(pageBody, div(class = 'footer small', footer))
   
@@ -130,7 +131,8 @@ saiPage <- function(title,
     title = windowTitle,
     theme = theme,
     lang = lang,
-    tags$nav(class = class, id = 'pagenav', navItems),
+    # tags$nav(class = class, id = 'pagenav', navItems)
+    tags$nav(class = class, id = id, navItems),
     pageBody
   )
 

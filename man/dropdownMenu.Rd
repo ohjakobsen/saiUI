@@ -5,8 +5,7 @@
 \title{Create a dropdown menu for inputs}
 \usage{
 dropdownMenu(inputId, label, choices, selected = NULL,
-  multiple = FALSE, icon = NULL, color = c("primary", "secondary",
-  "success", "danger", "warning", "info", "light", "dark"),
+  multiple = FALSE, icon = NULL, color = "primary",
   outline = FALSE, size = c("normal", "sm", "lg"),
   direction = c("down", "right", "up", "left"))
 }

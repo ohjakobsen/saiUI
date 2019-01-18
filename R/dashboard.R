@@ -26,7 +26,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
     brandTag <- a(class = 'navbar-brand', href = '#', brand)
   
   topNav <- tags$nav(
-    class = paste0('navbar navbar-dark sticky-top bg-', color, ' flex-md-nowrap p-0'),
+    class = paste0('mainnav navdashboard navbar navbar-dark sticky-top bg-', color, ' flex-md-nowrap p-0'),
     div(id = 'sidebarHeader', class = 'col-lg-2 mr-0',
       brandTag,
       tags$button(
@@ -134,7 +134,6 @@ dashboardFilter <- function() {
 buildDashboardNav <- function(tabs, tabselect) {
   
   # TODO: Fix in IE11 (brand not showing b/c of fixed positioning)
-  # icons <- c('dashboard', 'bar-chart', 'list', 'pulse', 'people', 'graph', 'cog', 'clock', 'bolt', 'dollar')
   i <- 1
   
   tabs <- lapply(tabs, function(t) {

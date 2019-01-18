@@ -54,7 +54,8 @@ Shiny.inputBindings.setPriority('saiUI.searchboxInput', 10);
 var navbarTabInputBinding = new Shiny.InputBinding();
 $.extend(navbarTabInputBinding, {
   find: function(scope) {
-    return $(scope).find('#pagenav');
+    // return $(scope).find('#pagenav');
+    return $(scope).find('.mainnav');
   },
   getId: function(el) {
     return $(el).attr('id');

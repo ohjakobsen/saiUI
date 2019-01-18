@@ -1,5 +1,4 @@
-require(shiny)
-require(saiUI)
+library(saiUI)
 
 ui <- singlePage(
   

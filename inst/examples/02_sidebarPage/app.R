@@ -1,4 +1,3 @@
-require(shiny)
 require(saiUI)
 
 ui <- saiPage(

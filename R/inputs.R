@@ -116,11 +116,12 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
 #'
 #' @export
 searchboxInput <- function(inputId, value = '', placeholder = NULL, button = NULL, icon = NULL,
-                           color = c('primary', 'secondary', 'danger', 'warning', 'success', 'light', 'dark'),
+                           color = 'primary',
+                           # color = c('primary', 'secondary', 'danger', 'warning', 'success', 'light', 'dark'),
                            outline = FALSE, size = c('normal', 'sm', 'lg')) {
   
   outline <- ifelse(outline, 'outline-', '')
-  color <- match.arg(color)
+  # color <- match.arg(color)
   size <- match.arg(size)
   
   if (is.null(button) & is.null(icon))
@@ -166,15 +167,16 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = NUL
 #' 
 #' @export
 dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FALSE, icon = NULL,
-                         color = c('primary', 'secondary', 'success', 'danger', 'warning',
-                                   'info', 'light', 'dark'),
+                         color = 'primary',
+                         # color = c('primary', 'secondary', 'success', 'danger', 'warning',
+                         #           'info', 'light', 'dark'),
                          outline = FALSE, size = c('normal', 'sm', 'lg'),
                          direction = c('down', 'right', 'up', 'left')) {
   
   selected <- restoreInput(id = inputId, default = selected)
   
   outline <- ifelse(outline, 'outline-', '')
-  color <- match.arg(color)
+  # color <- match.arg(color)
   size <- match.arg(size)
   direction <- match.arg(direction)
   size <- ifelse(size %in% c('lg', 'sm'), paste0(' btn-', size), '')
@@ -204,6 +206,32 @@ dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FA
   
 }
 
+#' Switch input
+#' 
+#' Create a switch input that can be used to specify logical values similar to a checkbox
+#' 
+#' @inheritParams shiny::checkboxInput
+#' 
+#' @return A switch input that can be added to a UI definition
+#' 
+#' @seealso \code{\link[shiny]{checkboxInput}}
+#' 
+#' @export
+switchInput <- function(inputId, label, value = FALSE) {
+  
+  value <- restoreInput(id = inputId, default = value)
+  
+  inputTag <- tags$input(id = inputId, type = 'checkbox', class = 'custom-control-input')
+  
+  if (!is.null(value) && value)
+    inputTag$attribs$checked = 'checked'
+  
+  div(class = 'custom-control custom-switch',
+      inputTag,
+      tags$label(class = 'custom-control-label',
+                 `for` = inputId, label))
+}
+
 #' Toggle button
 #' 
 #' Creates a button that can be toggled on and off. Returns a \code{TRUE} value when the
@@ -221,7 +249,7 @@ dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FA
 toggleButton <- function(inputId, label, color = 'primary', outline = TRUE,
                          size = c('normal', 'sm', 'lg'), active = FALSE) {
   
-  # active <- restoreInput(id = inputId, default = active)
+  active <- restoreInput(id = inputId, default = active)
   
   outline <- ifelse(outline, 'outline-', '')
   color <- paste0('btn-', outline, color)
@@ -283,8 +311,6 @@ slicerInput <- function(inputId, label, choices, selected = NULL, color = 'prima
   # TODO: Add reset option?
   
   selected <- restoreInput(id = inputId, default = selected)
-  
-  # if (!multiple && selectall) selectall <- FALSE
   
   if (is.null(selected) && !multiple)
     selected <- firstChoice(choices)
