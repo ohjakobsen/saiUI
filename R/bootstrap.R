@@ -277,15 +277,16 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
   tabs <- lapply(tabs, function(t) {
 
     class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
+    id <- gsub('\\s', '', t$attribs$id)
     selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
     style <- ifelse(t$attribs$`aria-hidden`, 'display: none;', '')
     
     list(
-      tags$li(class='nav-item', style = style,
-        a(id = paste0(gsub('\\s', '', t$attribs$id), '-tab'), class = class, `data-value` = t$attribs$id,
-          href = paste0('#', gsub('\\s', '', t$attribs$id)), `data-toggle` = 'pill', t$attribs$title,
-          `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$id))
+      tags$li(class='nav-item', style = style, a(
+        id = paste0(id, '-tab'), class = class, `data-value` = t$attribs$id,
+        `data-target` = paste0('#', id), href = paste0('#', id), `data-toggle` = 'pill',
+        t$attribs$title, `role` = 'tab', `aria-selected` = selected, `aria-controls` = id)
       )
     )
 

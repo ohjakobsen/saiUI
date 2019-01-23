@@ -140,15 +140,15 @@ buildDashboardNav <- function(tabs, tabselect) {
     
     icon <- HTML(paste0('<i class="oi oi-', t$attribs$`data-icon-class`, '"></i>'))
     class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
+    id <- gsub('\\s', '', t$attribs$id)
     selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
     
-    tags$li(class = 'nav-item',
-      a(id = paste0(gsub('\\s', '', t$attribs$id), '-tab'), class = class,
-        href = paste0('#', gsub('\\s', '', t$attribs$id)), `data-value` = t$attribs$`data-value`,
-        `data-toggle` = 'tab',
-        `role` = 'tab', `aria-selected` = selected, `aria-controls` = gsub('\\s', '', t$attribs$id),
-        list(icon, t$attribs$title))
+    tags$li(class = 'nav-item', a(
+      id = paste0(id, '-tab'), class = class, `data-target` = paste0('#', id),
+      href = paste0('#', id), `data-value` = t$attribs$`data-value`, `data-toggle` = 'tab',
+      `role` = 'tab', `aria-selected` = selected, `aria-controls` = id,
+      list(icon, t$attribs$title))
     )
     
   })
