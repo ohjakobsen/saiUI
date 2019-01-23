@@ -54,7 +54,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
                     div(class = 'tab-content', tabs))
   
   deps <- list(htmlDependency(
-    'dashboard', '0.4.0',
+    'dashboard', packageVersion('saiUI'),
     c(file = system.file('www', package = 'saiUI')),
     stylesheet = c('css/dashboard.min.css')
   ))

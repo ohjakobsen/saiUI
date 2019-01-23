@@ -1,5 +1,6 @@
 #' @import htmltools
 #' @importFrom shiny restoreInput icon
+#' @importFrom utils packageVersion
 NULL
 
 #' Bootstrap Page
@@ -13,17 +14,18 @@ NULL
 #' @export
 bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en') {
 
+  html <- tagList(
+    tags$html(lang = lang),
+    if (!is.null(title)) tags$head(tags$title(title)),
+    if (!is.null(theme)) {
+      tags$head(tags$link(rel="stylesheet", type="text/css", href = theme))
+    },
+    list(...)
+  )
+  
   attachDependencies(
-    tagList(
-      tags$html(lang = lang),
-      if (!is.null(title)) tags$head(tags$title(title)),
-      if (!is.null(theme)) {
-        tags$head(tags$link(rel="stylesheet", type="text/css", href = theme))
-      },
-
-      list(...)
-    ),
-    saiLib(theme, deps)
+    html,
+    bs4Lib(theme, deps)
   )
 
 }
@@ -37,15 +39,15 @@ bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en') {
 #' @param deps Additional dependencies to add to the page.
 #'
 #' @export
-saiLib <- function(theme = NULL, deps = NULL) {
-  r <- list(
-    htmlDependency('bootstrap', '4.1.0',
+bs4Lib <- function(theme = NULL, deps = NULL) {
+  libs <- list(
+    htmlDependency('bootstrap', '4.2.1',
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
       stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
       meta = list(viewport = "width=device-width, initial-scale=1")
     ),
-    htmlDependency('saiUI', '0.4.0',
+    htmlDependency('saiUI', packageVersion('saiUI'),
       c(file = system.file('www', package = 'saiUI')),
       script = c('js/saiUI.min.js', 'js/bindings.min.js'),
       stylesheet = c('css/saiUI.min.css')
@@ -55,9 +57,13 @@ saiLib <- function(theme = NULL, deps = NULL) {
       stylesheet = c('css/open-iconic-bootstrap.min.css')
     )
   )
-  if (!is.null(deps)) r <- c(r, deps)
-  return(r)
+  if (!is.null(deps)) libs <- append(libs, deps)
+  libs
 }
+
+#' @rdname bs4Lib
+#' @export
+saiLib <- bs4Lib
 
 #' Create a simple Bootstrap page
 #' 
