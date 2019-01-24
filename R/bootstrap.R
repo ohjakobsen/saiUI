@@ -532,10 +532,9 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
         tabValue <- divTag$attribs$`data-value`
 
         # create the a tag
-        aTag <- tags$a(href=paste("#", thisId, sep=""),
-                       class = 'nav-link',
-                       `data-toggle` = 'tab',
-                       `data-value` = tabValue)
+        aTag <- tags$a(
+          href = paste0("#", thisId), class = 'nav-link', `data-toggle` = 'tab',
+          `data-target` = paste0('#', thisId), `data-value` = tabValue)
 
         # append optional icon
         aTag <- appendIcon(aTag, divTag$attribs$`data-icon-class`)
