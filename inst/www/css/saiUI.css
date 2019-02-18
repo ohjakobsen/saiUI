@@ -57,12 +57,12 @@
 }
 
 .alert-icon {
-  padding-left: 3rem;
+  padding-left: 2.75rem;
 }
 
 .alert-icon i {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 1.25rem;
+  padding: 1rem;
 }
