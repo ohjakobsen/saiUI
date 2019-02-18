@@ -14,13 +14,15 @@ NULL
 #' @export
 bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en') {
 
-  html <- tagList(
-    tags$html(lang = lang),
-    if (!is.null(title)) tags$head(tags$title(title)),
-    if (!is.null(theme)) {
-      tags$head(tags$link(rel="stylesheet", type="text/css", href = theme))
-    },
-    list(...)
+  html <- htmlTemplate(
+    system.file('templates', 'default.html', package = 'saiUI'),
+    body = tagList(
+      if (!is.null(title)) tags$head(tags$title(title)),
+      if (!is.null(theme)) {
+        tags$head(tags$link(rel="stylesheet", type="text/css", href = theme))
+      },
+      list(...)
+    ), lang = paste0('lang="', lang, '"')
   )
   
   attachDependencies(
@@ -41,7 +43,7 @@ bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en') {
 #' @export
 bs4Lib <- function(theme = NULL, deps = NULL) {
   libs <- list(
-    htmlDependency('bootstrap', '4.2.1',
+    htmlDependency('bootstrap', '4.3.1',
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
       stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
