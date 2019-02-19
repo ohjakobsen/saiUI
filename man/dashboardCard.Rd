@@ -40,7 +40,7 @@ dashboardPanel(
   )
 )
 
-# Create a page with three individual cards 
+# Create a page with three individual cards
 dashboardPanel(
   title = "demo",
   fluidRow(

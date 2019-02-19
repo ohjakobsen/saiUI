@@ -22,7 +22,7 @@ ui <- saiDashboard(
         color = 'light',
         header = 'Big number',
         tags$span(class = 'display-1', floor(runif(1, 10, 100))),
-        classes = 'text-center'),
+        class = 'text-center'),
       dashboardCard(
         color = 'danger',
         'We can put content here',
