@@ -5,18 +5,20 @@
 \title{Create an information panel}
 \usage{
 dashboardCard(..., header = NULL, footer = NULL, color = NULL,
-  classes = NULL)
+  class = NULL, classes = NULL)
 }
 \arguments{
 \item{...}{The elements that should go into the card body}
 
-\item{header}{Header}
+\item{header}{Optional header to the card}
 
-\item{footer}{Footer}
+\item{footer}{Optional footer to the card}
 
-\item{color}{Color}
+\item{color}{Background color for the card. Must be a valid Bootstrap 4 color}
 
-\item{classes}{Optional additional CSS classes}
+\item{class}{Additional CSS classes to apply to the div tag}
+
+\item{classes}{Deprecated. Use \code{class} instead. Will be removed in version 0.6.0}
 }
 \description{
 Creates a Bootstrap card. The card can be used to highlight content on a page. Can be used

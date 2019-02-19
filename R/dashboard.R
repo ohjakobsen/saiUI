@@ -121,15 +121,6 @@ dashboardPanel <- function(title, ..., id = title, value = id, icon = 'dashboard
   
 }
 
-#' Dashboard filtering
-#' 
-#' @export
-dashboardFilter <- function() {
-  
-  
-  
-}
-
 # Build functions for dashboard layout
 buildDashboardNav <- function(tabs, tabselect) {
   
@@ -173,10 +164,11 @@ buildDashboardNav <- function(tabs, tabselect) {
 #' each card will be rendered individually.
 #' 
 #' @param ... The elements that should go into the card body
-#' @param header Header
-#' @param footer Footer
-#' @param color Color
-#' @param classes Optional additional CSS classes
+#' @param header Optional header to the card
+#' @param footer Optional footer to the card
+#' @param color Background color for the card. Must be a valid Bootstrap 4 color
+#' @param class Additional CSS classes to apply to the div tag
+#' @param classes Deprecated. Use \code{class} instead. Will be removed in version 0.6.0
 #' 
 #' @examples
 #' # Create a page with three linked cards
@@ -208,17 +200,21 @@ buildDashboardNav <- function(tabs, tabselect) {
 #' @seealso \code{\link{saiDashboard}} \code{\link{dashboardPanel}} \code{\link{cardGroup}}
 #' 
 #' @export
-dashboardCard <- function(..., header = NULL, footer = NULL, color = NULL, classes = NULL) {
+dashboardCard <- function(..., header = NULL, footer = NULL, color = NULL, class = NULL, classes = NULL) {
+  
+  if (!is.null(classes)) {
+    message('In dashboardCard(): classes is deprecated, use class instead')
+    class <- classes
+  }
+  
+  if (length(class) > 1) class <- paste(class, collapse = ' ')
   
   if (is.null(color))
-    class <- 'card'
+    class <- paste('card', class)
   else if (color == 'light')
-    class <- 'card bg-light'
+    class <- paste('card bg-light', class)
   else
-    class <- paste0('card text-white bg-', color)
-  
-  if (length(classes) > 1) classes <- paste(classes, collapse = ' ')
-  if (!is.null(classes)) class <- paste(class, classes)
+    class <- paste(paste0('card text-white bg-', color), class)
   
   divTag <- div(class = class)
   
@@ -244,13 +240,20 @@ dashboardCard <- function(..., header = NULL, footer = NULL, color = NULL, class
 #' 
 #' @param ... Two or more \code{\link{dashboardCard}}s to go into the group.
 #' @param type The type of card group. Can be either \code{group} or \code{deck}.
+#' @param class Additional CSS classes to apply to the div tag
 #' 
 #' @seealso \code{\link{dashboardCard}}
 #' 
 #' @export
-cardGroup <- function(..., type = c('group', 'deck')) {
+cardGroup <- function(..., type = c('group', 'deck'), class = NULL) {
   
   type <- match.arg(type)
+  
+  if (length(class) > 1) class <- paste(class, collapse = ' ')
+  if (!is.null(class))
+    class <- paste(paste0('card-', type), class)
+  else
+    class <- paste0('card-', type)
   
   div(class = paste0('card-', type), ...)
   

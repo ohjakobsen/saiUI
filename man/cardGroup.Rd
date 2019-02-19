@@ -4,12 +4,14 @@
 \alias{cardGroup}
 \title{Create a group of two or more \code{\link{dashboardCard}}s}
 \usage{
-cardGroup(..., type = c("group", "deck"))
+cardGroup(..., type = c("group", "deck"), class = NULL)
 }
 \arguments{
 \item{...}{Two or more \code{\link{dashboardCard}}s to go into the group.}
 
 \item{type}{The type of card group. Can be either \code{group} or \code{deck}.}
+
+\item{class}{Additional CSS classes to apply to the div tag}
 }
 \description{
 Create a group of two or more \code{\link{dashboardCard}}s. Two types of groups are

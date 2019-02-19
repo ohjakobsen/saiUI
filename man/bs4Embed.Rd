@@ -4,12 +4,12 @@
 \alias{bs4Embed}
 \title{Create responsive embed}
 \usage{
-bs4Embed(src, type = c("iframe", "video"), ratio = c(16, 9))
+bs4Embed(src, type = c("iframe", "video", "embed"), ratio = c(16, 9))
 }
 \arguments{
 \item{src}{The URL to the source that will be embedded}
 
-\item{type}{The type of source (usually an `iframe`)}
+\item{type}{The type of HTML tag that should be used (usually an `iframe`)}
 
 \item{ratio}{A vector of lenght 2 with the aspect ratio for the embedded content.
 See details}

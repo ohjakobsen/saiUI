@@ -35,7 +35,7 @@ bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
 #' Embed content from and external source and make the embed responsive.
 #' 
 #' @param src The URL to the source that will be embedded
-#' @param type The type of source (usually an `iframe`)
+#' @param type The type of HTML tag that should be used (usually an `iframe`)
 #' @param ratio A vector of lenght 2 with the aspect ratio for the embedded content.
 #'   See details
 #' 
@@ -45,17 +45,19 @@ bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
 #' @importFrom utils URLencode
 #' 
 #' @export
-bs4Embed <- function(src, type = c('iframe', 'video'), ratio = c(16, 9)) {
+bs4Embed <- function(src, type = c('iframe', 'video', 'embed'), ratio = c(16, 9)) {
   
-  classes <- paste0('embed-responsive embed-responsive-', ratio[1],'by', ratio[2])
+  classes <- paste0('embed-responsive embed-responsive-', ratio[1], 'by', ratio[2])
+  type <- match.arg(type)
   
-  divTag <- div(
-    class = classes,
-    tags$iframe(
-      class = 'embed-responsive-item',
-      src = URLencode(src)
-    )
+  embedTag <- switch(
+    type,
+    'iframe' = tags$iframe(class = 'embed-responsive-item', src = URLencode(src)),
+    'video' = tags$video(class = 'embed-responsive-item', src = URLencode(src)),
+    'embed' = tags$embed(class = 'embed-responsive-item', src = URLencode(src))
   )
+  
+  divTag <- div(class = classes, embedTag)
   
   divTag
   
