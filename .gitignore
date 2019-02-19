@@ -5,3 +5,6 @@ inst/doc
 .Ruserdata
 .DS_Store
 inst/dev
+
+# Do not include `docs` directory
+/docs/
