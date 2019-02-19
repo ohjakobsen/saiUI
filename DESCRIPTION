@@ -1,7 +1,7 @@
 Package: saiUI
 Type: Package
 Title: Bootstrap 4 layout for Shiny apps
-Version: 0.4.0.9000
+Version: 0.5.0
 Authors@R: c(
     person("Ove Haugland", "Jakobsen", role = c("aut", "cre"), email = "ohj@mac.com"),
     person(family = "Riksrevisjonen", role = "cph")

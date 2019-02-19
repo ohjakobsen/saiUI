@@ -1,11 +1,21 @@
-saiUI 0.x.x
+saiUI 0.5.0
 ===============
 
-* Update to Bootstrap 4.2.1.
-* New function `switchInput` that uses the new custom switch class in Bootstrap 4.2.
+This release updates Bootstrap to version 4.3.1 and include several bugfixes for running on Shiny server.
+
+## Full changelog
+
+* Update to Bootstrap 4.3.1.
+* New function `switchInput` that uses the new custom switch class in Bootstrap 4.2+.
 * Better mobile support for dashboard pages.
+* Adds `data-target` attribute to anchor elements in `saiPage`, `dashboardPage`, and `tabsetPanel` to fix issue with `shiny-server-client.js` on Shiny Server
+* `bs4Embed` now properly supports the `type` argument, and adds `embed` as a new valid type
+* Added html template in order for the `lang` attribute to be properly added to the `html` tag
 * Changed `color` argument to accept any value in inputs (to better support Bootstrap themes).
-* `id` can now be properly assigned to the navbar in `saiPage`
+* `id` can now be properly assigned to the navbar in `saiPage`.
+* Added `class` argument to `cardGroup`
+* Argument `classes` is deprecaed in `dashboardCard`. Use `class` instead
+* `saiLib` is renamed `bs4Lib`.
 
 saiUI 0.4.0
 ===============
