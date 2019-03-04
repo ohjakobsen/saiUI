@@ -328,3 +328,20 @@ slicerInput <- function(inputId, label, choices, selected = NULL, color = 'prima
   divTag
 
 }
+#' Update slicer input
+#' 
+#' Change the state of the slicer input on the client.
+#'
+#' If both \code{value} and \code{change} is given, \code{value} is given priority.
+#' If neither \code{value} nor \code{change} is given, \code{change} is assumed.
+#' 
+#' @inheritParams updateToggleButton
+#' 
+#' @export
+updateSlicerInput <- function(session, inputId, value = NULL, change = NULL) {
+  if (is.null(value) && is.null(change)) change <- TRUE
+  if (!is.null(value) && !is.null(change))
+    change <- NULL
+  message <- list(value = value, change = change)
+  session$sendInputMessage(inputId, message)
+}

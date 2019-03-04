@@ -208,6 +208,16 @@ $.extend(slicerInputBinding, {
     if (vals.length === 0) return null;
     return vals;
   },
+  receiveMessage : function(el, data) {
+    $(el).find('button').each(function() {
+      $(this).removeClass('active');
+      if ($(this).attr('data-value') === data.value) {
+        $(this).addClass('active');
+        $(this).attr('aria-pressed', 'true');
+      }
+    });
+    $(el).trigger('change');
+  },
   subscribe: function(el, callback) {
     $(el).on('change.slicerInputBinding', function(event) {
       callback();
