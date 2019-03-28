@@ -16,12 +16,12 @@ actionButton <- function(inputId, label, color = 'primary', outline = FALSE, ico
   size <- match.arg(size)
 
   size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
-  icon <- ifelse(is.null(icon), '', paste0('<i class="oi oi-', icon, '"></i> '))
+  if (!is.null(icon)) icon <- tags$i(class = paste0('oi oi-', icon))
 
   tags$button(
-    id = inputId, type = 'button',
-    class = paste('btn', size, color, 'action-button'),
-    `data-val` = value, list(HTML(icon), label), ...
+    id = inputId, type = 'button', class = 'action-button btn',
+    class = size, class = color,
+    `data-val` = value, list(icon, label), ...
   )
 }
 
@@ -40,15 +40,12 @@ downloadButton <- function(outputId, label = 'Download', color = 'primary', outl
   outline <- ifelse(outline, 'outline-', '')
   color <- paste0('btn-', outline, color)
   size <- match.arg(size)
-
   size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
-  icon <- '<i class="oi oi-cloud-download"></i> '
 
   aTag <- tags$a(
-    id = outputId, role = 'button',
-    class = paste('btn', size, color, 'shiny-download-link'),
-    href = '', target = '_blank', download = NA,
-    list(HTML(icon), label), ...)
+    id = outputId, role = 'button', class = 'shiny-download-link btn',
+    class = size, class = color, href = '', target = '_blank', download = NA,
+    list(tags$i(class = 'oi oi-cloud-download'), label), ...)
 }
 
 #' File Upload Control
@@ -129,7 +126,7 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = NUL
   div(
     class = 'form-group shiny-input-container d-flex',
     tags$form(
-      class = 'input-group form-inline searchbox px-1 my-2 w-100',
+      class = 'input-group form-inline searchbox my-2 w-100',
       tags$input(
         id = inputId, type = 'text', class = paste0('form-control', size$form),
         value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')),
@@ -328,6 +325,7 @@ slicerInput <- function(inputId, label, choices, selected = NULL, color = 'prima
   divTag
 
 }
+
 #' Update slicer input
 #' 
 #' Change the state of the slicer input on the client.

@@ -139,7 +139,6 @@ saiPage <- function(title,
     title = windowTitle,
     theme = theme,
     lang = lang,
-    # tags$nav(class = class, id = 'pagenav', navItems)
     tags$nav(class = class, id = id, navItems),
     pageBody
   )
@@ -315,9 +314,8 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
 #' Create a tab panel that can be included within a \code{tabsetPanel}. Overrides default Shiny
 #'   \code{tabPanel}.
 #'
-#' @param title Display title for tab.
-#' @param ... UI elements to include within the tab.
-#' @param value The value that should be sent when \code{tabsetPanel} reports that this tab is selected.
+#' @inheritParams shiny::tabPanel
+#' 
 #' @param icon Optional icon to appear on the tab.
 #' @param hidden Boolean value. Should the tab be hidden from the menu? Defalts to \code{FALSE}
 #'
@@ -340,18 +338,8 @@ tabPanel <- saiTab
 #' Create a tabset that contains \code{\link{tabPanel}} elements. Tabsets are
 #' useful for dividing output into multiple independently viewable sections.
 #'
-#' @param ... \code{\link{tabPanel}} elements to include in the tabset
-#' @param id If provided, you can use \code{input$}\emph{\code{id}} in your
-#'   server logic to determine which of the current tabs is active. The value
-#'   will correspond to the \code{value} argument that is passed to
-#'   \code{\link{tabPanel}}.
-#' @param selected The \code{value} (or, if none was supplied, the \code{title})
-#'   of the tab that should be selected by default. If \code{NULL}, the first
-#'   tab will be selected.
-#' @param type Use "tabs" for the standard look; Use "pills" for a more plain
-#'   look where tabs are selected using a background fill color.
-#' @param position This argument is deprecated; it has been discontinued in
-#'   Bootstrap 3.
+#' @inheritParams shiny::tabsetPanel
+#' 
 #' @return A tabset that can be passed to \code{\link{mainPanel}}
 #'
 #' @seealso \code{\link{tabPanel}}, \code{\link{updateTabsetPanel}}
@@ -370,13 +358,7 @@ tabPanel <- saiTab
 saiTabset <- function(...,
                       id = NULL,
                       selected = NULL,
-                      type = c('tabs', 'pills'),
-                      position = NULL) {
-  # if (!is.null(position)) {
-  #   shinyDeprecated(msg = paste("tabsetPanel: argument 'position' is deprecated;",
-  #                               "it has been discontinued in Bootstrap 3."),
-  #                   version = "0.10.2.2")
-  # }
+                      type = c('tabs', 'pills')) {
 
   if (!is.null(id))
     selected <- restoreInput(id = id, default = selected)
@@ -579,7 +561,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
 #' @export
 helpText <- function(..., small = FALSE) {
   if (small)
-    span(class = 'text-muted small', ...)
+    tags$small(class = 'text-muted', ...)
   else
     span(class = 'text-muted', ...)
 }
