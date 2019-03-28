@@ -1,3 +1,11 @@
+saiUI 0.5.1
+===============
+
+* Added function `updateSlicerInput()` and support for receiving messages from the server so that slicer inputs can be updated from the server script
+* CSS-adjustments to `searchboxInput()`
+* Performance adjustments to `actonButton()` and `downloadButton()`
+* Removed `position` argument from `saiTabset()`
+
 saiUI 0.5.0
 ===============
 
@@ -6,16 +14,16 @@ This release updates Bootstrap to version 4.3.1 and include several bugfixes for
 ## Full changelog
 
 * Update to Bootstrap 4.3.1.
-* New function `switchInput` that uses the new custom switch class in Bootstrap 4.2+.
+* New function `switchInput()` that uses the new custom switch class in Bootstrap 4.2+.
 * Better mobile support for dashboard pages.
-* Adds `data-target` attribute to anchor elements in `saiPage`, `dashboardPage`, and `tabsetPanel` to fix issue with `shiny-server-client.js` on Shiny Server
-* `bs4Embed` now properly supports the `type` argument, and adds `embed` as a new valid type
+* Adds `data-target` attribute to anchor elements in `saiPage()`, `dashboardPage()`, and `tabsetPanel()` to fix issue with `shiny-server-client.js` on Shiny Server
+* `bs4Embed()` now properly supports the `type` argument, and adds `embed` as a new valid type
 * Added html template in order for the `lang` attribute to be properly added to the `html` tag
 * Changed `color` argument to accept any value in inputs (to better support Bootstrap themes).
-* `id` can now be properly assigned to the navbar in `saiPage`.
-* Added `class` argument to `cardGroup`
-* Argument `classes` is deprecaed in `dashboardCard`. Use `class` instead
-* `saiLib` is renamed `bs4Lib`.
+* `id` can now be properly assigned to the navbar in `saiPage()`.
+* Added `class` argument to `cardGroup()`
+* Argument `classes` is deprecaed in `dashboardCard()`. Use `class` instead
+* `saiLib` is renamed `bs4Lib()`.
 
 saiUI 0.4.0
 ===============
@@ -24,12 +32,12 @@ This release add new UI elements and functions to more easily use Bootstrap 4 fe
 
 ## Full changelog
 
-* New UI function `bs4Alert` to create Bootstrap 4 alerts.
-* New UI function `bs4Embed` to create responsive embeds using Bootstrap 4.
-* Added `singlePage` as an alternative to `fluidPage` for a simple Bootstrap 4 page without a navbar.
-* Improved layout of search button in `searchboxInput`.
+* New UI function `bs4Alert()` to create Bootstrap 4 alerts.
+* New UI function `bs4Embed()` to create responsive embeds using Bootstrap 4.
+* Added `singlePage()` as an alternative to `fluidPage` for a simple Bootstrap 4 page without a navbar.
+* Improved layout of search button in `searchboxInput()`.
 * New layout functions for flex rows and columns in Bootstrap 4.
-* Default color for `slicerInput` is now `primary`.
+* Default color for `slicerInput()` is now `primary`.
 * Update to Bootstrap 4.1.3
 * Update to Popper.js 1.14.6
 * Added example apps to `inst/examples`.
@@ -38,39 +46,39 @@ This release add new UI elements and functions to more easily use Bootstrap 4 fe
 saiUI 0.3.3
 ===============
 
-* New functions `cardNav` and `cardNavItem` to support cards with Bootstrap's nav component in the header
+* New functions `cardNav()` and `cardNavItem()` to support cards with Bootstrap's nav component in the header
 * Minor bugfixes for the documentation
 
 saiUI 0.3.2
 ===============
 
-* `slicerInput` now supports named vectors as input choices
-* Bugfix where value of `slicerInput` would not be sent to Shiny if multiple == `FALSE`
+* `slicerInput()` now supports named vectors as input choices
+* Bugfix where value of `slicerInput()` would not be sent to Shiny if multiple == `FALSE`
 
 saiUI 0.3.1
 ===============
 
-* `saiDashboard` now supports restore feature in `shiny`
-* Ability to select a different default panel in `saiDashboard` with the `selected` parameter
-* New functions `dashboardCard` and `cardGroup` to create Bootstrap style cards and group of cards. See the [Bootstrap documentation](https://getbootstrap.com/docs/4.1/components/card/)
-* Tabs in navbar on `saiPage` can now be hidden by default
-* Wrapper for `helpText` with update to BS4 (class `help-block` deprecated in BS4)
+* `saiDashboard()` now supports restore feature in `shiny`
+* Ability to select a different default panel in `saiDashboard()` with the `selected` parameter
+* New functions `dashboardCard()` and `cardGroup()` to create Bootstrap style cards and group of cards. See the [Bootstrap documentation](https://getbootstrap.com/docs/4.1/components/card/)
+* Tabs in navbar on `saiPage()` can now be hidden by default
+* Wrapper for `helpText()` with update to BS4 (class `help-block` deprecated in BS4)
 
 saiUI 0.3.0
 ===============
 
-* New input function `toggleButton` that returns a boolean value depending on button state
-* New input function `slicerInput` that creates a set of small buttons that can act as a filter for datasets. Returns a vector with values for all buttons that are active. Supports single value or multiple values. `NULL` values are also supported (no active buttons).
-* New function for `downloadButton` to mask the original `shiny` button
-* New function for `fileInput` to mask the original `shiny` function
-* Added option for outlined buttons for all button inputs. Defaults to `FALSE` for `actionButton` and `downloadButton` and to `TRUE` for `inputSearchbox` and `toggleButton`
-* New functions to add text to header and footer of a `saiPage` layout
+* New input function `toggleButton()` that returns a boolean value depending on button state
+* New input function `slicerInput()` that creates a set of small buttons that can act as a filter for datasets. Returns a vector with values for all buttons that are active. Supports single value or multiple values. `NULL` values are also supported (no active buttons).
+* New function for `downloadButton()` to mask the original `shiny` button
+* New function for `fileInput()` to mask the original `shiny` function
+* Added option for outlined buttons for all button inputs. Defaults to `FALSE` for `actionButton()` and `downloadButton()` and to `TRUE` for `inputSearchbox()` and `toggleButton()`
+* New functions to add text to header and footer of a `saiPage()` layout
 * Added language attribute to `html` tag
-* `sidebarLayout` now supports the `position` argument
-* `display: flex` is now enforced for `searchboxInput` with added class `d-flex`
+* `sidebarLayout()` now supports the `position` argument
+* `display: flex` is now enforced for `searchboxInput()` with added class `d-flex`
 * Better compliance with web accessibility requirements
 * Better support for restoring app state if bookmarking is enabled
-* Better handling of color option on `saiMenu`
+* Better handling of color option on `saiMenu()`
 * Better documentation of original and masked functions
 
 saiUI 0.2.0
