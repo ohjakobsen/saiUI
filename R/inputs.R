@@ -117,8 +117,9 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = NUL
     button <- tags$i(class = paste0('oi oi-', icon))
 
   size <- list(
-    form = ifelse(size %in% c('lg', 'sm'), paste0(' form-control-', size), ''),
-    btn = ifelse(size %in% c('lg', 'sm'), paste0(' btn-', size), '')
+    form = switch(size, 'lg' = 'form-control-lg', 'sm' = 'form-control-sm', ''),
+    clear = switch(size, 'lg' = 'form-clear-lg', 'sm' = 'form-clear-sm', ''),
+    btn = switch(size, 'lg' = 'btn-lg', 'sm' = 'btn-sm', '')
   )
 
   value <- restoreInput(id = inputId, default = value)
@@ -128,11 +129,14 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = NUL
     tags$form(
       class = 'input-group form-inline searchbox my-2 w-100',
       tags$input(
-        id = inputId, type = 'text', class = paste0('form-control', size$form),
+        id = inputId, type = 'text', class = 'form-control', class = size$form,
         value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')),
-      tags$div(class = 'input-group-append', tags$button(
-        class = paste0('btn btn-', outline, color), type = 'button', button
-      ))
+      tags$span(class = 'form-clear d-none', class = size$clear),
+      tags$div(
+        class = 'input-group-append',
+        tags$button(
+          class = paste0('btn btn-', outline, color), class = size$btn,
+          type = 'button', button))
     )
   )
 

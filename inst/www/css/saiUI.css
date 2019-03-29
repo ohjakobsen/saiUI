@@ -57,6 +57,29 @@
   margin-right: .3rem;
 }
 
+.form-clear {
+  position: absolute;
+  z-index: 10;
+  margin: .375rem;
+  padding: .8rem;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 1)' stroke-width='1' d='M8 8L22 22 M22 8L8 22'/%3E%3C/svg%3E");
+}
+
+.form-clear-sm {
+  margin: .25rem;
+  padding: .7rem;
+}
+
+.form-clear-lg {
+  margin: .5rem;
+  padding: 1rem;
+}
+
+/* We obviously need a fix for MS */
+.searchbox input::-ms-clear {
+  display: none;
+}
+
 .alert-icon {
   padding-left: 2.75rem;
 }

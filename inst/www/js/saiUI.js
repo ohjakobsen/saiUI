@@ -36,6 +36,19 @@ $(document).ready(function() {
 
   });
 
+  $(document).on('keydown focus', '.searchbox input', function() {
+    if ($(this).val().length > 0) {
+      var size = $(this).siblings('.input-group-append').width();
+      $(this).siblings('.form-clear').css('right', size + 'px');
+      $(this).siblings('.form-clear').removeClass('d-none');
+    }
+  });
+
+  $(document).on('click', '.form-clear', function() {
+    $(this).siblings('input').val('').trigger('change');
+    $(this).addClass('d-none');
+  });
+
   $('.dropdown-item').on('click', function() {
 
     // Check if multiple choices are allowed
