@@ -1,3 +1,11 @@
+saiUI 0.5.2
+===============
+
+* New clear button for all search inputs that works on all modern browsers
+* Bugfix: Fix button size when `searchboxInput()` is set to size `sm`
+* Bugfix: Removed the `min-width` rule from `.shiny-input-container` as it could create havoc on small screens or small containers
+* Bugfix: Added specificity to `.shiny-input-container` rules to override Shiny behavior without the need for `!important` so that the `width` parameter can be used with input functions
+
 saiUI 0.5.1
 ===============
 
