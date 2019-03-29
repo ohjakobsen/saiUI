@@ -1,6 +1,5 @@
-.shiny-input-container {
-  width: auto !important;
-  min-width: 300px;
+.shiny-input-container:not(.shiny-input-container-inline) {
+  width: auto;
 }
 
 .control-label, .form-input > label {
