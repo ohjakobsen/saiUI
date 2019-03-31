@@ -29,8 +29,9 @@ $(document).ready(function() {
     // have been updated). We set the data-value attribute to match the status of the
     // button and trigger a change event
     this.setAttribute('data-value', this.classList.contains('active'));
-    var event = new Event('change');
-    this.dispatchEvent(event);
+    // Obviously, IE does not support the Event object, so we cannot use
+    // new Event('change') together with dispatchEvent. For now we fall back to jQuery
+    $(this).trigger('change');
 
   });
 
