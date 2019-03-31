@@ -22,34 +22,40 @@ $.fn.val = function () {
 
 $(document).ready(function() {
 
-  // Add custom JS here
-  $('button.toggle').on('click', function() {
+  // Change value on toggle button
+  $(document).on('click', 'button.toggle', function() {
 
-    // Get value of object
-    var value = $(this).val();
-
-    // We want to change a true value to false and vice versa
-    var ret = (value == 'true') ? 'false' : 'true';
-
-    // Set the new value to the object
-    $(this).val(ret);
+    // The toggle input listens to change events (we want to wait until all attributes
+    // have been updated). We set the data-value attribute to match the status of the
+    // button and trigger a change event
+    this.setAttribute('data-value', this.classList.contains('active'));
+    var event = new Event('change');
+    this.dispatchEvent(event);
 
   });
 
+  // Display form-clear if text is entered in the search field
   $(document).on('keydown focus', '.searchbox input', function() {
     if ($(this).val().length > 0) {
       var size = $(this).siblings('.input-group-append').width();
       $(this).siblings('.form-clear').css('right', size + 'px');
       $(this).siblings('.form-clear').removeClass('d-none');
     }
+  }).on('keydown keyup blur', '.searchbox input', function() {
+    if ($(this).val().length === 0) {
+      $(this).siblings('.form-clear').addClass('d-none');
+    }
   });
 
+  // Clear the search input and notify Shiny if form-clear is clicked
   $(document).on('click', '.form-clear', function() {
     $(this).siblings('input').val('').trigger('change');
     $(this).addClass('d-none');
   });
 
-  $('.dropdown-item').on('click', function() {
+  // Toggle values in dropdown menu when the user selects a value and notify Shiny
+  // The input binding for dropdown menus listens to the change event
+  $(document).on('click', '.dropdown-item', function() {
 
     // Check if multiple choices are allowed
     var multi = $(this).parent().prev('button').attr('data-multiple') === 'true';

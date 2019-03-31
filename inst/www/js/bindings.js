@@ -119,8 +119,8 @@ $.extend(toggleButtonInputBinding, {
     return $(el).attr('id');
   },
   getValue: function(el) {
-    // Return a boolean value
-    return Boolean(el.value == 'true');
+    // Returns true if class active is present, false if not
+    return el.classList.contains('active');
   },
   setValue: function(el, value) {
     var self = this;
@@ -131,7 +131,7 @@ $.extend(toggleButtonInputBinding, {
   receiveMessage: function(el, data) {
     if (data.hasOwnProperty('value') && data.value !== null) {
       // Get the old value
-      var old = Boolean(el.value == 'true')
+      var old = el.classList.contains('active');
       // If new value is not equal to the old value, trigger a click event
       if (data.value != old) {
         $(el).trigger('click');
@@ -141,7 +141,7 @@ $.extend(toggleButtonInputBinding, {
     }
   },
   subscribe: function(el, callback) {
-    $(el).on('click.toggleButtonInputBinding', function(event) {
+    $(el).on('change.toggleButtonInputBinding', function(event) {
       callback();
     });
   },
