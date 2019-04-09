@@ -6,7 +6,7 @@
 \usage{
 saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
   footer = NULL, theme = NULL, color = "primary",
-  windowTitle = title, lang = "en")
+  windowTitle = title, lang = "en", dir = "ltr")
 }
 \arguments{
 \item{title}{The title to display in the navbar.}
@@ -28,6 +28,8 @@ saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
 \item{windowTitle}{The title that should be displayed by the browser window.}
 
 \item{lang}{The language of the page that is added to the top level \code{html} element.}
+
+\item{dir}{Indicate the directionality of text in the \code{html} page}
 }
 \description{
 This functions builds the actual HTML page.

@@ -4,7 +4,8 @@
 \alias{bs4Page}
 \title{Bootstrap Page}
 \usage{
-bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en")
+bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en",
+  dir = "ltr")
 }
 \arguments{
 \item{...}{The UI elements of the page.}
@@ -15,7 +16,9 @@ bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en")
 
 \item{deps}{Additional dependencies to add to the page.}
 
-\item{lang}{The language of the page.}
+\item{lang}{The language of the page that is added to the top level \code{html} element.}
+
+\item{dir}{Indicate the directionality of text in the \code{html} page}
 }
 \description{
 Bootstrap Page

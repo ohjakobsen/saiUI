@@ -5,7 +5,8 @@
 \title{Dashboard page}
 \usage{
 saiDashboard(title, ..., selected = NULL, color = "dark",
-  brand = title, windowTitle = title, header = NULL, footer = NULL)
+  brand = title, windowTitle = title, header = NULL, footer = NULL,
+  lang = "en", dir = "ltr")
 }
 \arguments{
 \item{title}{The title for the page.}
@@ -24,6 +25,10 @@ If \code{NULL}, the first panel will be selected.}
 \item{header}{Tag or list of tags to display on top of page.}
 
 \item{footer}{Tag or list of tags to display on the botton of the page.}
+
+\item{lang}{The language of the page that is added to the top level \code{html} element.}
+
+\item{dir}{Indicate the directionality of text in the \code{html} page}
 }
 \description{
 Create a dashboard page that can be used with \code{\link{dashboardPanel}}s.

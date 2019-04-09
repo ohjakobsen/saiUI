@@ -13,7 +13,7 @@ singlePage(title, ..., theme = NULL, lang = "en")
 
 \item{theme}{Alternate Bootstrap 4 stylesheet.}
 
-\item{lang}{The language of the page.}
+\item{lang}{The language of the page that is added to the top level \code{html} element.}
 }
 \description{
 Create a simple Bootstrap page
