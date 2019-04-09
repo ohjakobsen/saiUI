@@ -9,20 +9,24 @@ NULL
 #' @param title The title for the page.
 #' @param theme Alternate Bootstrap 4 stylesheet.
 #' @param deps Additional dependencies to add to the page.
-#' @param lang The language of the page.
+#' @param lang The language of the page that is added to the top level \code{html} element.
+#' @param dir Indicate the directionality of text in the \code{html} page
 #'
 #' @export
-bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en') {
+bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en', dir = 'ltr') {
 
+  # If we have a theme, well add the proper style tag
+  if (!is.null(theme))
+    theme <- tags$link(rel="stylesheet", type="text/css", href = theme)
+  
+  # Render the html template
   html <- htmlTemplate(
     system.file('templates', 'default.html', package = 'saiUI'),
+    theme = theme,
     body = tagList(
       if (!is.null(title)) tags$head(tags$title(title)),
-      if (!is.null(theme)) {
-        tags$head(tags$link(rel="stylesheet", type="text/css", href = theme))
-      },
       list(...)
-    ), lang = paste0('lang="', lang, '"')
+    ), lang = sprintf('lang="%s" dir="%s"', lang, dir)
   )
   
   attachDependencies(
@@ -47,16 +51,14 @@ bs4Lib <- function(theme = NULL, deps = NULL) {
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
       stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
-      meta = list(viewport = "width=device-width, initial-scale=1")
+      meta = list(viewport = 'width=device-width, initial-scale=1, shrink-to-fit=no')
     ),
     htmlDependency('saiUI', packageVersion('saiUI'),
       c(file = system.file('www', package = 'saiUI')),
       script = c('js/saiUI.min.js', 'js/bindings.min.js'),
-      stylesheet = c('css/saiUI.min.css')
-    ),
-    htmlDependency('open-iconic', '1.1.0',
-      c(file = system.file('www/oi', package = 'saiUI')),
-      stylesheet = c('css/open-iconic-bootstrap.min.css')
+      stylesheet = c(
+        'css/saiUI.min.css',
+        'oi/css/open-iconic-bootstrap.min.css')
     )
   )
   if (!is.null(deps)) libs <- append(libs, deps)
@@ -84,28 +86,20 @@ singlePage <- function(title, ..., theme = NULL, lang = 'en') {
 #'
 #' This functions builds the actual HTML page.
 #'
+#' @inheritParams bs4Page
 #' @param title The title to display in the navbar.
 #' @param ... The UI elements of the page. Top level elements should be \code{\link{tabPanel}}.
 #' @param id The page ID
 #' @param selected The tab that is initially selected
 #' @param header Tag or list of tags to display as a common header above all tabPanels.
 #' @param footer Tag or list of tags to display as a common footer below all tabPanels.
-#' @param theme Alternate Bootstrap 4 stylesheet.
 #' @param color Color for the navbar. Supports all Bootstrap 4 colors.
 #' @param windowTitle The title that should be displayed by the browser window.
-#' @param lang The language of the page that is added to the top level \code{html} element.
 #'
 #' @export
-saiPage <- function(title,
-                    ...,
-                    id = NULL,
-                    selected = NULL,
-                    header = NULL,
-                    footer = NULL,
-                    theme = NULL,
-                    color = 'primary',
-                    windowTitle = title,
-                    lang = 'en') {
+saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, footer = NULL,
+                    theme = NULL, color = 'primary', windowTitle = title, lang = 'en',
+                    dir = 'ltr') {
 
   pageTitle <- title
   tabs <- list(...)
@@ -139,6 +133,7 @@ saiPage <- function(title,
     title = windowTitle,
     theme = theme,
     lang = lang,
+    dir = dir,
     tags$nav(class = class, id = id, navItems),
     pageBody
   )

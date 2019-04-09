@@ -2,6 +2,7 @@
 #'
 #' Create a dashboard page that can be used with \code{\link{dashboardPanel}}s.
 #'
+#' @inheritParams bs4Page
 #' @param title The title for the page.
 #' @param ... The UI elements of the page.
 #' @param selected The \code{value} of the panel that should be selected by default.
@@ -16,17 +17,18 @@
 #'
 #' @export
 saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = title,
-                         windowTitle = title, header = NULL, footer = NULL) {
+                         windowTitle = title, header = NULL, footer = NULL, lang = 'en',
+                         dir = 'ltr') {
 
   pageTitle <- title
 
-  if (nchar(tools::file_ext(brand)) > 0)
+  if (nzchar(tools::file_ext(brand)))
     brandTag <- a(class = 'navbar-brand', href = '#', img(src = brand, height = '30'))
   else
     brandTag <- a(class = 'navbar-brand', href = '#', brand)
 
   topNav <- tags$nav(
-    class = paste0('mainnav navdashboard navbar navbar-dark sticky-top bg-', color, ' flex-md-nowrap p-0'),
+    class = sprintf('mainnav navdashboard navbar navbar-dark sticky-top bg-%s flex-md-nowrap p-0', color),
     div(id = 'sidebarHeader', class = 'col-lg-2 mr-0',
       brandTag,
       tags$button(
@@ -62,6 +64,8 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
   bs4Page(
     title = windowTitle,
     theme = NULL,
+    lang = lang,
+    dir = dir,
     deps = deps,
     header,
     topNav,
@@ -107,17 +111,12 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
 #' @export
 dashboardPanel <- function(title, ..., id = title, value = id, icon = 'dashboard') {
 
-  # if (is.null(icon)) icon <- 'dashboard'
   id <- tolower(gsub(' ', '', id, fixed = TRUE))
 
-  divTag <- div(class = 'tab-pane fade',
-                id = id,
-                title = title,
-                `role` = 'tabpanel',
-                `aria-labelledby` = paste0(id, '-tab'),
-                `data-value` = value,
-                `data-icon-class` = icon,
-                ...)
+  divTag <- div(
+    class = 'tab-pane fade', id = id, title = title, role = 'tabpanel',
+    `aria-labelledby` = sprintf('%s-tab', id), `data-value` = value,
+    `data-icon-class` = icon, ...)
 
 }
 
@@ -129,15 +128,15 @@ buildDashboardNav <- function(tabs, tabselect) {
 
   tabs <- lapply(tabs, function(t) {
 
-    icon <- HTML(paste0('<i class="oi oi-', t$attribs$`data-icon-class`, '"></i>'))
+    icon <- tags$i(class = sprintf('oi oi-%s', t$attribs$`data-icon-class`))
     class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
     id <- gsub('\\s', '', t$attribs$id)
     selected <- ifelse(i == tabselect, 'true', 'false')
     i <<- i + 1
 
     tags$li(class = 'nav-item', a(
-      id = paste0(id, '-tab'), class = class, `data-target` = paste0('#', id),
-      href = paste0('#', id), `data-value` = t$attribs$`data-value`, `data-toggle` = 'tab',
+      id = sprintf('%s-tab', id), class = class, `data-target` = sprintf('#%s', id),
+      href = sprintf('#%s', id), `data-value` = t$attribs$`data-value`, `data-toggle` = 'tab',
       `role` = 'tab', `aria-selected` = selected, `aria-controls` = id,
       list(icon, t$attribs$title))
     )
@@ -251,11 +250,11 @@ cardGroup <- function(..., type = c('group', 'deck'), class = NULL) {
 
   if (length(class) > 1L) class <- paste(class, collapse = ' ')
   if (!is.null(class))
-    class <- paste(paste0('card-', type), class)
+    class <- paste(sprintf('card-%s', type), class)
   else
-    class <- paste0('card-', type)
+    class <- sprintf('card-%s', type)
 
-  div(class = paste0('card-', type), ...)
+  div(class = class, ...)
 
 }
 
