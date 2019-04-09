@@ -47,7 +47,7 @@ bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
 #' @export
 bs4Embed <- function(src, type = c('iframe', 'video', 'embed'), ratio = c(16, 9)) {
   
-  classes <- paste0('embed-responsive embed-responsive-', ratio[1], 'by', ratio[2])
+  classes <- sprintf('embed-responsive embed-responsive-%sby%s', ratio[1], ratio[2])
   type <- match.arg(type)
   
   embedTag <- switch(
