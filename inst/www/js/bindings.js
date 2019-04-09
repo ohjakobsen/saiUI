@@ -2,11 +2,10 @@ var searchboxInputBinding = new Shiny.InputBinding();
 
 $.extend(searchboxInputBinding, {
   find: function(scope) {
-  	return $(scope).find('.searchbox');
+  	return $(scope).find('.searchbox input');
   },
   getId: function(el) {
-  	// return InputBinding.prototype.getId.call(this, el) || el.name;
-  	return $(el).attr('id');
+    return $(el).attr('id');
   },
   getValue: function(el) {
     return el.value;
@@ -15,16 +14,28 @@ $.extend(searchboxInputBinding, {
   	el.value = value;
   },
   subscribe: function(el, callback) {
-    // removed input.searchboxInputBinding from on
-    $(el).on('keyup.searchboxInputBinding', function(event) {
-      callback(true);
-    });
-    $(el).on('change.searchboxInputBinding', function(event) {
-      callback();
-    });
+    if (el.hasAttribute('data-sayt')) {
+      // If search as you type is activated, we only want to trigger the callback
+      // when the enter key (code 13) is pressed
+      $(el).on('keyup.searchboxInput', function(e) {
+        if (e.keyCode === 13) callback();
+      });
+      $(el).on('change.searchboxInput', function(e) {
+        callback();
+      });
+    } else {
+      // For the keyup event, we want the debounce policy to apply
+      $(el).on('keyup.searchboxInput', function(e) {
+        callback(true);
+      });
+      // When the change event fires, send the value to Shiny immediately
+      $(el).on('change.searchboxInput', function(e) {
+        callback();
+      });
+    }
   },
   unsubscribe: function(el) {
-  	$(el).off('.searchboxInputBinding');
+  	$(el).off('.searchboxInput');
   },
   receiveMessage: function(el, data) {
   	if (data.hasOwnProperty('value')) this.setValue(el, data.value);
@@ -32,7 +43,6 @@ $.extend(searchboxInputBinding, {
     if (data.hasOwnProperty('placeholder')) {
       el.placeholder = data.placeholder;
     }
-
     $(el).trigger('change');
   },
   getState: function(el) {
@@ -44,7 +54,7 @@ $.extend(searchboxInputBinding, {
   getRatePolicy: function() {
   	return {
   	  policy: 'debounce',
-    	delay: 250
+    	delay: 500
   	};
   }
 });
@@ -54,7 +64,6 @@ Shiny.inputBindings.setPriority('saiUI.searchboxInput', 10);
 var navbarTabInputBinding = new Shiny.InputBinding();
 $.extend(navbarTabInputBinding, {
   find: function(scope) {
-    // return $(scope).find('#pagenav');
     return $(scope).find('.mainnav');
   },
   getId: function(el) {
@@ -95,12 +104,12 @@ $.extend(navbarTabInputBinding, {
       this.setValue(el, data.value);
   },
   subscribe: function(el, callback) {
-    $(el).on('change shown.navbarTabInputBinding shown.bs.tab.navbarTabInputBinding', function(event) {
+    $(el).on('change.navbarTabInput shown.navbarTabInput shown.bs.tab.navbarTabInput', function(event) {
       callback();
     });
   },
   unsubscribe: function(el) {
-    $(el).off('.bootstrapTabInputBinding');
+    $(el).off('.navbarTabInput');
   },
   _getTabName: function(anchor) {
     return anchor.attr('data-value') || anchor.text();
@@ -109,9 +118,9 @@ $.extend(navbarTabInputBinding, {
 Shiny.inputBindings.register(navbarTabInputBinding, 'saiUI.navbarTabInput');
 Shiny.inputBindings.setPriority('saiUI.navbarTabInput', 10);
 
-var toggleButtonInputBinding = new Shiny.InputBinding();
+var toggleButtonBinding = new Shiny.InputBinding();
 
-$.extend(toggleButtonInputBinding, {
+$.extend(toggleButtonBinding, {
   find: function(scope) {
     return $(scope).find('button.toggle');
   },
@@ -121,12 +130,6 @@ $.extend(toggleButtonInputBinding, {
   getValue: function(el) {
     // Returns true if class active is present, false if not
     return el.classList.contains('active');
-  },
-  setValue: function(el, value) {
-    var self = this;
-    if (value) {
-      console.log(value);
-    }
   },
   receiveMessage: function(el, data) {
     if (data.hasOwnProperty('value') && data.value !== null) {
@@ -141,22 +144,16 @@ $.extend(toggleButtonInputBinding, {
     }
   },
   subscribe: function(el, callback) {
-    $(el).on('change.toggleButtonInputBinding', function(event) {
+    $(el).on('change.toggleButtonInput', function(event) {
       callback();
     });
   },
   unsubscribe: function(el) {
-    $(el).off('button.toggle');
-  },
-  getRatePolicy: function() {
-    return {
-    	policy: 'debounce',
-    	delay: 100
-  	};
+    $(el).off('.toggleButtonInput');
   }
 });
 
-Shiny.inputBindings.register(toggleButtonInputBinding, 'saiUI.toggleButton');
+Shiny.inputBindings.register(toggleButtonBinding, 'saiUI.toggleButton');
 Shiny.inputBindings.setPriority('saiUI.toggleButton', 10);
 
 var dropdownMenuInputBinding = new Shiny.InputBinding();
@@ -179,12 +176,12 @@ $.extend(dropdownMenuInputBinding, {
     // TODO: Implement function!
   },
   subscribe: function(el, callback) {
-    $(el).on('change.dropdownMenuInputBinding', function(event) {
+    $(el).on('change.dropdownMenuInput', function(event) {
       callback();
     });
   },
   unsubscribe: function(el) {
-    $(el).off();
+    $(el).off('.dropdownMenuInput');
   }
 });
 
@@ -219,12 +216,12 @@ $.extend(slicerInputBinding, {
     $(el).trigger('change');
   },
   subscribe: function(el, callback) {
-    $(el).on('change.slicerInputBinding', function(event) {
+    $(el).on('change.slicerInput', function(event) {
       callback();
     });
   },
   unsubscribe: function(el) {
-    $(el).off();
+    $(el).off('.slicerInput');
   }
 })
 

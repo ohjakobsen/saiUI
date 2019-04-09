@@ -6,7 +6,7 @@
 \usage{
 searchboxInput(inputId, value = "", placeholder = NULL,
   button = NULL, icon = NULL, color = "primary", outline = FALSE,
-  size = c("normal", "sm", "lg"))
+  size = c("normal", "sm", "lg"), searchAsYouType = FALSE)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -26,6 +26,9 @@ control.}
 
 \item{size}{A character string giving the size of the input. Valid options are \code{normal},
 \code{sm} and \code{lg}. Defaults to \code{normal}}
+
+\item{searchAsYouType}{A boolean value to determine when a value should be sendt to
+Shiny. See details.}
 }
 \description{
 Create a searchbox input

@@ -11,8 +11,7 @@ actionButton <- function(inputId, label, color = 'primary', outline = FALSE, ico
                          width = NULL, size = c('normal', 'sm', 'lg'), ...) {
 
   value <- restoreInput(id = inputId, default = NULL)
-  outline <- ifelse(outline, 'outline-', '')
-  color <- paste0('btn-', outline, color)
+  color <- sprintf('btn-%s%s', ifelse(outline, 'outline-', ''), color)
   size <- match.arg(size)
 
   size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
@@ -37,8 +36,7 @@ actionButton <- function(inputId, label, color = 'primary', outline = FALSE, ico
 downloadButton <- function(outputId, label = 'Download', color = 'primary', outline = FALSE,
                            class = NULL, size = c('normal', 'sm', 'lg'), ...) {
 
-  outline <- ifelse(outline, 'outline-', '')
-  color <- paste0('btn-', outline, color)
+  color <- sprintf('btn-%s%s', ifelse(outline, 'outline-', ''), color)
   size <- match.arg(size)
   size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
 
@@ -103,10 +101,14 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
 #' @param outline Should the button be an outline button? Default value FALSE.
 #' @param size A character string giving the size of the input. Valid options are \code{normal},
 #'   \code{sm} and \code{lg}. Defaults to \code{normal}
+#' @param searchAsYouType A boolean value to determine when a value should be sendt to
+#'   Shiny. See details.
 #'
 #' @export
-searchboxInput <- function(inputId, value = '', placeholder = NULL, button = NULL, icon = NULL,
-                           color = 'primary', outline = FALSE, size = c('normal', 'sm', 'lg')) {
+searchboxInput <- function(
+  inputId, value = '', placeholder = NULL, button = NULL, icon = NULL,
+  color = 'primary', outline = FALSE, size = c('normal', 'sm', 'lg'),
+  searchAsYouType = FALSE) {
 
   outline <- ifelse(outline, 'outline-', '')
   size <- match.arg(size)
@@ -123,17 +125,22 @@ searchboxInput <- function(inputId, value = '', placeholder = NULL, button = NUL
   )
 
   value <- restoreInput(id = inputId, default = value)
+  
+  inputTag <- tags$input(
+    id = inputId, type = 'text', class = 'form-control', class = size$form,
+    value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')
+  )
+  
+  if (searchAsYouType) inputTag <- tagAppendAttributes(inputTag, 'data-sayt' = 'true')
 
   div(
     class = 'form-group shiny-input-container d-flex',
     tags$form(
       class = 'input-group form-inline searchbox my-2 w-100',
-      tags$input(
-        id = inputId, type = 'text', class = 'form-control', class = size$form,
-        value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')),
+      inputTag,
       tags$span(class = 'form-clear d-none', class = size$clear),
       tags$div(
-        class = 'input-group-append',
+        class = 'input-group-append searchbox-button',
         tags$button(
           class = paste0('btn btn-', outline, color), class = size$btn,
           type = 'button', button))
@@ -238,7 +245,7 @@ toggleButton <- function(inputId, label, color = 'primary', outline = TRUE,
   active <- restoreInput(id = inputId, default = active)
 
   outline <- ifelse(outline, 'outline-', '')
-  color <- paste0('btn-', outline, color)
+  color <- sprintf('btn-%s%s', outline, color)
   size <- match.arg(size)
   size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
 
@@ -249,7 +256,7 @@ toggleButton <- function(inputId, label, color = 'primary', outline = TRUE,
       `data-toggle` = 'button',
       `aria-pressed` = ifelse(active, 'true', 'false'),
       `autocomplete` = 'off',
-      value = ifelse(active, 'true', 'false'),
+      `data-value` = ifelse(active, 'true', 'false'),
       label
     )
   )
@@ -292,9 +299,6 @@ updateToggleButton <- function(session, inputId, value = NULL, change = NULL) {
 slicerInput <- function(inputId, label, choices, selected = NULL, color = 'primary',
                         outline = TRUE, multiple = FALSE) {
 
-  # TODO: Add select all/deselect all option?
-  # TODO: Add reset option?
-
   selected <- restoreInput(id = inputId, default = selected)
 
   if (is.null(selected) && !multiple)
@@ -302,8 +306,7 @@ slicerInput <- function(inputId, label, choices, selected = NULL, color = 'prima
   else if (!multiple)
     selected <- firstChoice(selected)
 
-  outline <- ifelse(outline, 'outline-', '')
-  color <- paste0('btn-', outline, color)
+  color <- sprintf('btn-%s%s', ifelse(outline, 'outline-', ''), color)
 
   if (is.null(names(choices))) names(choices) <- choices
 
