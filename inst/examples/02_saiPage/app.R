@@ -9,7 +9,8 @@ ui <- saiPage(
   tabPanel('First tab',
     sidebarLayout(
       saiMenu(
-        sliderInput('bins', 'Number of bins', min = 1, max = 50, value = 30)
+        sliderInput('bins', 'Number of bins', min = 1, max = 50, value = 30),
+        helpText('Select the number of bins in the histogram', small = TRUE)
       ),
       saiMain(
         plotOutput('distPlot')
