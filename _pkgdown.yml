@@ -1,0 +1,56 @@
+template:
+  params:
+    bootswatch: flatly
+
+reference:
+- title: Page layouts
+  desc: >
+    Functions to render page layouts.
+  contents:
+    - matches('Page')
+- title: Input functions
+  contents:
+    - matches("Input")
+- title: Buttons
+  contents:
+    - matches("Button")
+- title: All functions
+  desc: ~
+  contents:
+  - '`actionButton`'
+  - '`bs4Alert`'
+  - '`bs4Embed`'
+  - '`bs4Lib`'
+  - '`bs4Page`'
+  - '`bs4Toast`'
+  - '`cardGroup`'
+  - '`cardNav`'
+  - '`cardNavItem`'
+  - '`dashboardCard`'
+  - '`dashboardPanel`'
+  - '`downloadButton`'
+  - '`dropdownMenu`'
+  - '`fileInput`'
+  - '`flexColumn`'
+  - '`flexRow`'
+  - '`footerContent`'
+  - '`headerContent`'
+  - '`helpText`'
+  - '`saiDashboard`'
+  - '`saiMain`'
+  - '`saiMenu`'
+  - '`saiPage`'
+  - '`saiTab`'
+  - '`saiTabset`'
+  - '`searchboxInput`'
+  - '`sidebarLayout`'
+  - '`singleLayout`'
+  - '`singlePage`'
+  - '`slicerInput`'
+  - '`switchInput`'
+  - '`toggleButton`'
+  - '`updateSlicerInput`'
+  - '`updateToggleButton`'
+
+news:
+  - one_page: false
