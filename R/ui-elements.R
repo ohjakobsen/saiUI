@@ -30,6 +30,59 @@ bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
   
 }
 
+#' Add modal button
+#' 
+#' @param text The text of the close button.
+#' 
+#' @export
+bs4ModalButton <- function(text = 'Close') {
+  
+  tags$button(type = 'button', class = 'btn btn-secondary', `data-dismiss` = 'modal', text)
+  
+}
+
+#' Create a modal dialog
+#' 
+#' @param ... UI elements for the body of the modal dialog box.
+#' @param title An optional title for the modal.
+#' @param valign Boolean. If \code{TRUE} the modal is vertically centered
+#' @param size The size of the modal. One of \code{s}, \code{m} (default), \code{l} or \code{xl}
+#' @param footer UI for the footer of the modal
+#' @param easyClose Boolean. If \code{TRUE} the modal can be dismissed by clicking outside
+#'   the dialog box
+#' 
+#' @export
+bs4Modal <- function(..., title = NULL, valign = FALSE, size = c('m', 's', 'l', 'xl'),
+                     footer = bs4ModalButton(), easyClose = FALSE) {
+  
+  size <- match.arg(size)
+  cls <- 'modal fade'
+  
+  if (!is.null(title))
+    headerTag <- div(class = 'modal-header', h5(class = 'modal-title', title))
+  else
+    headerTag <- NULL
+  
+  footerTag <- div(class = 'modal-footer', footer)
+  
+  divTag <- div(
+    id = 'shiny-modal', class = cls, role ='dialog', tabindex = '-1',
+    div(
+      class = 'modal-dialog modal-dialog-scrollable',
+      class = switch(size, s = 'modal-s', m = 'modal-m', l = 'modal-l', xl = 'modal-xl'),
+      role = 'document',
+      div(
+        class = 'modal-content',
+        headerTag,
+        div(class = 'modal-body', ...),
+        footerTag)
+    )
+  )
+  
+  list(divTag, tags$script("$('#shiny-modal').modal().focus();"))
+  
+}
+
 #' Create responsive embed
 #' 
 #' Embed content from and external source and make the embed responsive.
