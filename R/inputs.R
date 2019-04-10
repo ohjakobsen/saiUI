@@ -38,7 +38,7 @@ downloadButton <- function(outputId, label = 'Download', color = 'primary', outl
 
   color <- sprintf('btn-%s%s', ifelse(outline, 'outline-', ''), color)
   size <- match.arg(size)
-  size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
+  size <- switch(size, normal = '', sprintf('btn-%s', size))
 
   aTag <- tags$a(
     id = outputId, role = 'button', class = 'shiny-download-link btn',
@@ -172,27 +172,27 @@ dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FA
 
   outline <- ifelse(outline, 'outline-', '')
   size <- match.arg(size)
+  size <- switch(size, 'normal' = '', sprintf('btn-%s', size))
   direction <- match.arg(direction)
-  size <- ifelse(size %in% c('lg', 'sm'), paste0(' btn-', size), '')
-  direction <- ifelse(direction != 'down', paste0('drop', direction), '')
-  icon <- ifelse(is.null(icon), '', paste0('<i class="oi oi-', icon, '"></i> '))
+  direction <- switch(direction, down = '', sprintf('drop%s', direction))
 
   items <- lapply(choices, function(i) {
     class <- ifelse(i %in% selected, 'dropdown-item active', 'dropdown-item')
-    a(class = class, href = '#', i)
+    a(class = class, role = 'button', tabindex = '0', i)
   })
 
   div(
     class = paste('dropdown dropdownmenu', direction),
     id = inputId,
     tags$button(
-      class = paste0('dropdown-toggle btn btn-', outline, color, size),
+      class = sprintf('dropdown-toggle btn btn-%s%s %s', outline, color, size),
       type = 'button',
       `data-toggle` = 'dropdown',
       `data-multiple` = ifelse(multiple, 'true', 'false'),
       `aria-haspopup` = 'true',
       `aria-expanded` = 'false',
-      list(HTML(icon), label)
+      if (!is.null(icon)) tags$i(class = sprintf('oi oi-%s', icon)),
+      label
     ),
     div(class = 'dropdown-menu', items)
   )
