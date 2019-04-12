@@ -7,11 +7,21 @@
 }
 
 .page-container {
+  // To get our fixed footer, we would use min-height: 100vh here, but obviously
+  // this causes IE to freak out (IE does not work properly with min-height).
+  // Therefore we need to use the heigh parameter instead, and then settings the
+  // flex-shink parameter to 0 on our child containers to avoid overflow issues
+  // on modern bowsers. Sigh.
+  // See: https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  /* Guess which browser we need this fix for? */
-  height: 0;
+  height: 100vh;
+
+  // This is only needed as long as we still support IE11. Change to min-width
+  // and remove this at a later stage
+  > div:not(.flex-grow-1) {
+    flex: 0 0 auto;
+  }
 }
 
 .mainnav {
