@@ -121,7 +121,7 @@ saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, foote
 
   navItems <- buildNavbar(pageTitle, tabs, tabselect, color)
 
-  pageTabs <- div(class = 'tab-content flex-grow-1', id = id, role = 'main', tabs)
+  pageTabs <- div(class = 'tab-content', id = id, role = 'main', tabs)
   
   pageBody <- div(class = 'page-container')
   pageBody <- tagAppendChild(pageBody, tags$nav(class = class, id = id, navItems))

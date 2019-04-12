@@ -12,8 +12,12 @@
   height: 100vh;
 }
 
-.page-container > div:not(.flex-grow-1) {
+.page-container > div:not(.tab-content) {
   flex: 0 0 auto;
+}
+
+.page-container > div.tab-content {
+  flex: 1 0 auto;
 }
 
 .mainnav {
