@@ -1,9 +1,30 @@
-.shiny-input-container {
-  width: auto !important;
+.shiny-input-container:not(.shiny-input-container-inline) {
+  width: auto;
 }
 
-.control-label {
+.control-label, .form-input > label {
   font-weight: bolder;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Guess which browser we need this fix for? */
+  height: 0;
+}
+
+.mainnav {
+  padding: 0 1rem;
+
+  .nav-item a {
+    padding: 1rem;
+  }
+
+}
+
+.navpage .nav-item a.active, .navpage .nav-item a:hover {
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .navbar-dark {
@@ -45,4 +66,48 @@
     width: 12rem;
   }
 
+  input::-ms-clear {
+    /* We obviously need a fix for MS */
+    display: none;
+  }
+
+}
+
+.alert-icon {
+  padding-left: 2.75rem;
+
+  i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+  }
+
+}
+
+.btn-pill {
+  padding: .3rem .6rem;
+  font-size: .7rem;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 1rem;
+  margin-right: .3rem;
+}
+
+.form-clear {
+  position: absolute;
+  z-index: 10;
+  margin: .375rem;
+  padding: .8rem;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 1)' stroke-width='1' d='M8 8L22 22 M22 8L8 22'/%3E%3C/svg%3E");
+}
+
+.form-clear-sm {
+  margin: .25rem;
+  padding: .7rem;
+}
+
+.form-clear-lg {
+  margin: .5rem;
+  padding: 1rem;
 }

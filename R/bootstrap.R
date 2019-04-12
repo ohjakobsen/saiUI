@@ -15,8 +15,8 @@ NULL
 #' @export
 bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en', dir = 'ltr') {
 
-  # If we have a theme, well add the proper style tag
-  if (!is.null(theme))
+  # If we have a theme (and not an empty string), well add the proper style tag
+  if (!is.null(theme) && nzchar(theme))
     theme <- tags$link(rel="stylesheet", type="text/css", href = theme)
   
   # Render the html template
@@ -121,12 +121,13 @@ saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, foote
 
   navItems <- buildNavbar(pageTitle, tabs, tabselect, color)
 
-  pageTabs <- div(class = 'tab-content', id = id, role = 'main', tabs)
+  pageTabs <- div(class = 'tab-content flex-grow-1', id = id, role = 'main', tabs)
   
-  pageBody <- div(class = 'page')
+  pageBody <- div(class = 'page-container')
+  pageBody <- tagAppendChild(pageBody, tags$nav(class = class, id = id, navItems))
   if (!is.null(header)) pageBody <- tagAppendChild(pageBody, div(class = 'header', header))
   pageBody <- tagAppendChild(pageBody, pageTabs)
-  if (!is.null(footer)) pageBody <- tagAppendChild(pageBody, div(class = 'footer small', footer))
+  if (!is.null(footer)) pageBody <- tagAppendChild(pageBody, div(class = 'footer', footer))
   
   # Build the page
   bs4Page(
@@ -134,7 +135,6 @@ saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, foote
     theme = theme,
     lang = lang,
     dir = dir,
-    tags$nav(class = class, id = id, navItems),
     pageBody
   )
 
@@ -153,10 +153,8 @@ saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, foote
 saiMenu <- function(..., width = 4, color = 'light') {
   
   text_color <- ifelse(!(color %in% c('light', 'white', 'info')), 'text-white', '')
-  color <- paste0('bg-', color)
-  width <- paste0('col-md-', width)
 
-  div(class = paste('col-12', width, color, text_color, 'pt-2'),
+  div(class = sprintf('col-md-%s bg-%s %s pt-2', width, color, text_color),
       tags$form(...)
   )
 
@@ -173,7 +171,7 @@ saiMenu <- function(..., width = 4, color = 'light') {
 #' @export
 saiMain <- function(..., width = 8) {
 
-  div(class = paste0('col-12 col-md-', width, ' pt-2'),
+  div(class = sprintf('col-md-%s pt-2', width),
       tags$section(...))
 
 }
@@ -202,14 +200,17 @@ headerContent <- function(..., color = 'primary') {
 #' 
 #' @param ... The text to include in the footer
 #' @param color The background color for the text. Must be a valid Bootstrap 4 color
+#' @param center Boolean. If \code{TRUE} the text will be centered
+#' @param small Boolean. If \code{TRUE} the text will be smaller than the body text
 #' 
 #' @export
-footerContent <- function(..., color = 'light') {
+footerContent <- function(..., color = 'light', center = TRUE, small = FALSE) {
   
-  text_color <- ifelse(!(color %in% c('light', 'white', 'info')), 'text-white', '')
-  color <- paste0('bg-', color)
+  text_color <- if (!(color %in% c('light', 'white', 'info'))) 'text-white' else ''
+  center <- if (center) 'text-center' else NULL
+  small <- if (small) 'small' else NULL
   
-  div(class = paste(color, text_color, 'fixed-bottom clearfix'),
+  div(class = sprintf('bg-%s %s p-2', color, text_color), class = center, class = small,
       p(class = 'p-2 m-0', ...))
   
 }
@@ -234,7 +235,7 @@ footerContent <- function(..., color = 'light') {
 #' @export
 singleLayout <- function(..., fluid = FALSE) {
 
-  class <- ifelse(fluid, 'container-fluid mt-1', 'container mt-1')
+  class <- if (fluid) 'container-fluid mt-1' else 'container mt-1'
   
   div(class = class, div(class = 'row',
     div(class = 'col-12', ...)
@@ -254,7 +255,7 @@ singleLayout <- function(..., fluid = FALSE) {
 sidebarLayout <- function(menu, main, position = c('left', 'right'), fluid = TRUE) {
   
   position <- match.arg(position)
-  class <- ifelse(fluid, 'container-fluid', 'container')
+  class <- if (fluid) 'container-fluid' else 'container'
   
   if (position == 'left')
     divTag <- div(class = 'row', menu, main)
@@ -362,7 +363,7 @@ saiTabset <- function(...,
   tabs <- list(...)
   type <- match.arg(type)
 
-  tabset <- buildTabset(tabs, paste0('nav nav-', type, ' my-2'), NULL, id, selected)
+  tabset <- buildTabset(tabs, sprintf('nav nav-%s my-2', type), NULL, id, selected)
 
   # create the content
   first <- tabset$navList

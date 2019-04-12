@@ -6,6 +6,14 @@
   font-weight: bolder;
 }
 
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Guess which browser we need this fix for? */
+  height: 0;
+}
+
 .mainnav {
   padding: 0 1rem;
 }
@@ -47,6 +55,22 @@
   width: 12rem;
 }
 
+.searchbox input::-ms-clear {
+  /* We obviously need a fix for MS */
+  display: none;
+}
+
+.alert-icon {
+  padding-left: 2.75rem;
+}
+
+.alert-icon i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+}
+
 .btn-pill {
   padding: .3rem .6rem;
   font-size: .7rem;
@@ -71,21 +95,5 @@
 
 .form-clear-lg {
   margin: .5rem;
-  padding: 1rem;
-}
-
-/* We obviously need a fix for MS */
-.searchbox input::-ms-clear {
-  display: none;
-}
-
-.alert-icon {
-  padding-left: 2.75rem;
-}
-
-.alert-icon i {
-  position: absolute;
-  top: 0;
-  left: 0;
   padding: 1rem;
 }
