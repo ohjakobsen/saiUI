@@ -12,7 +12,7 @@
   height: 100vh;
 }
 
-.page-container > div:not(.tab-content) {
+.page-container > div:not(.tab-content), .page-container > nav {
   flex: 0 0 auto;
 }
 

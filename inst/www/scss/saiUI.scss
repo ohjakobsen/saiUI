@@ -19,7 +19,7 @@
 
   // This is only needed as long as we still support IE11. Change to min-width
   // and remove this at a later stage
-  > div:not(.tab-content) {
+  > div:not(.tab-content), > nav {
     flex: 0 0 auto;
   }
 
