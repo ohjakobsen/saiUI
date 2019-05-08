@@ -72,6 +72,12 @@ $(document).ready(function() {
 
   });
 
+  // Do not propagate clicks on elements with attribute data-stoppropagation set
+  // to true
+  $(document).on('click', '[data-autoclose=false]', function(e) {
+     e.stopPropagation();
+  });
+
   $('body').on('click', '.slicer-input', function() {
     var multi = $(this).closest('.slicer').attr('multiple')
     if (typeof multi === typeof undefined || multi === false) {
