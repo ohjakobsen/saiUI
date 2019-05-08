@@ -14,8 +14,8 @@ actionButton <- function(inputId, label, color = 'primary', outline = FALSE, ico
   color <- sprintf('btn-%s%s', ifelse(outline, 'outline-', ''), color)
   size <- match.arg(size)
 
-  size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
-  if (!is.null(icon)) icon <- tags$i(class = paste0('oi oi-', icon))
+  size <- switch(size, normal = '', sprintf('btn-%s', size))
+  if (!is.null(icon)) icon <- tags$i(class = sprintf('oi oi-%s', icon))
 
   tags$button(
     id = inputId, type = 'button', class = 'action-button btn',
@@ -66,7 +66,7 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
 
   if (multiple) inputTag$attribs$multiple <- 'multiple'
   if (length(accept) > 0L)
-    inputTag$attribs$accept <- paste(accept, collapse=',')
+    inputTag$attribs$accept <- paste(accept, collapse = ',')
 
   div(
     class = 'custom-file input-group',
@@ -81,7 +81,7 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
       type = 'text'
     ),
     tags$div(
-      id = paste(inputId, '_progress', sep=''),
+      id = paste(inputId, '_progress', sep = ''),
       class = 'progress progress-striped active shiny-file-input-progress',
       tags$div(class = 'progress-bar')
     )
@@ -110,13 +110,13 @@ searchboxInput <- function(
   color = 'primary', outline = FALSE, size = c('normal', 'sm', 'lg'),
   searchAsYouType = FALSE) {
 
-  outline <- ifelse(outline, 'outline-', '')
+  outline <- if (outline) 'outline-' else ''
   size <- match.arg(size)
 
   if (is.null(button) & is.null(icon))
     button <- 'Search'
   if (is.null(button))
-    button <- tags$i(class = paste0('oi oi-', icon))
+    button <- tags$i(class = sprintf('oi oi-%s', icon))
 
   size <- list(
     form = switch(size, 'lg' = 'form-control-lg', 'sm' = 'form-control-sm', ''),
@@ -128,7 +128,7 @@ searchboxInput <- function(
   
   inputTag <- tags$input(
     id = inputId, type = 'text', class = 'form-control', class = size$form,
-    value = value, placeholder = placeholder, `aria-labelledby` = paste0(inputId, '-btn')
+    value = value, placeholder = placeholder, `aria-labelledby` = sprintf('%s-btn', inputId)
   )
   
   if (searchAsYouType) inputTag <- tagAppendAttributes(inputTag, 'data-sayt' = 'true')
@@ -142,7 +142,7 @@ searchboxInput <- function(
       tags$div(
         class = 'input-group-append searchbox-button',
         tags$button(
-          class = paste0('btn btn-', outline, color), class = size$btn,
+          class = sprintf('btn btn-%s%s', outline, color), class = size$btn,
           type = 'button', button))
     )
   )
@@ -161,7 +161,7 @@ searchboxInput <- function(
 #' @param outline Should the button be an outline button? Default value \code{TRUE}.
 #' @param size A character string giving the size of the input. Valid options are \code{normal},
 #'   \code{sm} and \code{lg}. Defaults to \code{normal}
-#' @param direction The direction of the menu. Default value \code{'up'}.
+#' @param direction The direction of the menu. Default value \code{'down'}.
 #'
 #' @export
 dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FALSE, icon = NULL,
@@ -170,7 +170,7 @@ dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FA
 
   selected <- restoreInput(id = inputId, default = selected)
 
-  outline <- ifelse(outline, 'outline-', '')
+  outline <- if (outline) 'outline-' else ''
   size <- match.arg(size)
   size <- switch(size, 'normal' = '', sprintf('btn-%s', size))
   direction <- match.arg(direction)
@@ -182,7 +182,7 @@ dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FA
   })
 
   div(
-    class = paste('dropdown dropdownmenu', direction),
+    class = 'dropdown dropdownmenu', class = direction,
     id = inputId,
     tags$button(
       class = sprintf('dropdown-toggle btn btn-%s%s %s', outline, color, size),
@@ -243,20 +243,22 @@ toggleButton <- function(inputId, label, color = 'primary', outline = TRUE,
                          size = c('normal', 'sm', 'lg'), active = FALSE) {
 
   active <- restoreInput(id = inputId, default = active)
-
-  outline <- ifelse(outline, 'outline-', '')
-  color <- sprintf('btn-%s%s', outline, color)
   size <- match.arg(size)
-  size <- ifelse(size %in% c('lg', 'sm'), paste0('btn-', size), '')
+  
+  outline <- if (outline) 'outline-' else ''
+  color <- sprintf('btn-%s%s', outline, color)
+  size <- switch(size, normal = '', sprintf('btn-%s', size))
+  active <- if (active) 'active' else ''
 
   div(class = 'form-group shiny-input-container',
     tags$button(
       id = inputId,
-      class = paste('toggle btn', size, color, ifelse(active, 'active', '')),
+      class = sprintf('toggle btn %s%s', color, size),
+      class = active,
       `data-toggle` = 'button',
-      `aria-pressed` = ifelse(active, 'true', 'false'),
+      `aria-pressed` = switch(active, active = 'true', 'false'),
       `autocomplete` = 'off',
-      `data-value` = ifelse(active, 'true', 'false'),
+      `data-value` = switch(active, active = 'true', 'false'),
       label
     )
   )
@@ -311,10 +313,10 @@ slicerInput <- function(inputId, label, choices, selected = NULL, color = 'prima
   if (is.null(names(choices))) names(choices) <- choices
 
   html <- mapply(choices, names(choices), SIMPLIFY = FALSE, FUN = function(btn, label) {
-    active <- ifelse(btn %in% selected, 'active', '')
+    active <- if (btn %in% selected) 'active' else ''
     tags$button(
       class = paste('slicer-input btn btn-pill', color, active), `data-value` = btn,
-      `aria-pressed` = ifelse(active == 'active', 'true', 'false'),
+      `aria-pressed` = switch(active, active = 'true', 'false'),
       htmlEscape(label))
   })
 
