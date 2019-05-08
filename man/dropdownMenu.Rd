@@ -29,7 +29,7 @@ dropdownMenu(inputId, label, choices, selected = NULL,
 \item{size}{A character string giving the size of the input. Valid options are \code{normal},
 \code{sm} and \code{lg}. Defaults to \code{normal}}
 
-\item{direction}{The direction of the menu. Default value \code{'up'}.}
+\item{direction}{The direction of the menu. Default value \code{'down'}.}
 }
 \description{
 Create a dropdown menu for inputs
