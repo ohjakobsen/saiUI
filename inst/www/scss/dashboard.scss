@@ -8,6 +8,11 @@ body {
   vertical-align: text-bottom;
 }
 
+#navlist i {
+  width: 1.2em;
+  text-align: center;
+}
+
 /*
  * Sidebar
  */
@@ -33,6 +38,19 @@ body {
     border-radius: 0;
   }
 
+  .nav-link .feather {
+    margin-right: 4px;
+    color: #999;
+  }
+
+  .nav-link.active {
+    color: #007bff;
+  }
+
+  .nav-link:hover .feather, .nav-link.active .feather {
+    color: inherit;
+  }
+
 }
 
 .sidebar-sticky {
@@ -43,20 +61,6 @@ body {
   padding-top: .5rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
-
-.sidebar .nav-link .feather {
-  margin-right: 4px;
-  color: #999;
-}
-
-.sidebar .nav-link.active {
-  color: #007bff;
-}
-
-.sidebar .nav-link:hover .feather,
-.sidebar .nav-link.active .feather {
-  color: inherit;
 }
 
 .sidebar-heading {
@@ -110,3 +114,10 @@ body {
 
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+/* Would any CSS file be complete without a bullshit hack for IE 10 and 11? */
+@media all and (-ms-high-contrast: none), (-ms-hig-contrast: active) {
+  #mainnav {
+    position: relative;
+  }
+}
