@@ -1,3 +1,41 @@
+saiUI 0.6.0
+===============
+
+This release fixes several outstanding issues and brings improvement to performance and improved UI functions.
+
+## Full changelog
+
+### Breaking changes
+
+* R version 3.5.0 or higher and shiny version 1.2.0 or higher are now required.
+* `bs4Lib()` now requires a boolean value for the `theme` argument.
+
+### New features
+
+* New functions to add [Bootstrap 4 modals](https://getbootstrap.com/docs/4.3/components/modal/).
+* New function `bs4Dropdown()` to create a dropdown with arbitrary UI elements
+* Added ability to change text direction for the `html` element with the new `dir` argument to `bs4Page()`.
+
+### Improvements
+
+* Changes to how custom themes are added. Themes will be loaded before any dependencies by adding them directly in the HTML template. The theme argument now also supports objects of type `html_dependency`.
+* `saiDashboard()` gains a `theme` argument.
+* Changes to how dependency files are loaded into saiUI. Files are only loaded with the `htmlDependency()` function, and not using `addResourcePath()` on package load.
+* Improved html markup on `saiPage()` using flexbox to fill the page if footer is present.
+* New arguments `center` and `small` in `footerContent()` to allow for centered text and smaller font size.
+* New argument `searchAsYouType` to `searchboxInput()` to control if input value should be sent to Shiny while the user is typing or not. Defaults to `TRUE` (the old behavior)
+* Clear button in `searchboxInput()` will now be removed if the search string is empty.
+* Finally updated the `searchboxInput()` binding methods so that they properly identify the input field and enforce new rate policies depending on the settings on the input
+* SASS files are now up to date
+* Performance improvments to most HTML-generating functions
+
+### Bugfixes
+
+* Removed `href` attribute from anchor elements in `dropdownMenu()` (and added `role` and `tabindex` attributes) to prevent the page from scrolling to the top when an option is selected.
+* Updated subscribe and unsubscribe methods for all input bindings so that they work properly
+* Updated bindings and custom functions for `toggleButton()`. We now listen to a change event instead of a click event to allow the relevant JS-functions to change the attribute values before they are sent to Shiny.
+* Additional classes are now properly added to `cardGroup()`.
+
 saiUI 0.5.2
 ===============
 
@@ -22,16 +60,16 @@ This release updates Bootstrap to version 4.3.1 and include several bugfixes for
 ## Full changelog
 
 * Update to Bootstrap 4.3.1.
-* New function `switchInput()` that uses the new custom switch class in Bootstrap 4.2+.
+* New function `switchInput()` that uses the new custom switch class available in Bootstrap 4.2+.
 * Better mobile support for dashboard pages.
 * Adds `data-target` attribute to anchor elements in `saiPage()`, `dashboardPage()`, and `tabsetPanel()` to fix issue with `shiny-server-client.js` on Shiny Server
 * `bs4Embed()` now properly supports the `type` argument, and adds `embed` as a new valid type
-* Added html template in order for the `lang` attribute to be properly added to the `html` tag
 * Changed `color` argument to accept any value in inputs (to better support Bootstrap themes).
-* `id` can now be properly assigned to the navbar in `saiPage()`.
 * Added `class` argument to `cardGroup()`
 * Argument `classes` is deprecaed in `dashboardCard()`. Use `class` instead
 * `saiLib` is renamed `bs4Lib()`.
+* Bugfix: Added html template in order for the `lang` attribute to be properly added to the `html` tag
+* Bugfix: `id` can now be properly assigned to the navbar in `saiPage()`.
 
 saiUI 0.4.0
 ===============
@@ -68,7 +106,7 @@ saiUI 0.3.1
 
 * `saiDashboard()` now supports restore feature in `shiny`
 * Ability to select a different default panel in `saiDashboard()` with the `selected` parameter
-* New functions `dashboardCard()` and `cardGroup()` to create Bootstrap style cards and group of cards. See the [Bootstrap documentation](https://getbootstrap.com/docs/4.1/components/card/)
+* New functions `dashboardCard()` and `cardGroup()` to create Bootstrap style cards and group of cards. See the [Bootstrap documentation](https://getbootstrap.com/docs/4.3/components/card/)
 * Tabs in navbar on `saiPage()` can now be hidden by default
 * Wrapper for `helpText()` with update to BS4 (class `help-block` deprecated in BS4)
 
@@ -92,7 +130,7 @@ saiUI 0.3.0
 saiUI 0.2.0
 ===============
 
-* New layout for interactice dashboards available with the function `saiDashboard()`. See `?saiDashboard` for more information
+* New layout for interactive dashboards available with the function `saiDashboard()`. See `?saiDashboard` for more information
 * Update to Bootstrap 4.1.1
 * Added `sidebarLayout()` function that masks the Shiny function
 * Bootstrap `rows` are now wrapped in either `container` or `container-fluid` elements
