@@ -4,9 +4,9 @@
 \alias{saiDashboard}
 \title{Dashboard page}
 \usage{
-saiDashboard(title, ..., selected = NULL, color = "dark",
-  brand = title, windowTitle = title, header = NULL, footer = NULL,
-  lang = "en", dir = "ltr")
+saiDashboard(title, ..., selected = NULL, footer = NULL,
+  header = NULL, theme = NULL, color = "dark", brand = title,
+  windowTitle = title, lang = "en", dir = "ltr")
 }
 \arguments{
 \item{title}{The title for the page.}
@@ -16,15 +16,18 @@ saiDashboard(title, ..., selected = NULL, color = "dark",
 \item{selected}{The \code{value} of the panel that should be selected by default.
 If \code{NULL}, the first panel will be selected.}
 
+\item{footer}{Tag or list of tags to display on the botton of the page.}
+
+\item{header}{Tag or list of tags to display on top of page.}
+
+\item{theme}{A character string or a \code{\link[htmltools]{htmlDependency}}-object
+with an alternate Bootstrap 4 stylesheet.}
+
 \item{color}{A string indicating the color of the top navigation}
 
 \item{brand}{A string indicating the brand for the page}
 
 \item{windowTitle}{The title that should be displayed by the browser window.}
-
-\item{header}{Tag or list of tags to display on top of page.}
-
-\item{footer}{Tag or list of tags to display on the botton of the page.}
 
 \item{lang}{The language of the page that is added to the top level \code{html} element.}
 

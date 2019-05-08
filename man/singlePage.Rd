@@ -11,7 +11,8 @@ singlePage(title, ..., theme = NULL, lang = "en")
 
 \item{...}{The UI elements of the page.}
 
-\item{theme}{Alternate Bootstrap 4 stylesheet.}
+\item{theme}{A character string or a \code{\link[htmltools]{htmlDependency}}-object
+with an alternate Bootstrap 4 stylesheet.}
 
 \item{lang}{The language of the page that is added to the top level \code{html} element.}
 }

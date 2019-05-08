@@ -7,17 +7,36 @@ NULL
 #'
 #' @param ... The UI elements of the page.
 #' @param title The title for the page.
-#' @param theme Alternate Bootstrap 4 stylesheet.
+#' @param theme A character string or a \code{\link[htmltools]{htmlDependency}}-object
+#'   with an alternate Bootstrap 4 stylesheet.
 #' @param deps Additional dependencies to add to the page.
 #' @param lang The language of the page that is added to the top level \code{html} element.
 #' @param dir Indicate the directionality of text in the \code{html} page
 #'
 #' @export
 bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en', dir = 'ltr') {
-
-  # If we have a theme (and not an empty string), well add the proper style tag
-  if (!is.null(theme) && nzchar(theme))
-    theme <- tags$link(rel="stylesheet", type="text/css", href = theme)
+  
+  if (!is.null(deps)) {
+    if (is.list(deps) && !all(sapply(deps, inherits, 'html_dependency')))
+      stop('You can only include objects of type html_dependency in the deps argument!')
+    else if (is.list(deps) && all(sapply(deps, inherits, 'html_dependency')))
+      deps <- deps
+    else if (inherits(deps, 'html_dependency'))
+      deps <- list(deps)
+    else
+      deps <- NULL
+  }
+  
+  if (!is.null(theme)) {
+    if (inherits(theme, 'html_dependency') && !is.null(deps))
+      deps <- c(deps, list(theme))
+    else if (inherits(theme, 'html_dependency') && is.null(deps))
+      deps <- list(theme)
+    else if (is.character(theme) && nzchar(theme))
+      theme <- tags$link(rel="stylesheet", type="text/css", href = theme)
+    else
+      theme <- NULL
+  }
   
   # Render the html template
   html <- htmlTemplate(
@@ -31,7 +50,7 @@ bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en', d
   
   attachDependencies(
     html,
-    bs4Lib(theme, deps)
+    bs4Lib(is.null(theme), deps)
   )
 
 }
@@ -41,16 +60,19 @@ bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en', d
 #' This function returns a set of web dependencies necessary for using Bootstrap
 #' components in a web page
 #'
-#' @param theme Alternate Bootstrap 4 stylesheet.
+#' @param theme If \code{TRUE} the default Bootstrap theme will be added.
 #' @param deps Additional dependencies to add to the page.
 #'
 #' @export
-bs4Lib <- function(theme = NULL, deps = NULL) {
+bs4Lib <- function(theme = TRUE, deps = NULL) {
+  if (!is.null(deps) && !is.list(deps))
+    stop('You need to provide a list of dependencies with the deps argument!')
+  
   libs <- list(
     htmlDependency('bootstrap', '4.3.1',
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
-      stylesheet = if (is.null(theme)) 'css/bootstrap.min.css',
+      stylesheet = if (theme) 'css/bootstrap.min.css',
       meta = list(viewport = 'width=device-width, initial-scale=1, shrink-to-fit=no')
     ),
     htmlDependency('saiUI', packageVersion('saiUI'),
@@ -61,7 +83,7 @@ bs4Lib <- function(theme = NULL, deps = NULL) {
         'oi/css/open-iconic-bootstrap.min.css')
     )
   )
-  if (!is.null(deps)) libs <- append(libs, deps)
+  if (!is.null(deps)) libs <- c(libs, deps)
   libs
 }
 
@@ -152,7 +174,7 @@ saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, foote
 #' @export
 saiMenu <- function(..., width = 4, color = 'light') {
   
-  text_color <- ifelse(!(color %in% c('light', 'white', 'info')), 'text-white', '')
+  text_color <- if (!(color %in% c('light', 'white', 'info'))) 'text-white' else ''
 
   div(class = sprintf('col-md-%s bg-%s %s pt-2', width, color, text_color),
       tags$form(...)
@@ -186,7 +208,7 @@ saiMain <- function(..., width = 8) {
 #' @export
 headerContent <- function(..., color = 'primary') {
   
-  text_color <- ifelse(!(color %in% c('light', 'white', 'info')), 'text-white', '')
+  text_color <- if (!(color %in% c('light', 'white', 'info'))) 'text-white' else ''
   color <- paste0('bg-', color)
   
   div(class = paste(color, text_color, 'clearfix'),

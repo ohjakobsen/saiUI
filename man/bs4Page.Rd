@@ -12,7 +12,8 @@ bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en",
 
 \item{title}{The title for the page.}
 
-\item{theme}{Alternate Bootstrap 4 stylesheet.}
+\item{theme}{A character string or a \code{\link[htmltools]{htmlDependency}}-object
+with an alternate Bootstrap 4 stylesheet.}
 
 \item{deps}{Additional dependencies to add to the page.}
 

@@ -7,18 +7,18 @@
 #' @param ... The UI elements of the page.
 #' @param selected The \code{value} of the panel that should be selected by default.
 #'   If \code{NULL}, the first panel will be selected.
+#' @param header Tag or list of tags to display on top of page.
+#' @param footer Tag or list of tags to display on the botton of the page.
 #' @param color A string indicating the color of the top navigation
 #' @param brand A string indicating the brand for the page
 #' @param windowTitle The title that should be displayed by the browser window.
-#' @param header Tag or list of tags to display on top of page.
-#' @param footer Tag or list of tags to display on the botton of the page.
 #'
 #' @seealso \code{\link{dashboardPanel}}
 #'
 #' @export
-saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = title,
-                         windowTitle = title, header = NULL, footer = NULL, lang = 'en',
-                         dir = 'ltr') {
+saiDashboard <- function(title, ..., selected = NULL, footer = NULL, header = NULL,
+                         theme = NULL, color = 'dark', brand = title, windowTitle = title,
+                         lang = 'en', dir = 'ltr') {
 
   pageTitle <- title
 
@@ -63,7 +63,7 @@ saiDashboard <- function(title, ..., selected = NULL, color = 'dark', brand = ti
 
   bs4Page(
     title = windowTitle,
-    theme = NULL,
+    theme = theme,
     lang = lang,
     dir = dir,
     deps = deps,

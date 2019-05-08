@@ -5,12 +5,12 @@
 \alias{saiLib}
 \title{Bootstrap Libraries}
 \usage{
-bs4Lib(theme = NULL, deps = NULL)
+bs4Lib(theme = TRUE, deps = NULL)
 
-saiLib(theme = NULL, deps = NULL)
+saiLib(theme = TRUE, deps = NULL)
 }
 \arguments{
-\item{theme}{Alternate Bootstrap 4 stylesheet.}
+\item{theme}{If \code{TRUE} the default Bootstrap theme will be added.}
 
 \item{deps}{Additional dependencies to add to the page.}
 }

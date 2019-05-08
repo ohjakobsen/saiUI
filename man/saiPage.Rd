@@ -21,7 +21,8 @@ saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
 
 \item{footer}{Tag or list of tags to display as a common footer below all tabPanels.}
 
-\item{theme}{Alternate Bootstrap 4 stylesheet.}
+\item{theme}{A character string or a \code{\link[htmltools]{htmlDependency}}-object
+with an alternate Bootstrap 4 stylesheet.}
 
 \item{color}{Color for the navbar. Supports all Bootstrap 4 colors.}
 
