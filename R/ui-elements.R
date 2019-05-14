@@ -10,12 +10,12 @@
 #' @export
 bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
   
-  classes <- paste0('alert alert-', color)
+  classes <- sprintf('alert alert-%s', color)
   if (dismissable) classes <- paste(classes, 'alert-dismissible fade show')
   
   if (!is.null(icon)) {
-    icon <- tags$i(class = paste0('oi oi-', icon))
-    classes <- paste(classes, 'alert-icon')
+    icon <- tags$i(class = sprintf('oi oi-%s', icon))
+    classes <- sprintf('%s alert-icon', classes)
   }
   
   divTag <- div(class = classes, role = 'alert', list(icon, ...))
