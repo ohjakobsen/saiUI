@@ -222,8 +222,8 @@ headerContent <- function(..., color = 'primary') {
 #' 
 #' @param ... The text to include in the footer
 #' @param color The background color for the text. Must be a valid Bootstrap 4 color
-#' @param center Boolean. If \code{TRUE} the text will be centered
-#' @param small Boolean. If \code{TRUE} the text will be smaller than the body text
+#' @param center If \code{TRUE} the text will be centered
+#' @param small If \code{TRUE} the text will be smaller than the body text
 #' 
 #' @export
 footerContent <- function(..., color = 'light', center = TRUE, small = FALSE) {
@@ -243,8 +243,8 @@ footerContent <- function(..., color = 'light', center = TRUE, small = FALSE) {
 #' \code{\link{saiPage}}.
 #'
 #' @param ... UI elements to include in the layout
-#' @param fluid \code{TRUE} to use a fluid layout (100% width on all devices), or \code{FALSE}
-#'   to use a responsive layout. Defalts to \code{FALSE}
+#' @param fluid If \code{TRUE} use a fluid layout (100% width on all devices). If \code{FALSE}
+#'   use a responsive layout. Defalts to \code{FALSE}
 #'
 #' @examples
 #' # Simple "Hello world" example
@@ -417,8 +417,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
     isTRUE(attr(x, 'selected', exact = TRUE))
   }
 
-  # Returns TRUE if a list of tab items contains a selected tab, FALSE
-  # otherwise.
+  # Returns TRUE if a list of tab items contains a selected tab, FALSE otherwise.
   containsSelected <- function(tabs) {
     any(vapply(tabs, isSelected, logical(1)))
   }

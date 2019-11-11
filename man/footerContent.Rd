@@ -11,9 +11,9 @@ footerContent(..., color = "light", center = TRUE, small = FALSE)
 
 \item{color}{The background color for the text. Must be a valid Bootstrap 4 color}
 
-\item{center}{Boolean. If \code{TRUE} the text will be centered}
+\item{center}{If \code{TRUE} the text will be centered}
 
-\item{small}{Boolean. If \code{TRUE} the text will be smaller than the body text}
+\item{small}{If \code{TRUE} the text will be smaller than the body text}
 }
 \description{
 Add a text message below the content area on \code{\link{saiPage}}

@@ -9,8 +9,8 @@ singleLayout(..., fluid = FALSE)
 \arguments{
 \item{...}{UI elements to include in the layout}
 
-\item{fluid}{\code{TRUE} to use a fluid layout (100% width on all devices), or \code{FALSE}
-to use a responsive layout. Defalts to \code{FALSE}}
+\item{fluid}{If \code{TRUE} use a fluid layout (100% width on all devices). If \code{FALSE}
+use a responsive layout. Defalts to \code{FALSE}}
 }
 \description{
 Create a single coloumn responsive layout. This function should be used together with
