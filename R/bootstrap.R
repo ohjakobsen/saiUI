@@ -295,16 +295,16 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
   i <- 1
   tabs <- lapply(tabs, function(t) {
 
-    class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
+    class <- if (i == tabselect) 'nav-link active' else 'nav-link'
     id <- gsub('\\s', '', t$attribs$id)
-    selected <- ifelse(i == tabselect, 'true', 'false')
+    selected <- if (i == tabselect) 'true' else 'false'
     i <<- i + 1
-    style <- ifelse(t$attribs$`aria-hidden`, 'display: none;', '')
+    style <- if (t$attribs$`aria-hidden`) 'display: none;' else ''
     
     list(
       tags$li(class='nav-item', style = style, a(
-        id = paste0(id, '-tab'), class = class, `data-value` = t$attribs$id,
-        `data-target` = paste0('#', id), href = paste0('#', id), `data-toggle` = 'pill',
+        id = sprintf('%s-tab', id), class = class, `data-value` = t$attribs$id,
+        `data-target` = sprintf('#%s', id), href = sprintf('#%s', id), `data-toggle` = 'pill',
         t$attribs$title, `role` = 'tab', `aria-selected` = selected, `aria-controls` = id)
       )
     )
@@ -534,8 +534,8 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
 
         # create the a tag
         aTag <- tags$a(
-          href = paste0("#", thisId), class = 'nav-link', `data-toggle` = 'tab',
-          `data-target` = paste0('#', thisId), `data-value` = tabValue)
+          href = sprintf('#%s', thisId), class = 'nav-link', `data-toggle` = 'tab',
+          `data-target` = sprintf('#%s', thisId), `data-value` = tabValue)
 
         # append optional icon
         aTag <- appendIcon(aTag, divTag$attribs$`data-icon-class`)
