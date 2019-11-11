@@ -134,11 +134,13 @@ saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, foote
   else
     tabselect <- 1
   
-  tabs[[tabselect]]$attribs$class <- 'tab-pane fade show active'
-
-  class = paste0(
-    'mainnav navpage navbar navbar-expand-lg ',
-    ifelse(color == 'light', 'navbar-light', 'navbar-dark'), ' bg-', color
+  tabClass <- tabs[[tabselect]]$attribs$class
+  tabs[[tabselect]]$attribs$class <- sprintf('%s show active', tabClass)
+  
+  class <- sprintf(
+    'mainnav navpage navbar navbar-expand-lg %s bg-%s',
+    if (color == 'light') 'navbar-light' else 'navbar-dark',
+    color
   )
 
   navItems <- buildNavbar(pageTitle, tabs, tabselect, color)
