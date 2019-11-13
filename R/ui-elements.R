@@ -116,7 +116,7 @@ bs4Dropdown <- function(title, ..., color = 'primary', outline = FALSE,
     ),
     div(
       class = 'dropdown-menu p-3',
-      `data-autoclose` = ifelse(autoclose, 'true', 'false'),
+      `data-autoclose` = if (autoclose) 'true' else 'false',
       style = sprintf('width: %spx; max-width: 90vw;', width),
       div(...))
   )

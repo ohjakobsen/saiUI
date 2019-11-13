@@ -129,9 +129,9 @@ buildDashboardNav <- function(tabs, tabselect) {
   tabs <- lapply(tabs, function(t) {
 
     icon <- tags$i(class = sprintf('oi oi-%s', t$attribs$`data-icon-class`))
-    class <- ifelse(i == tabselect, 'nav-link active', 'nav-link')
+    class <- if (i == tabselect) 'nav-link active' else 'nav-link'
     id <- gsub('\\s', '', t$attribs$id)
-    selected <- ifelse(i == tabselect, 'true', 'false')
+    selected <- if (i == tabselect) 'true' else 'false'
     i <<- i + 1
 
     tags$li(class = 'nav-item', a(
@@ -211,9 +211,9 @@ dashboardCard <- function(..., header = NULL, footer = NULL, color = NULL, class
   if (is.null(color))
     class <- paste('card', class)
   else if (color == 'light')
-    class <- paste('card bg-light', class)
+    class <- sprintf('card bg-light %s', class)
   else
-    class <- paste(paste0('card text-white bg-', color), class)
+    class <- sprintf('card text-white bg-%s %s', color, class)
 
   divTag <- div(class = class)
 
@@ -295,12 +295,12 @@ cardNav <- function(navId, ...) {
 
     id <- el$attribs$id
     title <- el$attribs$`data-title`
-    class <- ifelse(i == 1, 'nav-link active', 'nav-link')
+    class <- if (i == 1) 'nav-link active' else 'nav-link'
     i <<- i + 1
 
     tags$li(
       class = 'nav-item',
-      tags$a(class = class, `data-toggle` = 'tab', role = 'tab', href = paste0('#', id), title)
+      tags$a(class = class, `data-toggle` = 'tab', role = 'tab', href = sprintf('#%s', id), title)
     )
 
   })

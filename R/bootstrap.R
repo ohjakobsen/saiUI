@@ -211,7 +211,7 @@ saiMain <- function(..., width = 8) {
 headerContent <- function(..., color = 'primary') {
   
   text_color <- if (!(color %in% c('light', 'white', 'info'))) 'text-white' else ''
-  color <- paste0('bg-', color)
+  color <- sprintf('bg-%s', color)
   
   div(class = paste(color, text_color, 'clearfix'),
       p(class = 'p-2 m-0', ...))
@@ -344,7 +344,7 @@ saiTab <- function(title, ..., value = title, icon = NULL, hidden = FALSE) {
   value <- tolower(gsub(' ', '', value, fixed = TRUE))
   divTag <- div(
     class = 'tab-pane fade', id = value, title = title, `role` = 'tabpanel',
-    `aria-labelledby` = (paste0(value, '-tab')), `data-value` = value,
+    `aria-labelledby` = sprintf('%s-tab', value), `data-value` = value,
     `data-icon-class` = NULL, `aria-hidden` = hidden, ...
     )
 }
@@ -551,7 +551,7 @@ buildTabset <- function(tabs, ulClass, textFilter = NULL,
         # If selected, set appropriate classes on li tag and div tag.
         if (isSelected(divTag)) {
           liTag$children[[1]]$attribs$class <- 'nav-link active'
-          divTag$attribs$class <- "tab-pane active"
+          divTag$attribs$class <- 'tab-pane active'
         }
 
         divTag$attribs$title <- NULL
