@@ -22,7 +22,8 @@ you could also use any other HTML, like an image.}
 \item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'};
 see \code{\link{validateCssUnit}}.}
 
-\item{size}{The size of the button.}
+\item{size}{The size of the button. Use \code{sm} for small and \code{lg} for
+large buttons.}
 
 \item{...}{Named attributes to be applied to the button or link.}
 }

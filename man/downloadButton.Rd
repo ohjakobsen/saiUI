@@ -15,11 +15,12 @@ is assigned to.}
 
 \item{color}{Alternate Bootstrap 4 stylesheet.}
 
-\item{outline}{Should the button be an outline button? Default value FALSE.}
+\item{outline}{Should the button be an outline button? Default value \code{FALSE}.}
 
 \item{class}{Additional CSS classes to apply to the tag, if any.}
 
-\item{size}{The size of the button.}
+\item{size}{The size of the button. Use \code{sm} for small and \code{lg} for
+large buttons.}
 
 \item{...}{Other arguments to pass to the container tag function.}
 }

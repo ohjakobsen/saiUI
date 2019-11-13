@@ -27,9 +27,16 @@ control.}
 \item{size}{A character string giving the size of the input. Valid options are \code{normal},
 \code{sm} and \code{lg}. Defaults to \code{normal}}
 
-\item{searchAsYouType}{A boolean value to determine when a value should be sendt to
-Shiny. See details.}
+\item{searchAsYouType}{If \code{TRUE}, the value will be continously updated to
+  Shiny. See details.
+ 
+If \code{searchAsYouType} is set to \code{TRUE}, values will be sent to Shiny as
+the user types (with a slight delay to account for continous typing). This is the
+default behaviour. If the input invalidates an expensive reactive function on the
+server, \code{searchAsYouType} can be set to \code{FALSE}. The value will then
+only be updated on the server when the user presses the search button, or presses
+the enter key.}
 }
 \description{
-Create a searchbox input
+Create an input control for text that behaves as a search field.
 }

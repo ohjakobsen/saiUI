@@ -4,14 +4,15 @@
 #'
 #' @param color Alternate Bootstrap 4 stylesheet.
 #' @param outline Should the button be an outline button? Default value \code{FALSE}.
-#' @param size The size of the button.
+#' @param size The size of the button. Use \code{sm} for small and \code{lg} for
+#'   large buttons.
 #'
 #' @export
 actionButton <- function(inputId, label, color = 'primary', outline = FALSE, icon = NULL,
                          width = NULL, size = c('normal', 'sm', 'lg'), ...) {
 
   value <- restoreInput(id = inputId, default = NULL)
-  color <- sprintf('btn-%s%s', ifelse(outline, 'outline-', ''), color)
+  color <- sprintf('btn-%s%s', if (outline) 'outline-' else '', color)
   size <- match.arg(size)
 
   size <- switch(size, normal = '', sprintf('btn-%s', size))
@@ -27,10 +28,7 @@ actionButton <- function(inputId, label, color = 'primary', outline = FALSE, ico
 #' Create a download button or link
 #'
 #' @inherit shiny::downloadButton
-#'
-#' @param color Alternate Bootstrap 4 stylesheet.
-#' @param outline Should the button be an outline button? Default value FALSE.
-#' @param size The size of the button.
+#' @inheritParams actionButton
 #'
 #' @export
 downloadButton <- function(outputId, label = 'Download', color = 'primary', outline = FALSE,
@@ -90,6 +88,8 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
 }
 
 #' Create a searchbox input
+#' 
+#' Create an input control for text that behaves as a search field.
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
 #' @param value A character string with the default value of the search box
@@ -101,8 +101,15 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
 #' @param outline Should the button be an outline button? Default value FALSE.
 #' @param size A character string giving the size of the input. Valid options are \code{normal},
 #'   \code{sm} and \code{lg}. Defaults to \code{normal}
-#' @param searchAsYouType A boolean value to determine when a value should be sendt to
+#' @param searchAsYouType If \code{TRUE}, the value will be continously updated to
 #'   Shiny. See details.
+#'  
+#' If \code{searchAsYouType} is set to \code{TRUE}, values will be sent to Shiny as
+#' the user types (with a slight delay to account for continous typing). This is the
+#' default behaviour. If the input invalidates an expensive reactive function on the
+#' server, \code{searchAsYouType} can be set to \code{FALSE}. The value will then
+#' only be updated on the server when the user presses the search button, or presses
+#' the enter key.
 #'
 #' @export
 searchboxInput <- function(
@@ -308,7 +315,7 @@ slicerInput <- function(inputId, label, choices, selected = NULL, color = 'prima
   else if (!multiple)
     selected <- firstChoice(selected)
 
-  color <- sprintf('btn-%s%s', ifelse(outline, 'outline-', ''), color)
+  color <- sprintf('btn-%s%s', if (outline) 'outline-' else '', color)
 
   if (is.null(names(choices))) names(choices) <- choices
 
