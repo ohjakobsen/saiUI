@@ -4,9 +4,20 @@
 \alias{saiPage}
 \title{SAI page element}
 \usage{
-saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
-  footer = NULL, theme = NULL, color = "primary",
-  windowTitle = title, lang = "en", dir = "ltr")
+saiPage(
+  title,
+  ...,
+  id = NULL,
+  selected = NULL,
+  header = NULL,
+  footer = NULL,
+  theme = NULL,
+  color = "primary",
+  notifications = TRUE,
+  windowTitle = title,
+  lang = "en",
+  dir = "ltr"
+)
 }
 \arguments{
 \item{title}{The title to display in the navbar.}
@@ -25,6 +36,8 @@ saiPage(title, ..., id = NULL, selected = NULL, header = NULL,
 with an alternate Bootstrap 4 stylesheet.}
 
 \item{color}{Color for the navbar. Supports all Bootstrap 4 colors.}
+
+\item{notifications}{If \code{TRUE} (default), toast notifications are enabled}
 
 \item{windowTitle}{The title that should be displayed by the browser window.}
 

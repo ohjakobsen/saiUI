@@ -69,7 +69,7 @@ bs4Lib <- function(theme = TRUE, deps = NULL) {
     stop('You need to provide a list of dependencies with the deps argument!')
   
   libs <- list(
-    htmlDependency('bootstrap', '4.3.1',
+    htmlDependency('bootstrap', '4.4.1',
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
       stylesheet = if (theme) 'css/bootstrap.min.css',
@@ -116,12 +116,14 @@ singlePage <- function(title, ..., theme = NULL, lang = 'en') {
 #' @param header Tag or list of tags to display as a common header above all tabPanels.
 #' @param footer Tag or list of tags to display as a common footer below all tabPanels.
 #' @param color Color for the navbar. Supports all Bootstrap 4 colors.
+#' @param notifications If \code{TRUE} (default), toast notifications are enabled
 #' @param windowTitle The title that should be displayed by the browser window.
 #'
 #' @export
-saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, footer = NULL,
-                    theme = NULL, color = 'primary', windowTitle = title, lang = 'en',
-                    dir = 'ltr') {
+saiPage <- function(
+  title, ..., id = NULL, selected = NULL, header = NULL, footer = NULL, theme = NULL,
+  color = 'primary', notifications = TRUE, windowTitle = title, lang = 'en', dir = 'ltr')
+{
 
   pageTitle <- title
   tabs <- list(...)
@@ -149,6 +151,7 @@ saiPage <- function(title, ..., id = NULL, selected = NULL, header = NULL, foote
   
   pageBody <- div(class = 'page-container')
   pageBody <- tagAppendChild(pageBody, tags$nav(class = class, id = id, navItems))
+  if (notifications) pageBody <- tagAppendChild(pageBody, toastWrapper())
   if (!is.null(header)) pageBody <- tagAppendChild(pageBody, div(class = 'header', header))
   pageBody <- tagAppendChild(pageBody, pageTabs)
   if (!is.null(footer)) pageBody <- tagAppendChild(pageBody, div(class = 'footer', footer))
