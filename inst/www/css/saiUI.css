@@ -103,3 +103,15 @@
   margin: .5rem;
   padding: 1rem;
 }
+
+#toast-container {
+  position: absolute;
+  margin: .375rem;
+  top: 0;
+  right: 0;
+  z-index: 999;
+}
+
+#toast-container > .toast {
+  min-width: 350px;
+}
