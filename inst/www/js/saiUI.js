@@ -20,6 +20,70 @@ $.fn.val = function () {
   return obj;
 }
 
+// Helper function for setting multiple attributes to an element
+function setAttributes(el, attrs) {
+  for(var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+}
+
+// Message is a list of five values; the title, the body, the id of the toast,
+// a boolean if the toast should autohide and the delay in hiding in seconds.
+function addToastMessage(message) {
+
+  var newMsg = document.createElement('div');
+
+  // Create a list of attributes
+  attrs = {
+    'role': 'alert',
+    'aria-live': 'assertive',
+    'aria-atomic': 'true',
+    'class': 'toast',
+    'id': message[2]
+  }
+
+  // If autohide is disabled, we need to set data-autohide to false. If not
+  // we add the data-delay attribute
+  if (message[3] == 'false') {
+    attrs['data-autohide'] = 'false';
+  } else {
+    attrs['data-delay'] = parseInt(message[4], 10);
+  }
+
+  // Set the attributes using our helper function
+  setAttributes(newMsg, attrs);
+
+  // HTMl for the close button
+  var btn = '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">'+
+  '<span aria-hidden="true">&times;</span></button>';
+
+  // Create the title and body elements and add them to the toast
+  var msgTitle = document.createElement('div');
+      msgTitle.setAttribute('class', 'toast-header');
+      msgTitle.innerHTML = '<strong class="mr-auto">' + message[0] + '</strong>' + btn;
+  var msgBody = document.createElement('div');
+      msgBody.setAttribute('class', 'toast-body');
+      msgBody.innerHTML = message[1];
+
+  newMsg.appendChild(msgTitle);
+  newMsg.appendChild(msgBody);
+
+  // Find the toast container element and add the toast notification
+  var toastContainer = document.getElementById('toast-container');
+  toastContainer.appendChild(newMsg);
+
+  // New notifications will not be shown by default. Therefore we need to apply
+  // the toast method to our new notification and set it to show
+  $('#' + message[2]).toast('show');
+
+}
+
+Shiny.addCustomMessageHandler('createToast', addToastMessage);
+
+function destroyToastMessage() {
+
+}
+
 $(document).ready(function() {
 
   // Change value on toggle button
@@ -105,7 +169,6 @@ $(document).ready(function() {
       // Trigger a change event on the parent element
       $(this).closest('.slicer').trigger('change');
     }
-    // console.log(this.className.split(/\s+/));
   });
 
   $('.navbar-collapse ul > li > a').on('click', function(){
