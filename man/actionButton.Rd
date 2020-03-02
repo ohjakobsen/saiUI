@@ -4,8 +4,17 @@
 \alias{actionButton}
 \title{Create an action button}
 \usage{
-actionButton(inputId, label, color = "primary", outline = FALSE,
-  icon = NULL, width = NULL, size = c("normal", "sm", "lg"), ...)
+actionButton(
+  inputId,
+  label,
+  color = "primary",
+  outline = FALSE,
+  icon = NULL,
+  class = NULL,
+  width = NULL,
+  size = c("normal", "sm", "lg"),
+  ...
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -15,12 +24,15 @@ you could also use any other HTML, like an image.}
 
 \item{color}{Alternate Bootstrap 4 stylesheet.}
 
-\item{outline}{Should the button be an outline button? Default value \code{FALSE}.}
+\item{outline}{If \code{TRUE}, background color will be removed from the button.
+Defaults to \code{FALSE}.}
 
-\item{icon}{An optional \code{\link{icon}} to appear on the button.}
+\item{icon}{An optional \code{\link[shiny:icon]{icon()}} to appear on the button.}
+
+\item{class}{Additional CSS classes to add to the button}
 
 \item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'};
-see \code{\link{validateCssUnit}}.}
+see \code{\link[shiny:validateCssUnit]{validateCssUnit()}}.}
 
 \item{size}{The size of the button. Use \code{sm} for small and \code{lg} for
 large buttons.}
@@ -31,6 +43,19 @@ large buttons.}
 Creates an action button or link whose value is initially zero, and increments by one
 each time it is pressed.
 }
+\section{Server value}{
+
+
+An integer of class \code{"shinyActionButtonValue"}. This class differs from
+ordinary integers in that a value of 0 is considered "falsy".
+This implies two things:
+\itemize{
+\item Event handlers (e.g., \code{\link[shiny:observeEvent]{observeEvent()}}, \code{\link[shiny:eventReactive]{eventReactive()}}) won't execute on initial load.
+\item Input validation (e.g., \code{\link[shiny:req]{req()}}, \code{\link[shiny:need]{need()}}) will fail on initial load.
+}
+
+}
+
 \examples{
 ## Only run examples in interactive R sessions
 if (interactive()) {
@@ -58,14 +83,14 @@ shinyApp(ui, server)
 }
 }
 \seealso{
-\code{\link{observeEvent}} and \code{\link{eventReactive}}
+\code{\link[shiny:observeEvent]{observeEvent()}} and \code{\link[shiny:eventReactive]{eventReactive()}}
 
-Other input elements: \code{\link{checkboxGroupInput}},
-  \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{dateRangeInput}}, \code{\link{fileInput}},
-  \code{\link{numericInput}}, \code{\link{passwordInput}},
-  \code{\link{radioButtons}}, \code{\link{selectInput}},
-  \code{\link{sliderInput}}, \code{\link{submitButton}},
-  \code{\link{textAreaInput}}, \code{\link{textInput}},
-  \code{\link{varSelectInput}}
+Other input elements: \code{\link[shiny]{checkboxGroupInput}},
+  \code{\link[shiny]{checkboxInput}}, \code{\link[shiny]{dateInput}},
+  \code{\link[shiny]{dateRangeInput}}, \code{\link[shiny]{fileInput}},
+  \code{\link[shiny]{numericInput}}, \code{\link[shiny]{passwordInput}},
+  \code{\link[shiny]{radioButtons}}, \code{\link[shiny]{selectInput}},
+  \code{\link[shiny]{sliderInput}}, \code{\link[shiny]{submitButton}},
+  \code{\link[shiny]{textAreaInput}}, \code{\link[shiny]{textInput}},
+  \code{\link[shiny]{varSelectInput}}
 }

@@ -4,8 +4,15 @@
 \alias{downloadButton}
 \title{Create a download button or link}
 \usage{
-downloadButton(outputId, label = "Download", color = "primary",
-  outline = FALSE, class = NULL, size = c("normal", "sm", "lg"), ...)
+downloadButton(
+  outputId,
+  label = "Download",
+  color = "primary",
+  outline = FALSE,
+  class = NULL,
+  size = c("normal", "sm", "lg"),
+  ...
+)
 }
 \arguments{
 \item{outputId}{The name of the output slot that the \code{downloadHandler}
@@ -15,7 +22,8 @@ is assigned to.}
 
 \item{color}{Alternate Bootstrap 4 stylesheet.}
 
-\item{outline}{Should the button be an outline button? Default value \code{FALSE}.}
+\item{outline}{If \code{TRUE}, background color will be removed from the button.
+Defaults to \code{FALSE}.}
 
 \item{class}{Additional CSS classes to apply to the tag, if any.}
 
@@ -27,7 +35,7 @@ large buttons.}
 \description{
 Use these functions to create a download button or link; when clicked, it
 will initiate a browser download. The filename and contents are specified by
-the corresponding \code{\link{downloadHandler}} defined in the server
+the corresponding \code{\link[shiny:downloadHandler]{downloadHandler()}} defined in the server
 function.
 }
 \examples{
@@ -47,5 +55,5 @@ downloadLink('downloadData', 'Download')
 }
 }
 \seealso{
-\code{\link{downloadHandler}}
+\code{\link[shiny:downloadHandler]{downloadHandler()}}
 }

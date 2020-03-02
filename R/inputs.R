@@ -3,25 +3,29 @@
 #' @inherit shiny::actionButton
 #'
 #' @param color Alternate Bootstrap 4 stylesheet.
-#' @param outline Should the button be an outline button? Default value \code{FALSE}.
+#' @param outline If \code{TRUE}, background color will be removed from the button.
+#'   Defaults to \code{FALSE}.
+#' @param class Additional CSS classes to add to the button
 #' @param size The size of the button. Use \code{sm} for small and \code{lg} for
 #'   large buttons.
 #'
 #' @export
-actionButton <- function(inputId, label, color = 'primary', outline = FALSE, icon = NULL,
-                         width = NULL, size = c('normal', 'sm', 'lg'), ...) {
+actionButton <- function(
+  inputId, label, color = 'primary', outline = FALSE, icon = NULL, class = NULL,
+  width = NULL, size = c('normal', 'sm', 'lg'), ...)
+{
 
   value <- restoreInput(id = inputId, default = NULL)
   color <- sprintf('btn-%s%s', if (outline) 'outline-' else '', color)
   size <- match.arg(size)
-
-  size <- switch(size, normal = '', sprintf('btn-%s', size))
+  size <- switch(size, normal = NULL, sprintf('btn-%s', size))
+  classes <- paste(c('shiny-download-link btn', size, color, class), collapse = ' ')
+  
   if (!is.null(icon)) icon <- tags$i(class = sprintf('oi oi-%s', icon))
 
   tags$button(
-    id = inputId, type = 'button', class = 'action-button btn',
-    class = size, class = color,
-    `data-val` = value, list(icon, label), ...
+    id = inputId, type = 'button', class = classes, `data-val` = value,
+    list(icon, label), ...
   )
 }
 
@@ -31,17 +35,20 @@ actionButton <- function(inputId, label, color = 'primary', outline = FALSE, ico
 #' @inheritParams actionButton
 #'
 #' @export
-downloadButton <- function(outputId, label = 'Download', color = 'primary', outline = FALSE,
-                           class = NULL, size = c('normal', 'sm', 'lg'), ...) {
+downloadButton <- function(
+  outputId, label = 'Download', color = 'primary', outline = FALSE, class = NULL,
+  size = c('normal', 'sm', 'lg'), ...)
+{
 
-  color <- sprintf('btn-%s%s', ifelse(outline, 'outline-', ''), color)
+  color <- sprintf('btn-%s%s', if (outline) 'outline-' else '', color)
   size <- match.arg(size)
-  size <- switch(size, normal = '', sprintf('btn-%s', size))
-
+  size <- switch(size, normal = NULL, sprintf('btn-%s', size))
+  classes <- paste(c('shiny-download-link btn', size, color, class), collapse = ' ')
+  
   aTag <- tags$a(
-    id = outputId, role = 'button', class = 'shiny-download-link btn',
-    class = size, class = color, href = '', target = '_blank', download = NA,
-    list(tags$i(class = 'oi oi-cloud-download'), label), ...)
+    id = outputId, role = 'button', class = classes, href = '', target = '_blank',
+    download = NA, list(tags$i(class = 'oi oi-cloud-download'), label), ...)
+  
 }
 
 #' File Upload Control
