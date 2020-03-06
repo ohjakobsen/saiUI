@@ -155,3 +155,55 @@ bs4Embed <- function(src, type = c('iframe', 'video', 'embed'), ratio = c(16, 9)
   divTag
   
 }
+
+#' Create an icon tag
+#' 
+#' Create an icon for use within a page or UI element, such as inside a button. This
+#' function extends and replaces the \code{\link[shiny]{icon}} function in \code{shiny}.
+#' 
+#' @param icon The icon name. Must be a valid icon name from Font Awesome Free,
+#'   Glyphicons or Open Iconic. Prefixes such as \code{fa-}, \code{glyphicon-} and
+#'   \code{oi-} are not needed.
+#' @param class Addictional classes to cutomize the style of the icon
+#' @param lib Icon library to use. See details.
+#' 
+#' @details 
+#' \code{shiny} supports the Font Awesome Free and Glyphicons libraries. In addition,
+#' \code{saiUI} supports the Open Iconic library. This is also the default library.
+#' See \code{\link[shiny]{icon}} for more details on using Font Awesome Free and
+#' Glyphicons.
+#' 
+#' UI elements that support icons, will use the default library. You can override this
+#' by using \code{createIcon} instead of a character vector, and specifying the
+#' \code{lib} argument.
+#' 
+#' @examples 
+#' \dontrun{
+#' # Create an action button with the default icon library
+#' actionButton("button", "A button", icon = "info")
+#' # Specify a custom library by using createIcon
+#' actionButton("button", "A button", icon = createIcon("info", lib = "font-awesome"))
+#' }
+#' 
+#' @export
+createIcon <- function(icon, class = NULL, lib = 'oi') {
+  
+  if (inherits(icon, 'shiny.tag') && icon$name == 'i') return(icon)
+  
+  lib <- match.arg(lib, c('oi', 'fa'))
+  
+  if (lib == 'oi') {
+    iconTag <- tags$i()
+    iconTag$attribs$class <- sprintf('oi oi-%s', icon)
+    htmlDependencies(iconTag) <- htmlDependency(
+      'openiconic', '1.1.0', 'www/oi', package = 'saiUI',
+      stylesheet = 'css/open-iconic-bootstrap.min.css'
+    )
+  } else if (lib == 'fa') {
+    iconTag <- shiny::icon(icon)
+  } else {
+    stop(lib, ' is an unknown icon library')
+  }
+  
+  htmltools::browsable(iconTag)
+  
