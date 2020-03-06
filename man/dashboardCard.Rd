@@ -4,8 +4,14 @@
 \alias{dashboardCard}
 \title{Create an information panel}
 \usage{
-dashboardCard(..., header = NULL, footer = NULL, color = NULL,
-  class = NULL, classes = NULL)
+dashboardCard(
+  ...,
+  header = NULL,
+  footer = NULL,
+  color = NULL,
+  class = NULL,
+  classes = NULL
+)
 }
 \arguments{
 \item{...}{The elements that should go into the card body}

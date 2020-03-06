@@ -199,23 +199,29 @@ buildDashboardNav <- function(tabs, tabselect) {
 #' @seealso \code{\link{saiDashboard}} \code{\link{dashboardPanel}} \code{\link{cardGroup}}
 #'
 #' @export
-dashboardCard <- function(..., header = NULL, footer = NULL, color = NULL, class = NULL, classes = NULL) {
+dashboardCard <- function(
+  ..., header = NULL, footer = NULL, color = NULL, class = NULL, classes = NULL)
+{
 
   if (!is.null(classes)) {
-    message('In dashboardCard(): classes is deprecated, use class instead')
+    warning('Argument classes is deprecated in dashboard cards, use class instead.',
+            'Use of classes will break the app in the next release.')
     class <- classes
   }
 
-  if (length(class) > 1L) class <- paste(class, collapse = ' ')
-
   if (is.null(color))
-    class <- paste('card', class)
+    divClass <- 'card'
   else if (color == 'light')
-    class <- sprintf('card bg-light %s', class)
+    divClass <- 'card bg-light'
   else
-    class <- sprintf('card text-white bg-%s %s', color, class)
+    divClass <- sprintf('card text-white bg-%s', color)
+  
+  if (length(class) > 1L)
+    divClass <- sprintf('%s %s', divClass, paste(class, collapse = ' '))
+  else if (length(class) == 1L)
+    divClass <- sprintf('%s %s', divClass, class)
 
-  divTag <- div(class = class)
+  divTag <- div(class = divClass)
 
   # Add elements to card
   if (!is.null(header)) divTag <- tagAppendChild(divTag, div(class = 'card-header', header))
@@ -250,7 +256,7 @@ cardGroup <- function(..., type = c('group', 'deck'), class = NULL) {
 
   if (length(class) > 1L) class <- paste(class, collapse = ' ')
   if (!is.null(class))
-    class <- paste(sprintf('card-%s', type), class)
+    class <- sprintf('card-%s %s', type, class)
   else
     class <- sprintf('card-%s', type)
 
