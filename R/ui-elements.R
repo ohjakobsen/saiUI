@@ -202,7 +202,7 @@ createIcon <- function(icon, class = NULL, lib = 'oi') {
       stylesheet = 'css/open-iconic-bootstrap.min.css'
     )
   } else if (lib %in% c('font-awesome', 'glyphicons')) {
-    iconTag <- shiny::icon(icon)
+    iconTag <- shiny::icon(icon, class = class, lib = lib)
   } else {
     stop(lib, ' is an unknown icon library')
   }
