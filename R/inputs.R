@@ -115,13 +115,14 @@ fileInput <- function(
 #'   \code{sm} and \code{lg}. Defaults to \code{normal}
 #' @param searchAsYouType If \code{TRUE}, the value will be continously updated to
 #'   Shiny. See details.
-#'  
+#'
+#' @details 
 #' If \code{searchAsYouType} is set to \code{TRUE}, values will be sent to Shiny as
-#' the user types (with a slight delay to account for continous typing). This is the
-#' default behaviour. If the input invalidates an expensive reactive function on the
-#' server, \code{searchAsYouType} can be set to \code{FALSE}. The value will then
-#' only be updated on the server when the user presses the search button, or presses
-#' the enter key.
+#' the user types (with a slight delay to account for continous typing).If the input
+#' invalidates an expensive reactive function on the server, \code{searchAsYouType}
+#' should be set to \code{FALSE}. This is also the default behaviour. When set to
+#' \code{FALSE}, the value will not be updated before the user clicks on the button or
+#' hits the enter key.
 #'
 #' @export
 searchboxInput <- function(
@@ -293,13 +294,14 @@ toggleButton <- function(
 #'
 #' Change the state of the toggle button on the client.
 #'
-#' If both \code{value} and \code{change} is given, \code{value} is given priority.
-#' If neither \code{value} nor \code{change} is given, \code{change} is assumed.
-#'
 #' @param session The \code{session} object passed to function given to \code{shinyServer}.
 #' @param inputId The id of the input object.
 #' @param value Optional. The new value of the button.
 #' @param change Optional. If the current value should be changed.
+#' 
+#' @details 
+#' If both \code{value} and \code{change} is given, \code{value} is given priority.
+#' If neither \code{value} nor \code{change} is given, \code{change} is assumed.
 #'
 #' @export
 updateToggleButton <- function(session, inputId, value = NULL, change = NULL) {

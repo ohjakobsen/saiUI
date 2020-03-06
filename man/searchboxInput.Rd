@@ -36,15 +36,16 @@ control.}
 \code{sm} and \code{lg}. Defaults to \code{normal}}
 
 \item{searchAsYouType}{If \code{TRUE}, the value will be continously updated to
-  Shiny. See details.
- 
-If \code{searchAsYouType} is set to \code{TRUE}, values will be sent to Shiny as
-the user types (with a slight delay to account for continous typing). This is the
-default behaviour. If the input invalidates an expensive reactive function on the
-server, \code{searchAsYouType} can be set to \code{FALSE}. The value will then
-only be updated on the server when the user presses the search button, or presses
-the enter key.}
+Shiny. See details.}
 }
 \description{
 Create an input control for text that behaves as a search field.
+}
+\details{
+If \code{searchAsYouType} is set to \code{TRUE}, values will be sent to Shiny as
+the user types (with a slight delay to account for continous typing).If the input
+invalidates an expensive reactive function on the server, \code{searchAsYouType}
+should be set to \code{FALSE}. This is also the default behaviour. When set to
+\code{FALSE}, the value will not be updated before the user clicks on the button or
+hits the enter key.
 }

@@ -4,9 +4,16 @@
 \alias{bs4Dropdown}
 \title{Create Bootstrap dropdown button with custom UI}
 \usage{
-bs4Dropdown(title, ..., color = "primary", outline = FALSE,
-  size = c("normal", "sm", "lg"), width = 400, direction = c("down",
-  "right", "up", "left"), autoclose = TRUE)
+bs4Dropdown(
+  title,
+  ...,
+  color = "primary",
+  outline = FALSE,
+  size = c("normal", "sm", "lg"),
+  width = 400,
+  direction = c("down", "right", "up", "left"),
+  autoclose = TRUE
+)
 }
 \arguments{
 \item{title}{The name of the dropdown button}
