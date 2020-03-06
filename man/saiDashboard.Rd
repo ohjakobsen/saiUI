@@ -4,9 +4,20 @@
 \alias{saiDashboard}
 \title{Dashboard page}
 \usage{
-saiDashboard(title, ..., selected = NULL, footer = NULL,
-  header = NULL, theme = NULL, color = "dark", brand = title,
-  windowTitle = title, lang = "en", dir = "ltr")
+saiDashboard(
+  title,
+  ...,
+  selected = NULL,
+  footer = NULL,
+  header = NULL,
+  theme = NULL,
+  color = "dark",
+  notifications = TRUE,
+  brand = title,
+  windowTitle = title,
+  lang = "en",
+  dir = "ltr"
+)
 }
 \arguments{
 \item{title}{The title for the page.}
@@ -24,6 +35,8 @@ If \code{NULL}, the first panel will be selected.}
 with an alternate Bootstrap 4 stylesheet.}
 
 \item{color}{A string indicating the color of the top navigation}
+
+\item{notifications}{If \code{TRUE} (default), toast notifications are enabled}
 
 \item{brand}{A string indicating the brand for the page}
 

@@ -2,7 +2,7 @@
 #'
 #' Create a dashboard page that can be used with \code{\link{dashboardPanel}}s.
 #'
-#' @inheritParams bs4Page
+#' @inheritParams saiPage
 #' @param title The title for the page.
 #' @param ... The UI elements of the page.
 #' @param selected The \code{value} of the panel that should be selected by default.
@@ -11,14 +11,14 @@
 #' @param footer Tag or list of tags to display on the botton of the page.
 #' @param color A string indicating the color of the top navigation
 #' @param brand A string indicating the brand for the page
-#' @param windowTitle The title that should be displayed by the browser window.
 #'
 #' @seealso \code{\link{dashboardPanel}}
 #'
 #' @export
-saiDashboard <- function(title, ..., selected = NULL, footer = NULL, header = NULL,
-                         theme = NULL, color = 'dark', brand = title, windowTitle = title,
-                         lang = 'en', dir = 'ltr') {
+saiDashboard <- function(
+  title, ..., selected = NULL, footer = NULL, header = NULL, theme = NULL, color = 'dark',
+  notifications = TRUE, brand = title, windowTitle = title, lang = 'en', dir = 'ltr')
+{
 
   pageTitle <- title
 
@@ -69,6 +69,7 @@ saiDashboard <- function(title, ..., selected = NULL, footer = NULL, header = NU
     deps = deps,
     header,
     topNav,
+    if (notifications) toastWrapper(),
     div(class = 'container-fluid',
       div(class = 'row',
         navItems,
@@ -111,7 +112,7 @@ saiDashboard <- function(title, ..., selected = NULL, footer = NULL, header = NU
 #' @export
 dashboardPanel <- function(title, ..., id = title, value = id, icon = 'dashboard') {
 
-  id <- tolower(gsub(' ', '', id, fixed = TRUE))
+  id <- idFromTitle(id)
 
   divTag <- div(
     class = 'tab-pane fade', id = id, title = title, role = 'tabpanel',
@@ -128,9 +129,9 @@ buildDashboardNav <- function(tabs, tabselect) {
 
   tabs <- lapply(tabs, function(t) {
 
-    icon <- tags$i(class = sprintf('oi oi-%s', t$attribs$`data-icon-class`))
+    icon <- createIcon(t$attribs$`data-icon-class`)
     class <- if (i == tabselect) 'nav-link active' else 'nav-link'
-    id <- gsub('\\s', '', t$attribs$id)
+    id <- idFromTitle(t$attribs$id)
     selected <- if (i == tabselect) 'true' else 'false'
     i <<- i + 1
 
