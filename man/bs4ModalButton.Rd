@@ -4,7 +4,7 @@
 \alias{bs4ModalButton}
 \title{Add modal button}
 \usage{
-bs4ModalButton(text = "Close")
+bs4ModalButton(text = "Close", color = "secondary")
 }
 \arguments{
 \item{text}{The text of the close button.}

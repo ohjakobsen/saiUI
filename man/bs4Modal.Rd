@@ -4,8 +4,14 @@
 \alias{bs4Modal}
 \title{Create a modal dialog}
 \usage{
-bs4Modal(..., title = NULL, valign = FALSE, size = c("m", "s", "l",
-  "xl"), footer = bs4ModalButton(), easyClose = FALSE)
+bs4Modal(
+  ...,
+  title = NULL,
+  valign = FALSE,
+  size = "m",
+  footer = bs4ModalButton(),
+  easyClose = FALSE
+)
 }
 \arguments{
 \item{...}{UI elements for the body of the modal dialog box.}

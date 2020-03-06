@@ -35,9 +35,11 @@ bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
 #' @param text The text of the close button.
 #' 
 #' @export
-bs4ModalButton <- function(text = 'Close') {
+bs4ModalButton <- function(text = 'Close', color = 'secondary') {
   
-  tags$button(type = 'button', class = 'btn btn-secondary', `data-dismiss` = 'modal', text)
+  tags$button(
+    type = 'button', class = sprintf('btn btn-%s', color),
+    `data-dismiss` = 'modal', text)
   
 }
 
@@ -52,10 +54,12 @@ bs4ModalButton <- function(text = 'Close') {
 #'   the dialog box
 #' 
 #' @export
-bs4Modal <- function(..., title = NULL, valign = FALSE, size = c('m', 's', 'l', 'xl'),
-                     footer = bs4ModalButton(), easyClose = FALSE) {
+bs4Modal <- function(
+  ..., title = NULL, valign = FALSE, size = 'm', footer = bs4ModalButton(),
+  easyClose = FALSE)
+{
   
-  size <- match.arg(size)
+  size <- match.arg(size, c('m', 's', 'l', 'xl'))
   cls <- 'modal fade'
   
   if (!is.null(title))
@@ -69,7 +73,7 @@ bs4Modal <- function(..., title = NULL, valign = FALSE, size = c('m', 's', 'l', 
     id = 'shiny-modal', class = cls, role ='dialog', tabindex = '-1',
     div(
       class = 'modal-dialog modal-dialog-scrollable',
-      class = switch(size, s = 'modal-s', m = 'modal-m', l = 'modal-l', xl = 'modal-xl'),
+      class = switch(size, s = 'modal-s', m = 'modal-m', l = 'modal-l', xl = 'modal-xl', 'modal-m'),
       role = 'document',
       div(
         class = 'modal-content',
@@ -96,10 +100,10 @@ bs4Modal <- function(..., title = NULL, valign = FALSE, size = c('m', 's', 'l', 
 #' @param autoclose If \code{TRUE} the dropdown will close when the user clicks inside it
 #' 
 #' @export
-bs4Dropdown <- function(title, ..., color = 'primary', outline = FALSE,
-                        size = c('normal', 'sm', 'lg'), width = 400,
-                        direction = c('down', 'right', 'up', 'left'),
-                        autoclose = TRUE) {
+bs4Dropdown <- function(
+  title, ..., color = 'primary', outline = FALSE, size = c('normal', 'sm', 'lg'),
+  width = 400, direction = c('down', 'right', 'up', 'left'), autoclose = TRUE)
+{
   
   outline <- if (outline) 'outline-' else ''
   size <- match.arg(size)
@@ -207,3 +211,4 @@ createIcon <- function(icon, class = NULL, lib = 'oi') {
   
   htmltools::browsable(iconTag)
   
+}
