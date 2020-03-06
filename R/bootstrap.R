@@ -14,7 +14,9 @@ NULL
 #' @param dir Indicate the directionality of text in the \code{html} page
 #'
 #' @export
-bs4Page <- function(..., title = NULL, theme = NULL, deps = NULL, lang = 'en', dir = 'ltr') {
+bs4Page <- function(
+  ..., title = NULL, theme = NULL, deps = NULL, lang = 'en', dir = 'ltr')
+{
   
   if (!is.null(deps)) {
     if (is.list(deps) && !all(sapply(deps, inherits, 'html_dependency')))
@@ -78,9 +80,7 @@ bs4Lib <- function(theme = TRUE, deps = NULL) {
     htmlDependency('saiUI', packageVersion('saiUI'),
       c(file = system.file('www', package = 'saiUI')),
       script = c('js/saiUI.min.js', 'js/bindings.min.js'),
-      stylesheet = c(
-        'css/saiUI.min.css',
-        'oi/css/open-iconic-bootstrap.min.css')
+      stylesheet = 'css/saiUI.min.css'
     )
   )
   if (!is.null(deps)) libs <- c(libs, deps)
@@ -339,17 +339,20 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
 #'
 #' @inheritParams shiny::tabPanel
 #' 
+#' @param class Additional classes to add to the tab.
 #' @param icon Optional icon to appear on the tab.
 #' @param hidden Boolean value. Should the tab be hidden from the menu? Defalts to \code{FALSE}
 #'
 #' @export
-saiTab <- function(title, ..., value = title, icon = NULL, hidden = FALSE) {
-  value <- tolower(gsub(' ', '', value, fixed = TRUE))
+saiTab <- function(title, ..., value = title, class = NULL, icon = NULL, hidden = FALSE) {
+  value <- tolower(gsub('[^[:alnum:]]', '', title))
+  if (!is.null(class) && length(class) > 1) class <- paste(class, collapse = ' ')
   divTag <- div(
-    class = 'tab-pane fade', id = value, title = title, `role` = 'tabpanel',
-    `aria-labelledby` = sprintf('%s-tab', value), `data-value` = value,
-    `data-icon-class` = NULL, `aria-hidden` = hidden, ...
-    )
+    class = if (!is.null(class)) sprintf('%s tab-pane fade', class) else 'tab-pane fade',
+    id = value, title = title, role = 'tabpanel', `data-value` = value,
+    `aria-labelledby` = sprintf('%s-tab', value),
+    `aria-hidden` = if (hidden) 'true' else 'false', ...
+  )
 }
 
 #' @rdname saiTab
@@ -378,10 +381,9 @@ tabPanel <- saiTab
 #'   )
 #' )
 #' @export
-saiTabset <- function(...,
-                      id = NULL,
-                      selected = NULL,
-                      type = c('tabs', 'pills')) {
+saiTabset <- function(
+  ..., id = NULL, selected = NULL, type = c('tabs', 'pills'))
+{
 
   if (!is.null(id))
     selected <- restoreInput(id = id, default = selected)
@@ -404,8 +406,9 @@ saiTabset <- function(...,
 #' @export
 tabsetPanel <- saiTabset
 
-buildTabset <- function(tabs, ulClass, textFilter = NULL,
-                        id = NULL, selected = NULL) {
+buildTabset <- function(
+  tabs, ulClass, textFilter = NULL,  id = NULL, selected = NULL)
+{
 
   # This function proceeds in two phases. First, it scans over all the items
   # to find and mark which tab should start selected. Then it actually builds

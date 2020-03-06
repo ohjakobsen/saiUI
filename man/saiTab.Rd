@@ -5,9 +5,9 @@
 \alias{tabPanel}
 \title{Create a tab panel}
 \usage{
-saiTab(title, ..., value = title, icon = NULL, hidden = FALSE)
+saiTab(title, ..., value = title, class = NULL, icon = NULL, hidden = FALSE)
 
-tabPanel(title, ..., value = title, icon = NULL, hidden = FALSE)
+tabPanel(title, ..., value = title, class = NULL, icon = NULL, hidden = FALSE)
 }
 \arguments{
 \item{title}{Display title for tab}
@@ -17,6 +17,8 @@ tabPanel(title, ..., value = title, icon = NULL, hidden = FALSE)
 \item{value}{The value that should be sent when \code{tabsetPanel} reports
 that this tab is selected. If omitted and \code{tabsetPanel} has an
 \code{id}, then the title will be used..}
+
+\item{class}{Additional classes to add to the tab.}
 
 \item{icon}{Optional icon to appear on the tab.}
 

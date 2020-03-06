@@ -4,8 +4,7 @@
 \alias{bs4Page}
 \title{Bootstrap Page}
 \usage{
-bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en",
-  dir = "ltr")
+bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en", dir = "ltr")
 }
 \arguments{
 \item{...}{The UI elements of the page.}

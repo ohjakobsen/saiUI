@@ -7,16 +7,15 @@
 \usage{
 saiTabset(..., id = NULL, selected = NULL, type = c("tabs", "pills"))
 
-tabsetPanel(..., id = NULL, selected = NULL, type = c("tabs",
-  "pills"))
+tabsetPanel(..., id = NULL, selected = NULL, type = c("tabs", "pills"))
 }
 \arguments{
-\item{...}{\code{\link{tabPanel}} elements to include in the tabset}
+\item{...}{\code{\link[shiny:tabPanel]{tabPanel()}} elements to include in the tabset}
 
 \item{id}{If provided, you can use \code{input$}\emph{\code{id}} in your
 server logic to determine which of the current tabs is active. The value
 will correspond to the \code{value} argument that is passed to
-\code{\link{tabPanel}}.}
+\code{\link[shiny:tabPanel]{tabPanel()}}.}
 
 \item{selected}{The \code{value} (or, if none was supplied, the \code{title})
 of the tab that should be selected by default. If \code{NULL}, the first
