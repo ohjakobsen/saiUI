@@ -21,7 +21,7 @@ actionButton <- function(
   size <- switch(size, normal = NULL, sprintf('btn-%s', size))
   classes <- paste(c('shiny-download-link btn', size, color, class), collapse = ' ')
   
-  if (!is.null(icon)) icon <- tags$i(class = sprintf('oi oi-%s', icon))
+  if (!is.null(icon)) icon <- createIcon(icon)
 
   tags$button(
     id = inputId, type = 'button', class = classes, `data-val` = value,
@@ -44,10 +44,13 @@ downloadButton <- function(
   size <- match.arg(size)
   size <- switch(size, normal = NULL, sprintf('btn-%s', size))
   classes <- paste(c('shiny-download-link btn', size, color, class), collapse = ' ')
+  icon <- createIcon('cloud-download', 'oi')
   
   aTag <- tags$a(
     id = outputId, role = 'button', class = classes, href = '', target = '_blank',
-    download = NA, list(tags$i(class = 'oi oi-cloud-download'), label), ...)
+    download = NA, tagList(icon, label), ...)
+  
+  aTag
   
 }
 
@@ -59,8 +62,10 @@ downloadButton <- function(
 #' @inherit shiny::fileInput
 #'
 #' @export
-fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = NULL,
-                      buttonLabel = NULL, placeholder = 'Choose file') {
+fileInput <- function(
+  inputId, label, multiple = FALSE, accept = NULL, width = NULL, buttonLabel = NULL,
+  placeholder = 'Choose file')
+{
 
   inputTag <- tags$input(
     id = inputId,
@@ -122,7 +127,8 @@ fileInput <- function(inputId, label, multiple = FALSE, accept = NULL, width = N
 searchboxInput <- function(
   inputId, value = '', placeholder = NULL, button = NULL, icon = NULL,
   color = 'primary', outline = FALSE, size = c('normal', 'sm', 'lg'),
-  searchAsYouType = FALSE) {
+  searchAsYouType = FALSE)
+{
 
   outline <- if (outline) 'outline-' else ''
   size <- match.arg(size)
@@ -130,7 +136,7 @@ searchboxInput <- function(
   if (is.null(button) & is.null(icon))
     button <- 'Search'
   if (is.null(button))
-    button <- tags$i(class = sprintf('oi oi-%s', icon))
+    button <- createIcon(icon)
 
   size <- list(
     form = switch(size, 'lg' = 'form-control-lg', 'sm' = 'form-control-sm', ''),
@@ -178,9 +184,11 @@ searchboxInput <- function(
 #' @param direction The direction of the menu. Default value \code{'down'}.
 #'
 #' @export
-dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FALSE, icon = NULL,
-                         color = 'primary', outline = FALSE, size = c('normal', 'sm', 'lg'),
-                         direction = c('down', 'right', 'up', 'left')) {
+dropdownMenu <- function(
+  inputId, label, choices, selected = NULL, multiple = FALSE, icon = NULL,
+  color = 'primary', outline = FALSE, size = c('normal', 'sm', 'lg'),
+  direction = c('down', 'right', 'up', 'left'))
+{
 
   selected <- restoreInput(id = inputId, default = selected)
 
@@ -205,7 +213,7 @@ dropdownMenu <- function(inputId, label, choices, selected = NULL, multiple = FA
       `data-multiple` = ifelse(multiple, 'true', 'false'),
       `aria-haspopup` = 'true',
       `aria-expanded` = 'false',
-      if (!is.null(icon)) tags$i(class = sprintf('oi oi-%s', icon)),
+      if (!is.null(icon)) createIcon(icon),
       label
     ),
     div(class = 'dropdown-menu', items)
@@ -253,8 +261,10 @@ switchInput <- function(inputId, label, value = FALSE) {
 #' @param active Should the button be active on initalization? Default value \code{FALSE}.
 #'
 #' @export
-toggleButton <- function(inputId, label, color = 'primary', outline = TRUE,
-                         size = c('normal', 'sm', 'lg'), active = FALSE) {
+toggleButton <- function(
+  inputId, label, color = 'primary', outline = TRUE,
+  size = c('normal', 'sm', 'lg'), active = FALSE)
+{
 
   active <- restoreInput(id = inputId, default = active)
   size <- match.arg(size)
@@ -312,9 +322,11 @@ updateToggleButton <- function(session, inputId, value = NULL, change = NULL) {
 #' @return A list control that can be added to a UI definition.
 #'
 #' @export
-slicerInput <- function(inputId, label, choices, selected = NULL, color = 'primary',
-                        outline = TRUE, multiple = FALSE) {
-
+slicerInput <- function(
+  inputId, label, choices, selected = NULL, color = 'primary', outline = TRUE,
+  multiple = FALSE)
+{
+ 
   selected <- restoreInput(id = inputId, default = selected)
 
   if (is.null(selected) && !multiple)

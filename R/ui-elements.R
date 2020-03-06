@@ -194,8 +194,6 @@ createIcon <- function(icon, class = NULL, lib = 'oi') {
   
   if (inherits(icon, 'shiny.tag') && icon$name == 'i') return(icon)
   
-  lib <- match.arg(lib, c('oi', 'fa'))
-  
   if (lib == 'oi') {
     iconTag <- tags$i()
     iconTag$attribs$class <- sprintf('oi oi-%s', icon)
@@ -203,7 +201,7 @@ createIcon <- function(icon, class = NULL, lib = 'oi') {
       'openiconic', '1.1.0', 'www/oi', package = 'saiUI',
       stylesheet = 'css/open-iconic-bootstrap.min.css'
     )
-  } else if (lib == 'fa') {
+  } else if (lib %in% c('font-awesome', 'glyphicons')) {
     iconTag <- shiny::icon(icon)
   } else {
     stop(lib, ' is an unknown icon library')

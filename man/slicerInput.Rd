@@ -4,8 +4,15 @@
 \alias{slicerInput}
 \title{Slicer Input}
 \usage{
-slicerInput(inputId, label, choices, selected = NULL,
-  color = "primary", outline = TRUE, multiple = FALSE)
+slicerInput(
+  inputId,
+  label,
+  choices,
+  selected = NULL,
+  color = "primary",
+  outline = TRUE,
+  multiple = FALSE
+)
 }
 \arguments{
 \item{inputId}{The input slot that will be used to access the value.}

@@ -4,8 +4,14 @@
 \alias{toggleButton}
 \title{Toggle button}
 \usage{
-toggleButton(inputId, label, color = "primary", outline = TRUE,
-  size = c("normal", "sm", "lg"), active = FALSE)
+toggleButton(
+  inputId,
+  label,
+  color = "primary",
+  outline = TRUE,
+  size = c("normal", "sm", "lg"),
+  active = FALSE
+)
 }
 \arguments{
 \item{inputId}{The input slot that will be used to access the value.}
