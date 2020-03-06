@@ -28,3 +28,5 @@ firstChoice <- function(choices) {
 controlLabel <- function(controlName, label) {
   label %AND% tags$label(class = "control-label", `for` = controlName, label)
 }
+
+idFromTitle <- function(x) invisible(tolower(gsub('[^[:alnum:]]', '', x)))
