@@ -301,17 +301,17 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
   tabs <- lapply(tabs, function(t) {
 
     class <- if (i == tabselect) 'nav-link active' else 'nav-link'
-    id <- gsub('\\s', '', t$attribs$id)
+    id <- idFromTitle(t$attribs$id)
     selected <- if (i == tabselect) 'true' else 'false'
     i <<- i + 1
     style <- if (t$attribs$`aria-hidden`) 'display: none;' else ''
     
-    list(
-      tags$li(class='nav-item', style = style, a(
+    tags$li(
+      class='nav-item', style = style,
+      a(
         id = sprintf('%s-tab', id), class = class, `data-value` = t$attribs$id,
         `data-target` = sprintf('#%s', id), href = sprintf('#%s', id), `data-toggle` = 'pill',
         t$attribs$title, `role` = 'tab', `aria-selected` = selected, `aria-controls` = id)
-      )
     )
 
   })
@@ -340,12 +340,12 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
 #' @inheritParams shiny::tabPanel
 #' 
 #' @param class Additional classes to add to the tab.
-#' @param icon Optional icon to appear on the tab.
+#' @param icon An optional \code{\link[=createIcon]{icon}} to appear on the tab.
 #' @param hidden Boolean value. Should the tab be hidden from the menu? Defalts to \code{FALSE}
 #'
 #' @export
 saiTab <- function(title, ..., value = title, class = NULL, icon = NULL, hidden = FALSE) {
-  value <- tolower(gsub('[^[:alnum:]]', '', title))
+  value <- idFromTitle(title)
   if (!is.null(class) && length(class) > 1) class <- paste(class, collapse = ' ')
   divTag <- div(
     class = if (!is.null(class)) sprintf('%s tab-pane fade', class) else 'tab-pane fade',
@@ -407,7 +407,7 @@ saiTabset <- function(
 tabsetPanel <- saiTabset
 
 buildTabset <- function(
-  tabs, ulClass, textFilter = NULL,  id = NULL, selected = NULL)
+  tabs, ulClass, textFilter = NULL, id = NULL, selected = NULL)
 {
 
   # This function proceeds in two phases. First, it scans over all the items
@@ -581,7 +581,7 @@ buildTabset <- function(
 #' 
 #' @inherit shiny::helpText
 #' 
-#' @param small Should the text be smaller?
+#' @param small If \code{TRUE}, the text will be smaller than the default size
 #' 
 #' @export
 helpText <- function(..., small = FALSE) {
