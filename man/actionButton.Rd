@@ -22,12 +22,12 @@ actionButton(
 \item{label}{The contents of the button or link--usually a text label, but
 you could also use any other HTML, like an image.}
 
-\item{color}{Alternate Bootstrap 4 stylesheet.}
+\item{color}{The color of the button. Must be a valid Bootstrap 4 color.}
 
 \item{outline}{If \code{TRUE}, background color will be removed from the button.
 Defaults to \code{FALSE}.}
 
-\item{icon}{An optional \code{\link[shiny:icon]{icon()}} to appear on the button.}
+\item{icon}{An optional \code{\link[=createIcon]{icon}} to appear next to the label}
 
 \item{class}{Additional CSS classes to add to the button}
 

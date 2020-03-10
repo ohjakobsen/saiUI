@@ -2,6 +2,7 @@
 % Please edit documentation in R/ui-elements.R
 \name{bs4Modal}
 \alias{bs4Modal}
+\alias{modalDialog}
 \title{Create a modal dialog}
 \usage{
 bs4Modal(
@@ -10,7 +11,18 @@ bs4Modal(
   valign = FALSE,
   size = "m",
   footer = bs4ModalButton(),
-  easyClose = FALSE
+  easyClose = FALSE,
+  fade = TRUE
+)
+
+modalDialog(
+  ...,
+  title = NULL,
+  valign = FALSE,
+  size = "m",
+  footer = bs4ModalButton(),
+  easyClose = FALSE,
+  fade = TRUE
 )
 }
 \arguments{

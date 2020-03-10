@@ -11,10 +11,27 @@ bs4Alert(..., color = "primary", icon = NULL, dismissable = FALSE)
 
 \item{color}{The color of the alert}
 
-\item{icon}{Name of an icon from the Open Iconic library that should be shown before the text}
+\item{icon}{An optional \code{\link[=createIcon]{icon}} to appear next to the text}
 
-\item{dismissable}{Should the user be allowed to dismiss the alert}
+\item{dismissable}{If \code{TRUE} the user can dismiss the alert. Defaults to
+\code{FALSE}.}
 }
 \description{
 Create a Bootstrap alert box that optionally can be dismissed by the user.
+}
+\details{
+This creates a Bootstrap 4 type alert that can be shown in the UI. The alert can
+optionally be dismissed by the user, by setting the argument \code{dismissable} to
+\code{TRUE}.
+
+Alerts can be placed anywhere in the UI. They are useful for highlighting important
+information to the user. If you want to send a message to the user,
+\code{\link[=sendToast]{toast notifications}} might be a better alternative.
+}
+\examples{
+bs4Alert('This is important information', color = 'warning', icon = 'warning')
+
+}
+\seealso{
+\code{\link{sendToast}}
 }

@@ -2,10 +2,11 @@
 #'
 #' @inherit shiny::actionButton
 #'
-#' @param color Alternate Bootstrap 4 stylesheet.
+#' @param icon An optional \code{\link[=createIcon]{icon}} to appear next to the label
+#' @param class Additional CSS classes to add to the button
+#' @param color The color of the button. Must be a valid Bootstrap 4 color.
 #' @param outline If \code{TRUE}, background color will be removed from the button.
 #'   Defaults to \code{FALSE}.
-#' @param class Additional CSS classes to add to the button
 #' @param size The size of the button. Use \code{sm} for small and \code{lg} for
 #'   large buttons.
 #'

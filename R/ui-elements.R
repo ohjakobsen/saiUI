@@ -4,21 +4,36 @@
 #' 
 #' @param ... One or more HTML elements to show in the alert
 #' @param color The color of the alert
-#' @param icon Name of an icon from the Open Iconic library that should be shown before the text
-#' @param dismissable Should the user be allowed to dismiss the alert
+#' @param icon An optional \code{\link[=createIcon]{icon}} to appear next to the text
+#' @param dismissable If \code{TRUE} the user can dismiss the alert. Defaults to
+#'   \code{FALSE}.
+#'   
+#' @details
+#' This creates a Bootstrap 4 type alert that can be shown in the UI. The alert can
+#' optionally be dismissed by the user, by setting the argument \code{dismissable} to
+#' \code{TRUE}.
+#' 
+#' Alerts can be placed anywhere in the UI. They are useful for highlighting important
+#' information to the user. If you want to send a message to the user,
+#' \code{\link[=sendToast]{toast notifications}} might be a better alternative.
+#' 
+#' @examples
+#' bs4Alert('This is important information', color = 'warning', icon = 'warning')
+#' 
+#' @seealso \code{\link{sendToast}}
 #' 
 #' @export
 bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
   
-  classes <- sprintf('alert alert-%s', color)
-  if (dismissable) classes <- paste(classes, 'alert-dismissible fade show')
+  cls <- sprintf('alert alert-%s', color)
+  if (dismissable) cls <- paste(cls, 'alert-dismissible fade show')
   
   if (!is.null(icon)) {
-    icon <- tags$i(class = sprintf('oi oi-%s', icon))
-    classes <- sprintf('%s alert-icon', classes)
+    icon <- createIcon(icon)
+    cls <- sprintf('%s alert-icon', cls)
   }
   
-  divTag <- div(class = classes, role = 'alert', list(icon, ...))
+  divTag <- div(class = cls, role = 'alert', list(icon, ...))
   
   if (dismissable)
     divTag <- tagAppendChild(divTag, tags$button(
@@ -30,18 +45,33 @@ bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
   
 }
 
-#' Add modal button
+#' Create a modal button
 #' 
-#' @param text The text of the close button.
+#' Create a button that will dismiss a modal dialog.
+#' 
+#' @inheritParams actionButton
+#' 
+#' @seealso \code{\link{bs4ModalDialog}}
 #' 
 #' @export
-bs4ModalButton <- function(text = 'Close', color = 'secondary') {
+bs4ModalButton <- function(
+  label = 'Close', icon = NULL, color = 'secondary', size = c('normal', 'sm', 'lg'))
+{
+  
+  icon <- if (!is.null(icon)) createIcon(icon) else NULL
+  size <- match.arg(size)
+  size <- switch(size, normal = NULL, sprintf('btn-%s', size))
+  cls <- paste(c('btn', size, sprintf('btn-%s', color)), collapse = ' ')
   
   tags$button(
-    type = 'button', class = sprintf('btn btn-%s', color),
-    `data-dismiss` = 'modal', text)
+    type = 'button', class = cls,
+    `data-dismiss` = 'modal', icon, label)
   
 }
+
+#' @rdname bs4ModalButton
+#' @export
+modalButton <- bs4ModalButton
 
 #' Create a modal dialog
 #' 
@@ -56,11 +86,11 @@ bs4ModalButton <- function(text = 'Close', color = 'secondary') {
 #' @export
 bs4Modal <- function(
   ..., title = NULL, valign = FALSE, size = 'm', footer = bs4ModalButton(),
-  easyClose = FALSE)
+  easyClose = FALSE, fade = TRUE)
 {
   
   size <- match.arg(size, c('m', 's', 'l', 'xl'))
-  cls <- 'modal fade'
+  cls <- if (fade) 'modal fade' else 'modal'
   
   if (!is.null(title))
     headerTag <- div(class = 'modal-header', h5(class = 'modal-title', title))
@@ -86,6 +116,10 @@ bs4Modal <- function(
   list(divTag, tags$script("$('#shiny-modal').modal().focus();"))
   
 }
+
+#' @rdname bs4Modal
+#' @export
+modalDialog <- bs4Modal
 
 #' Create Bootstrap dropdown button with custom UI
 #' 
@@ -144,7 +178,7 @@ bs4Dropdown <- function(
 #' @export
 bs4Embed <- function(src, type = c('iframe', 'video', 'embed'), ratio = c(16, 9)) {
   
-  classes <- sprintf('embed-responsive embed-responsive-%sby%s', ratio[1], ratio[2])
+  cls <- sprintf('embed-responsive embed-responsive-%sby%s', ratio[1], ratio[2])
   type <- match.arg(type)
   
   embedTag <- switch(
@@ -154,7 +188,7 @@ bs4Embed <- function(src, type = c('iframe', 'video', 'embed'), ratio = c(16, 9)
     'embed' = tags$embed(class = 'embed-responsive-item', src = URLencode(src))
   )
   
-  divTag <- div(class = classes, embedTag)
+  divTag <- div(class = cls, embedTag)
   
   divTag
   
@@ -165,17 +199,17 @@ bs4Embed <- function(src, type = c('iframe', 'video', 'embed'), ratio = c(16, 9)
 #' Create an icon for use within a page or UI element, such as inside a button. This
 #' function extends and replaces the \code{\link[shiny]{icon}} function in \code{shiny}.
 #' 
-#' @param icon The icon name. Must be a valid icon name from Font Awesome Free,
-#'   Glyphicons or Open Iconic. Prefixes such as \code{fa-}, \code{glyphicon-} and
-#'   \code{oi-} are not needed.
+#' @param icon The icon name. Must be a valid icon name from Font Awesome Free or
+#'   Open Iconic. Prefixes such as \code{fa-} and \code{oi-} are not needed.
 #' @param class Addictional classes to cutomize the style of the icon
 #' @param lib Icon library to use. See details.
 #' 
 #' @details 
-#' \code{shiny} supports the Font Awesome Free and Glyphicons libraries. In addition,
-#' \code{saiUI} supports the Open Iconic library. This is also the default library.
-#' See \code{\link[shiny]{icon}} for more details on using Font Awesome Free and
-#' Glyphicons.
+#' \code{shiny} supports the Font Awesome Free library. In addition, \code{saiUI} supports
+#' the Open Iconic library. This is also the default library. See \code{\link[shiny]{icon}}
+#' for more details on using Font Awesome Free. Note that Glyphicons has been removed
+#' from Bootstrap 4. Since saiUI replaces all Bootstrap 3 resources, Glyphicons is
+#' not available as the relevant CSS files will not be loaded.
 #' 
 #' UI elements that support icons, will use the default library. You can override this
 #' by using \code{createIcon} instead of a character vector, and specifying the
@@ -201,8 +235,10 @@ createIcon <- function(icon, class = NULL, lib = 'oi') {
       'openiconic', '1.1.0', 'www/oi', package = 'saiUI',
       stylesheet = 'css/open-iconic-bootstrap.min.css'
     )
-  } else if (lib %in% c('font-awesome', 'glyphicon')) {
+  } else if (lib == 'font-awesome') {
     iconTag <- shiny::icon(icon, class = class, lib = lib)
+  } else if (lib == 'glyphicon') {
+    warning(lib, ' has been removed in Bootstrap 4')
   } else {
     stop(lib, ' is an unknown icon library')
   }

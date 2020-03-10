@@ -7,9 +7,8 @@
 createIcon(icon, class = NULL, lib = "oi")
 }
 \arguments{
-\item{icon}{The icon name. Must be a valid icon name from Font Awesome Free,
-Glyphicons or Open Iconic. Prefixes such as \code{fa-}, \code{glyphicon-} and
-\code{oi-} are not needed.}
+\item{icon}{The icon name. Must be a valid icon name from Font Awesome Free or
+Open Iconic. Prefixes such as \code{fa-} and \code{oi-} are not needed.}
 
 \item{class}{Addictional classes to cutomize the style of the icon}
 
@@ -20,10 +19,11 @@ Create an icon for use within a page or UI element, such as inside a button. Thi
 function extends and replaces the \code{\link[shiny]{icon}} function in \code{shiny}.
 }
 \details{
-\code{shiny} supports the Font Awesome Free and Glyphicons libraries. In addition,
-\code{saiUI} supports the Open Iconic library. This is also the default library.
-See \code{\link[shiny]{icon}} for more details on using Font Awesome Free and
-Glyphicons.
+\code{shiny} supports the Font Awesome Free library. In addition, \code{saiUI} supports
+the Open Iconic library. This is also the default library. See \code{\link[shiny]{icon}}
+for more details on using Font Awesome Free. Note that Glyphicons has been removed
+from Bootstrap 4. Since saiUI replaces all Bootstrap 3 resources, Glyphicons is
+not available as the relevant CSS files will not be loaded.
 
 UI elements that support icons, will use the default library. You can override this
 by using \code{createIcon} instead of a character vector, and specifying the

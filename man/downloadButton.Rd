@@ -20,7 +20,7 @@ is assigned to.}
 
 \item{label}{The label that should appear on the button.}
 
-\item{color}{Alternate Bootstrap 4 stylesheet.}
+\item{color}{The color of the button. Must be a valid Bootstrap 4 color.}
 
 \item{outline}{If \code{TRUE}, background color will be removed from the button.
 Defaults to \code{FALSE}.}

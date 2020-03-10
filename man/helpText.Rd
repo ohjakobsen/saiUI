@@ -9,7 +9,7 @@ helpText(..., small = FALSE)
 \arguments{
 \item{...}{One or more help text strings (or other inline HTML elements)}
 
-\item{small}{Should the text be smaller?}
+\item{small}{If \code{TRUE}, the text will be smaller than the default size}
 }
 \value{
 A help text element that can be added to a UI definition.

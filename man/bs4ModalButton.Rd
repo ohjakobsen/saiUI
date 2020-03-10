@@ -2,13 +2,37 @@
 % Please edit documentation in R/ui-elements.R
 \name{bs4ModalButton}
 \alias{bs4ModalButton}
-\title{Add modal button}
+\alias{modalButton}
+\title{Create a modal button}
 \usage{
-bs4ModalButton(text = "Close", color = "secondary")
+bs4ModalButton(
+  label = "Close",
+  icon = NULL,
+  color = "secondary",
+  size = c("normal", "sm", "lg")
+)
+
+modalButton(
+  label = "Close",
+  icon = NULL,
+  color = "secondary",
+  size = c("normal", "sm", "lg")
+)
 }
 \arguments{
-\item{text}{The text of the close button.}
+\item{label}{The contents of the button or link--usually a text label, but
+you could also use any other HTML, like an image.}
+
+\item{icon}{An optional \code{\link[=createIcon]{icon}} to appear next to the label}
+
+\item{color}{The color of the button. Must be a valid Bootstrap 4 color.}
+
+\item{size}{The size of the button. Use \code{sm} for small and \code{lg} for
+large buttons.}
 }
 \description{
-Add modal button
+Create a button that will dismiss a modal dialog.
+}
+\seealso{
+\code{\link{bs4ModalDialog}}
 }

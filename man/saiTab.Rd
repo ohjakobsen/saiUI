@@ -20,7 +20,7 @@ that this tab is selected. If omitted and \code{tabsetPanel} has an
 
 \item{class}{Additional classes to add to the tab.}
 
-\item{icon}{Optional icon to appear on the tab.}
+\item{icon}{An optional \code{\link[=createIcon]{icon}} to appear on the tab.}
 
 \item{hidden}{Boolean value. Should the tab be hidden from the menu? Defalts to \code{FALSE}}
 }
