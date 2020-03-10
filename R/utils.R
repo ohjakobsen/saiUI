@@ -15,10 +15,6 @@
   return(NULL)
 }
 
-`%.%` <- function(x, y) {
-  paste(x, y, sep='')
-}
-
 firstChoice <- function(choices) {
   if (length(choices) == 0L) return()
   choice <- choices[[1]]
@@ -30,3 +26,7 @@ controlLabel <- function(controlName, label) {
 }
 
 idFromTitle <- function(x) invisible(tolower(gsub('[^[:alnum:]]', '', x)))
+
+is.tab <- function(x) {
+  inherits(x, 'shiny.tag') && !is.null(x$attribs$role) && x$attribs$role == 'tabpanel'
+}
