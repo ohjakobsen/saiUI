@@ -345,7 +345,7 @@ buildNavbar <- function(title, tabs, tabselect, color = 'primary') {
 #'
 #' @export
 saiTab <- function(title, ..., value = title, class = NULL, icon = NULL, hidden = FALSE) {
-  value <- idFromTitle(title)
+  value <- idFromTitle(value)
   if (!is.null(class) && length(class) > 1) class <- paste(class, collapse = ' ')
   divTag <- div(
     class = if (!is.null(class)) sprintf('%s tab-pane fade', class) else 'tab-pane fade',
