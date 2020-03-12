@@ -20,12 +20,12 @@ actionButton <- function(
   color <- sprintf('btn-%s%s', if (outline) 'outline-' else '', color)
   size <- match.arg(size)
   size <- switch(size, normal = NULL, sprintf('btn-%s', size))
-  classes <- paste(c('shiny-download-link btn', size, color, class), collapse = ' ')
+  cls <- paste(c('action-button btn', size, color, class), collapse = ' ')
   
   if (!is.null(icon)) icon <- createIcon(icon)
 
   tags$button(
-    id = inputId, type = 'button', class = classes, `data-val` = value,
+    id = inputId, type = 'button', class = cls, `data-val` = value,
     list(icon, label), ...
   )
 }
