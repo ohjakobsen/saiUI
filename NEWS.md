@@ -1,3 +1,32 @@
+saiUI 0.7.0
+===============
+
+## Full changelog
+
+### Breaking changes
+
+* `bs4ModalDialog()` and `bs4ModalButton()` now masks the equivolent Shiny functions `modalDialog` and `modalButton`. This should not break any functionality from the Shiny functions, but to ensure compability with the Shiny functions, the `text` argument to `bs4ModalButton()` has been renamed `label`
+* Using the `classes` argument in `dashboardCard()` will now issue a warning (argument will be removed in next release)
+* `dropdownMenu()` has been renamed `dropdownInput()`
+
+### New features
+
+* Added support for toast notifications. `saiPage()` and `saiDashboard()` gain a new argument `notifications` to enable toast notifications independent on the selected tab. Toast notifications are enabled by default.
+* Send new toast notifications to the UI with `sendToast()`
+* New function `createIcon()` that extends the `icon` function in Shiny. Input functions have been updated to use the now icon function. `createIcon()` supports Open Iconic (the default library in saiUI) and Font Awesome Free (included in Shiny). Note that Glyphicons is not supported as the library has been removed from Bootstrap 4
+
+### Improvements
+
+* `bs4ModalButton()` now supports a `color` and a `size` argument
+* Update to Bootstrap 4.4.1 and Popper.js 1.16.1
+* `actionButton()` now supports a `class` argument for adding addtional CSS classes to a button
+* `downloadButton()` now properly handles the `class` argument
+* Minor performance improvements
+
+### Bugfixes
+
+* Classes set in `tabPanel()` function will not be overwritten for active tabs in `saiPage()`
+
 saiUI 0.6.0
 ===============
 
