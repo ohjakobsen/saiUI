@@ -11,24 +11,24 @@ $.extend(searchboxInputBinding, {
     return el.value;
   },
   setValue: function(el, value) {
-  	el.value = value;
+    el.value = value;
   },
   subscribe: function(el, callback) {
     if (el.hasAttribute('data-sayt')) {
-      // If search as you type is activated, we only want to trigger the callback
-      // when the enter key (code 13) is pressed
-      $(el).on('keyup.searchboxInput', function(e) {
-        if (e.keyCode === 13) callback();
-      });
-      $(el).on('change.searchboxInput', function(e) {
-        callback();
-      });
-    } else {
       // For the keyup event, we want the debounce policy to apply
       $(el).on('keyup.searchboxInput', function(e) {
         callback(true);
       });
       // When the change event fires, send the value to Shiny immediately
+      $(el).on('change.searchboxInput', function(e) {
+        callback();
+      });
+    } else {
+      // If search as you type is not activated, we only want to trigger the callback
+      // when the enter key (code 13) is pressed
+      $(el).on('keyup.searchboxInput', function(e) {
+        if (e.keyCode === 13) callback();
+      });
       $(el).on('change.searchboxInput', function(e) {
         callback();
       });

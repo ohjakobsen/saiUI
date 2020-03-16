@@ -119,7 +119,7 @@ fileInput <- function(
 #'
 #' @details 
 #' If \code{searchAsYouType} is set to \code{TRUE}, values will be sent to Shiny as
-#' the user types (with a slight delay to account for continous typing).If the input
+#' the user types (with a slight delay to account for continous typing). If the input
 #' invalidates an expensive reactive function on the server, \code{searchAsYouType}
 #' should be set to \code{FALSE}. This is also the default behaviour. When set to
 #' \code{FALSE}, the value will not be updated before the user clicks on the button or
@@ -153,7 +153,7 @@ searchboxInput <- function(
     value = value, placeholder = placeholder, `aria-labelledby` = sprintf('%s-btn', inputId)
   )
   
-  if (searchAsYouType) inputTag <- tagAppendAttributes(inputTag, 'data-sayt' = 'true')
+  if (searchAsYouType) inputTag <- tagAppendAttributes(inputTag, 'data-sayt' = NA)
 
   div(
     class = 'form-group shiny-input-container d-flex',

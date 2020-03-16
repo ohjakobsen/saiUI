@@ -43,7 +43,7 @@ Create an input control for text that behaves as a search field.
 }
 \details{
 If \code{searchAsYouType} is set to \code{TRUE}, values will be sent to Shiny as
-the user types (with a slight delay to account for continous typing).If the input
+the user types (with a slight delay to account for continous typing). If the input
 invalidates an expensive reactive function on the server, \code{searchAsYouType}
 should be set to \code{FALSE}. This is also the default behaviour. When set to
 \code{FALSE}, the value will not be updated before the user clicks on the button or
