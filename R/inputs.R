@@ -171,22 +171,19 @@ searchboxInput <- function(
 
 }
 
-#' Create a dropdown menu for inputs
+#' Create a dropdown menu input
+#' 
+#' Creates a dropdown menu input.
 #'
-#' @param inputId The \code{input} slot that will be used to access the value.
+#' @inheritParams actionButton
 #' @param label The text on the dropdown menu button.
 #' @param choices List of values to select from.
 #' @param selected The initially selected value.
-#' @param multiple Is selection of multiple items allowed?
-#' @param icon Optional icon shown before the label.
-#' @param color A character string giving the color of the search button.
-#' @param outline Should the button be an outline button? Default value \code{TRUE}.
-#' @param size A character string giving the size of the input. Valid options are \code{normal},
-#'   \code{sm} and \code{lg}. Defaults to \code{normal}
-#' @param direction The direction of the menu. Default value \code{'down'}.
+#' @param multiple If \code{TRUE}, multiple items can be selected
+#' @param direction The direction of the menu. Defaults to \code{'down'}.
 #'
 #' @export
-dropdownMenu <- function(
+dropdownInput <- function(
   inputId, label, choices, selected = NULL, multiple = FALSE, icon = NULL,
   color = 'primary', outline = FALSE, size = c('normal', 'sm', 'lg'),
   direction = c('down', 'right', 'up', 'left'))
@@ -221,6 +218,13 @@ dropdownMenu <- function(
     div(class = 'dropdown-menu', items)
   )
 
+}
+
+#' @rdname dropdownInput
+#' @export
+dropdownMenu <- function(...) {
+  message('dropdownMenu is deprecated. Use dropdownInput instead.')
+  dropdownInput(...)
 }
 
 #' Switch input
