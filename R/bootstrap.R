@@ -19,9 +19,9 @@ bs4Page <- function(
 {
   
   if (!is.null(deps)) {
-    if (is.list(deps) && !all(sapply(deps, inherits, 'html_dependency')))
+    if (class(deps) == 'list' && !all(sapply(deps, inherits, 'html_dependency')))
       stop('You can only include objects of type html_dependency in the deps argument!')
-    else if (is.list(deps) && all(sapply(deps, inherits, 'html_dependency')))
+    else if (class(deps) == 'list' && all(sapply(deps, inherits, 'html_dependency')))
       deps <- deps
     else if (inherits(deps, 'html_dependency'))
       deps <- list(deps)
