@@ -34,7 +34,7 @@ function addToastMessage(message) {
   var newMsg = document.createElement('div');
 
   // Create a list of attributes
-  attrs = {
+  var attrs = {
     'role': 'alert',
     'aria-live': 'assertive',
     'aria-atomic': 'true',
