@@ -18,7 +18,7 @@ saiUI 0.7.0
 ### Improvements
 
 * `bs4ModalButton()` now supports a `color` and a `size` argument
-* Update to Bootstrap 4.4.1 and Popper.js 1.16.1
+* Update to Bootstrap 4.5.3 and Popper.js 1.16.1
 * `actionButton()` now supports a `class` argument for adding addtional CSS classes to a button
 * `downloadButton()` now properly handles the `class` argument
 * Minor performance improvements
@@ -26,6 +26,7 @@ saiUI 0.7.0
 ### Bugfixes
 
 * Classes set in `tabPanel()` function will not be overwritten for active tabs in `saiPage()`
+* Single dependencies given to the `deps` argument in `bs4Page()` will now be correctly recognised
 
 saiUI 0.6.0
 ===============
