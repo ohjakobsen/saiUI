@@ -16,7 +16,7 @@ tabPanel(title, ..., value = title, class = NULL, icon = NULL, hidden = FALSE)
 
 \item{value}{The value that should be sent when \code{tabsetPanel} reports
 that this tab is selected. If omitted and \code{tabsetPanel} has an
-\code{id}, then the title will be used..}
+\code{id}, then the title will be used.}
 
 \item{class}{Additional classes to add to the tab.}
 

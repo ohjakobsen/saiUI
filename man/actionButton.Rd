@@ -32,7 +32,7 @@ Defaults to \code{FALSE}.}
 \item{class}{Additional CSS classes to add to the button}
 
 \item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'};
-see \code{\link[shiny:validateCssUnit]{validateCssUnit()}}.}
+see \code{\link[shiny:reexports]{validateCssUnit()}}.}
 
 \item{size}{The size of the button. Use \code{sm} for small and \code{lg} for
 large buttons.}
@@ -50,8 +50,8 @@ An integer of class \code{"shinyActionButtonValue"}. This class differs from
 ordinary integers in that a value of 0 is considered "falsy".
 This implies two things:
 \itemize{
-\item Event handlers (e.g., \code{\link[shiny:observeEvent]{observeEvent()}}, \code{\link[shiny:eventReactive]{eventReactive()}}) won't execute on initial load.
-\item Input validation (e.g., \code{\link[shiny:req]{req()}}, \code{\link[shiny:need]{need()}}) will fail on initial load.
+\item Event handlers (e.g., \code{\link[shiny:observeEvent]{observeEvent()}}, \code{\link[shiny:observeEvent]{eventReactive()}}) won't execute on initial load.
+\item Input validation (e.g., \code{\link[shiny:req]{req()}}, \code{\link[shiny:validate]{need()}}) will fail on initial load.
 }
 
 }
@@ -62,7 +62,7 @@ if (interactive()) {
 
 ui <- fluidPage(
   sliderInput("obs", "Number of observations", 0, 1000, 500),
-  actionButton("goButton", "Go!"),
+  actionButton("goButton", "Go!", class = "btn-success"),
   plotOutput("distPlot")
 )
 
@@ -81,16 +81,27 @@ server <- function(input, output) {
 shinyApp(ui, server)
 
 }
+
+## Example of adding extra class values
+actionButton("largeButton", "Large Primary Button", class = "btn-primary btn-lg")
+actionLink("infoLink", "Information Link", class = "btn-info")
 }
 \seealso{
-\code{\link[shiny:observeEvent]{observeEvent()}} and \code{\link[shiny:eventReactive]{eventReactive()}}
+\code{\link[shiny:observeEvent]{observeEvent()}} and \code{\link[shiny:observeEvent]{eventReactive()}}
 
-Other input elements: \code{\link[shiny]{checkboxGroupInput}},
-  \code{\link[shiny]{checkboxInput}}, \code{\link[shiny]{dateInput}},
-  \code{\link[shiny]{dateRangeInput}}, \code{\link[shiny]{fileInput}},
-  \code{\link[shiny]{numericInput}}, \code{\link[shiny]{passwordInput}},
-  \code{\link[shiny]{radioButtons}}, \code{\link[shiny]{selectInput}},
-  \code{\link[shiny]{sliderInput}}, \code{\link[shiny]{submitButton}},
-  \code{\link[shiny]{textAreaInput}}, \code{\link[shiny]{textInput}},
-  \code{\link[shiny]{varSelectInput}}
+Other input elements: 
+\code{\link[shiny]{checkboxGroupInput}()},
+\code{\link[shiny]{checkboxInput}()},
+\code{\link[shiny]{dateInput}()},
+\code{\link[shiny]{dateRangeInput}()},
+\code{\link[shiny]{fileInput}()},
+\code{\link[shiny]{numericInput}()},
+\code{\link[shiny]{passwordInput}()},
+\code{\link[shiny]{radioButtons}()},
+\code{\link[shiny]{selectInput}()},
+\code{\link[shiny]{sliderInput}()},
+\code{\link[shiny]{submitButton}()},
+\code{\link[shiny]{textAreaInput}()},
+\code{\link[shiny]{textInput}()},
+\code{\link[shiny]{varSelectInput}()}
 }
