@@ -29,21 +29,24 @@ bs4Page <- function(
       deps <- NULL
   }
   
+  # Check if a theme is provided and the type of object of the theme. html_dependency
+  # must be added to the list of dependencies. Strings should be added directly to the
+  # stylesheet in the header. All other object types will be returned as NULL
   if (!is.null(theme)) {
     if (inherits(theme, 'html_dependency') && !is.null(deps))
       deps <- c(deps, list(theme))
     else if (inherits(theme, 'html_dependency') && is.null(deps))
       deps <- list(theme)
     else if (is.character(theme) && nzchar(theme))
-      theme <- tags$link(rel="stylesheet", type="text/css", href = theme)
+      user_theme <- tags$link(rel="stylesheet", type="text/css", href = theme)
     else
-      theme <- NULL
+      theme <- user_theme <- NULL
   }
   
   # Render the html template
   html <- htmlTemplate(
-    system.file('templates', 'default.html', package = 'saiUI'),
-    theme = theme,
+    lang = sprintf('lang="%s" dir="%s"', lang, dir),
+    theme = user_theme,
     body = tagList(
       if (!is.null(title)) tags$head(tags$title(title)),
       list(...)
@@ -71,7 +74,7 @@ bs4Lib <- function(theme = TRUE, deps = NULL) {
     stop('You need to provide a list of dependencies with the deps argument!')
   
   libs <- list(
-    htmlDependency('bootstrap', '4.4.1',
+    htmlDependency('bootstrap', '4.5.3',
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
       stylesheet = if (theme) 'css/bootstrap.min.css',
