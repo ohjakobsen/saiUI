@@ -16,7 +16,7 @@ ui <- saiDashboard(
       type = 'deck',
       dashboardCard(
         header = 'Header',
-        footer = tags$button(class = 'btn btn-sm btn-primary', 'Click me'),
+        footer = actionButton('toastbtn', 'Click me'),
         'This is the content'),
       dashboardCard(
         color = 'light',
@@ -63,6 +63,10 @@ server <- function(session, input, output) {
          xlab = 'Waiting times',
          ylab = 'Eruptions')
     
+  })
+  
+  observeEvent(input$toastbtn, {
+    sendToast('Hello', 'You clicked me! This is a toast notification.', autohide = FALSE)
   })
   
 }

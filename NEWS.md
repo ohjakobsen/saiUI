@@ -8,6 +8,7 @@ saiUI 0.7.0
 * `bs4ModalDialog()` and `bs4ModalButton()` now masks the equivolent Shiny functions `modalDialog` and `modalButton`. This should not break any functionality from the Shiny functions, but to ensure compability with the Shiny functions, the `text` argument to `bs4ModalButton()` has been renamed `label`
 * Using the `classes` argument in `dashboardCard()` will now issue a warning (argument will be removed in next release)
 * `dropdownMenu()` has been renamed `dropdownInput()`
+* Shiny 1.4.0 or higher (in order to use jQuery 3) and htmltools 0.4.0 or higher is now required
 
 ### New features
 
@@ -22,11 +23,14 @@ saiUI 0.7.0
 * `actionButton()` now supports a `class` argument for adding addtional CSS classes to a button
 * `downloadButton()` now properly handles the `class` argument
 * Minor performance improvements
+* Default HTML template now supports adding JS scripts to the page footer
 
 ### Bugfixes
 
 * Classes set in `tabPanel()` function will not be overwritten for active tabs in `saiPage()`
 * Single dependencies given to the `deps` argument in `bs4Page()` will now be correctly recognised
+* Themes now render _after_ other styles have been added to the header
+* Fixed logical checks in `dep` argument in `bs4Page()`
 
 saiUI 0.6.0
 ===============

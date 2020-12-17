@@ -4,7 +4,15 @@
 \alias{bs4Page}
 \title{Bootstrap Page}
 \usage{
-bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en", dir = "ltr")
+bs4Page(
+  ...,
+  title = NULL,
+  theme = NULL,
+  template = "default",
+  deps = NULL,
+  lang = "en",
+  dir = "ltr"
+)
 }
 \arguments{
 \item{...}{The UI elements of the page.}
@@ -13,6 +21,8 @@ bs4Page(..., title = NULL, theme = NULL, deps = NULL, lang = "en", dir = "ltr")
 
 \item{theme}{A character string or a \code{\link[htmltools]{htmlDependency}}-object
 with an alternate Bootstrap 4 stylesheet.}
+
+\item{template}{Name of the template that should be used}
 
 \item{deps}{Additional dependencies to add to the page.}
 
