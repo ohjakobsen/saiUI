@@ -11,9 +11,9 @@ Description: A package to replace the sidebar layout from the Shiny package with
 License: MIT + file LICENSE
 Depends:
     R (>= 3.5.0),
-    shiny (>= 1.2.0)
+    shiny (>= 1.4.0)
 Imports:
-    htmltools (>= 0.3.5),
+    htmltools (>= 0.4.0),
     utils
 Suggests:
     knitr,
