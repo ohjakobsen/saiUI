@@ -245,14 +245,28 @@ footerContent <- function(..., color = 'light', center = TRUE, small = FALSE) {
   
 }
 
+#' Full page layout
+#' 
+#' Create a full page (fuild) layout. This function should be used together with
+#' \code{\link{saiPage}}.
+#' 
+#' @param ... UI elements to include in the layout
+#' 
+#' @export
+fullpageLayout <- function(...) {
+  
+  div(class = 'container-fluid mt-1', ...)
+  
+}
+
 #' Single column layout
 #'
 #' Create a single coloumn responsive layout. This function should be used together with
 #' \code{\link{saiPage}}.
 #'
-#' @param ... UI elements to include in the layout
+#' @inheritParams fullpageLayout
 #' @param fluid If \code{TRUE} use a fluid layout (100% width on all devices). If \code{FALSE}
-#'   use a responsive layout. Defalts to \code{FALSE}
+#'   use a responsive layout. Defaults to \code{FALSE}
 #'
 #' @examples
 #' # Simple "Hello world" example
@@ -279,7 +293,7 @@ singleLayout <- function(..., fluid = FALSE) {
 #' @param main The \code{\link{saiMain}} containing outputs
 #' @param position The position of the menu relative to the main area
 #' @param fluid \code{TRUE} to use a fluid layout (100% width on all devices), or \code{FALSE}
-#'   to use a responsive layout. Defalts to \code{TRUE}
+#'   to use a responsive layout. Defaults to \code{TRUE}
 #' 
 #' @export
 sidebarLayout <- function(menu, main, position = c('left', 'right'), fluid = TRUE) {
@@ -578,6 +592,39 @@ buildTabset <- function(
   # Finally, actually invoke the functions to do the processing.
   tabs <- findAndMarkSelected(tabs, selected)
   build(tabs, ulClass, textFilter, id)
+}
+
+#' Create a navigation list panel
+#' 
+#' @inherit shiny::navlistPanel
+#' 
+#' @export
+navlistPanel <- function(
+  ..., id = NULL, selected = NULL, header = NULL, footer = NULL, fluid = TRUE,
+  widths = c(4, 8))
+{
+  
+  if (!is.null(id))
+    selected <- shiny::restoreInput(id = id, default = selected)
+  
+  tabs <- list(...)
+  
+  tabset <- buildTabset(
+    tabs, 'nav nav-pills flex-column',
+    textFilter = function(text) tags$li(class = 'navbar-brand', text),
+    id = id, selected = selected
+  )
+
+  nav <- dashboardCard(tabset$navList)
+  content <- list(header, tabset$content, footer)
+  
+  divTag <- flexRow(
+    shiny::column(widths[[1]], nav),
+    shiny::column(widths[[2]], content)
+  )
+  
+  divTag
+  
 }
 
 #' Create a help text element

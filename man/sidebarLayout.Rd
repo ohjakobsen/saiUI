@@ -14,7 +14,7 @@ sidebarLayout(menu, main, position = c("left", "right"), fluid = TRUE)
 \item{position}{The position of the menu relative to the main area}
 
 \item{fluid}{\code{TRUE} to use a fluid layout (100% width on all devices), or \code{FALSE}
-to use a responsive layout. Defalts to \code{TRUE}}
+to use a responsive layout. Defaults to \code{TRUE}}
 }
 \description{
 Sidebar layout
