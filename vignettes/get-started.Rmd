@@ -1,0 +1,66 @@
+---
+title: "Get Started"
+author: "Ove Haugland Jakobsen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+saiUI is an extension to Shiny that let's you create beautiful layouts with a great user experience using the [Bootstrap 4](https://getbootstrap.com) framework. The package replaces the Bootstrap 3 files with the new Bootstrap 4 framework. The package introduces new functions for creating user interfaces that are compatible with Bootstrap 4.
+
+saiUI is written so that most standard Shiny functions should work as expected. There are however some incompabilities between version 3 and 4 of Bootstrap that will break if you convert a standard Shiny app to saiUI:
+
+* Glyphicons have been removed from Bootstrap 4, and will not render even if you use the `shiny::icon` function (the relevant CSS files are not included)
+
+There are three main layouts included in saiUI. `singlePage()` creates a simple Bootstrap 4 layout with a fluid container. It is an alternative to `fluidPage` from the Shiny package. `saiPage()` is meant as a replacement for `navbarPage` in Shiny. It is built so that you can convert a navbar page to Bootstrap 4 with minimal changes to the code. Because of this, saiUI is *not* compatible with `navbarPage`. The other layout -  `saiDashboard()` - is an alternative to the dashboard layout for the package [shinydashboard](https://github.com/rstudio/shinydashboard) using a custom Bootstrap 4 layout.
+
+## Basic usage
+
+saiUI works in the same way as a standard Shiny application. In the UI file (or your UI definition in `app.R`), you specify the UI function you want to use to render your app. If you want an app with a basic Bootstrap 4 layout, you can use the function `bs4Page()`.
+
+A very basic layout would look like this:
+
+```{r, eval=FALSE}
+library(saiUI)
+
+ui <- bs4Page(
+  title = 'Demo page',
+  div('Hello world!')
+)
+
+server <- function(session, input, output) {}
+
+shinyApp(ui = ui, server = server)
+```
+
+## Single page
+
+To view an example of the `singlePage()` layout, run the following code in an interactive R session:
+
+```{r, eval=FALSE}
+runApp(system.file('examples/01_singlePage', package = 'saiUI'))
+```
+
+## Navbar page
+
+To view an example of the `saiPage()` layout, run the following code in an interactive R session:
+
+```{r, eval=FALSE}
+runApp(system.file('examples/02_saiPage', package = 'saiUI'))
+```
+
+## Dashboard page
+
+```{r, eval=FALSE}
+runApp(system.file('examples/03_saiDashboard', package = 'saiUI'))
+```

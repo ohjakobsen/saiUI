@@ -1,0 +1,58 @@
+---
+title: "Using inputs"
+author: "Ove Haugland Jakobsen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using inputs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(saiUI)
+```
+
+saiUI can be used with all input functions from the Shiny package. Some of the input functions in Shiny are masked in saiUI because of changes between Bootstrap 3 and 4. We have also added support for more Bootstrap options, such as setting the color of buttons. If you for some reason would still would  to use the Shiny function, you can always use the `::` notation in R to make a specific call to the Shiny function.
+
+## Slicer input
+
+The `slicerInput()` function creates a slicer to quickly and easily filter data. The slicer input works in much the same way as a slicer in Microsoft Excel or Power BI. The user can quickly select from a list of values without the need to open dialog boxes or dropdown menus. The best use cases for the slicer input is if the users of your application needs to frequently filter their data using a limited number of values, such as those from a discrete, categorical variable. This type of input usually works best when the number of categories are less than 10.
+
+To use the slicer input, you need to specify three arguments; the id of the input, the label for the input, and a vector of choices the user can choose among. Note that if you do *not* want a label for your input, you can specify the value `NULL` as the second argument. A basic `slicerInput()` call will look like this.
+
+```{r, eval=FALSE}
+slicerInput('my_input', 'Slicer', choices = c('A', 'B', 'C'))
+```
+
+By default, the `slicerInput()` will be single choice, with the first choice selected by default. You can specify which choice should be selected initially with the `selected`-argument. If you want to allow multiple choices, you can set the `multiple` argument to `TRUE`.
+
+## Switch input
+
+The `switchInput()` functions creates an iOS style switch to quickly enable or disable a setting.
+
+The input will return either a `TRUE` or a `FALSE` value.
+
+```{r eval=FALSE}
+switchInput('my_input', 'Toggle me on or off')
+```
+
+## Searchbox input
+
+The `searchboxInput()` function creates a text input for sending text to the server. The inputs works in the same way as a text input field, but is styled like a search input field with a search button to the right of the text input and optional placeholder text. You can also change the size of the input field in order to make it more or less prominent on the page. The input will return a string.
+
+```{r, eval=FALSE}
+searchboxInput('my_input', placeholder = 'Enter search term')
+```
+
+By default the search input will only send an updated value to the server when the user clicks on the button or hits the enter key. This behaviour can be controlled with the argument `searchAsYouType`. If set to `TRUE`, an updated value will be sent to the server as the user types, except for a slight delay to allow for normal typing.
+
+```{r, eval=FALSE}
+searchboxInput('my_input', placeholder = 'Enter search term', searchAsYouType = TRUE)
+```
+
+Search as you type should only be set to `TRUE` if the reactive expression it invalidates is an inexpensive expression. You should also note that if you use search as you type together with an external API, you might run into limits to the number of queries set by the API, as a single search could result in a series of API calls.
