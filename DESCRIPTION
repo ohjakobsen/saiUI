@@ -10,7 +10,7 @@ Description: A package to replace the sidebar layout from the Shiny package with
     Adds additional functions and layout elements to Shiny apps.
 License: MIT + file LICENSE
 Depends:
-    R (>= 3.5.0),
+    R (>= 3.6.0),
     shiny (>= 1.4.0)
 Imports:
     htmltools (>= 0.4.0),
