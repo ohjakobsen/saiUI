@@ -1,6 +1,5 @@
 template:
-  params:
-    bootswatch: flatly
+  bootstrap: 5
 
 reference:
 - title: Page layouts
@@ -8,49 +7,22 @@ reference:
     Functions to render page layouts.
   contents:
     - matches('Page')
+- title: Layout functions
+  contents:
+    - matches("Layout")
 - title: Input functions
   contents:
     - matches("Input")
 - title: Buttons
   contents:
     - matches("Button")
+- title: Cards
+  contents:
+    - starts_with("card")
 - title: All functions
   desc: ~
   contents:
-  - '`actionButton`'
-  - '`bs4Alert`'
-  - '`bs4Embed`'
-  - '`bs4Lib`'
-  - '`bs4Page`'
-  - '`bs4Toast`'
-  - '`cardGroup`'
-  - '`cardNav`'
-  - '`cardNavItem`'
-  - '`dashboardCard`'
-  - '`dashboardPanel`'
-  - '`downloadButton`'
-  - '`dropdownMenu`'
-  - '`fileInput`'
-  - '`flexColumn`'
-  - '`flexRow`'
-  - '`footerContent`'
-  - '`headerContent`'
-  - '`helpText`'
-  - '`saiDashboard`'
-  - '`saiMain`'
-  - '`saiMenu`'
-  - '`saiPage`'
-  - '`saiTab`'
-  - '`saiTabset`'
-  - '`searchboxInput`'
-  - '`sidebarLayout`'
-  - '`singleLayout`'
-  - '`singlePage`'
-  - '`slicerInput`'
-  - '`switchInput`'
-  - '`toggleButton`'
-  - '`updateSlicerInput`'
-  - '`updateToggleButton`'
+  - matches("^.+$")
 
 news:
   - one_page: false
