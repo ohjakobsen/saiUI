@@ -152,7 +152,7 @@ saiPage <- function(
   tabs[[tabselect]]$attribs$class <- sprintf('%s show active', tabClass)
   
   class <- sprintf(
-    'mainnav navpage navbar navbar-expand-lg %s bg-%s',
+    'mainnav navpage navbar navbar-expand-lg %s bg-%s py-0',
     if (color == 'light') 'navbar-light' else 'navbar-dark',
     color
   )
