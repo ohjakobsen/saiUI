@@ -15,11 +15,13 @@ saiUI 0.7.0
 * Added support for toast notifications. `saiPage()` and `saiDashboard()` gain a new argument `notifications` to enable toast notifications independent on the selected tab. Toast notifications are enabled by default.
 * Send new toast notifications to the UI with `sendToast()`
 * New function `createIcon()` that extends the `icon` function in Shiny. Input functions have been updated to use the now icon function. `createIcon()` supports Open Iconic (the default library in saiUI) and Font Awesome Free (included in Shiny). Note that Glyphicons is not supported as the library has been removed from Bootstrap 4
+* Added support for `navlistPanel()` with Bootstrap 4 card layout for the panel (replaces the well style from Bootstrap 3)
+* New layout function `fullpageLayout()`
 
 ### Improvements
 
 * `bs4ModalButton()` now supports a `color` and a `size` argument
-* Update to Bootstrap 4.5.3 and Popper.js 1.16.1
+* Update to Bootstrap 4.6.1 and Popper.js 1.16.1
 * `actionButton()` now supports a `class` argument for adding addtional CSS classes to a button
 * `downloadButton()` now properly handles the `class` argument
 * Minor performance improvements
