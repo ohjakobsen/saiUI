@@ -83,7 +83,7 @@ bs4Lib <- function(theme = TRUE, deps = NULL) {
     stop('You need to provide a list of dependencies with the deps argument!')
   
   libs <- list(
-    htmlDependency('bootstrap', '4.5.3',
+    htmlDependency('bootstrap', '4.6.1',
       c(file = system.file('www/bs4', package = 'saiUI')),
       script = c('js/popper.min.js', 'js/bootstrap.min.js'),
       stylesheet = if (theme) 'css/bootstrap.min.css',
@@ -492,12 +492,13 @@ buildTabset <- function(
   }
 
   # Append an optional icon to an aTag
-  appendIcon <- function(aTag, iconClass) {
+  appendIcon <- function(aTag, iconClass, lib = 'oi') {
     if (!is.null(iconClass)) {
-      # for font-awesome we specify fixed-width
-      if (grepl("fa-", iconClass, fixed = TRUE))
-        iconClass <- paste(iconClass, "fa-fw")
-      aTag <- tagAppendChild(aTag, icon(name = NULL, class = iconClass))
+      if (grepl('fa-', iconClass, fixed = TRUE)) {
+        lib <- 'font-awesome'
+        iconClass <- sub('fa-', '', iconClass)
+      }
+      aTag <- tagAppendChild(aTag, createIcon(iconClass, lib = lib))
     }
     aTag
   }
@@ -559,8 +560,7 @@ buildTabset <- function(
 
       } else {
         # Standard navbar item
-        # compute id and assign it to the div
-        thisId <- paste("tab", tabsetId, tabId, sep="-")
+        thisId <- sprintf('tab-%s-%s', tabsetId, tabId)
         divTag$attribs$id <- thisId
         tabId <<- tabId + 1
 
