@@ -9,13 +9,14 @@ NULL
 #' @param title The title for the page.
 #' @param theme A character string or a \code{\link[htmltools]{htmlDependency}}-object
 #'   with an alternate Bootstrap 4 stylesheet.
+#' @param template Name of the template that should be used
 #' @param deps Additional dependencies to add to the page.
 #' @param lang The language of the page that is added to the top level \code{html} element.
 #' @param dir Indicate the directionality of text in the \code{html} page
 #'
 #' @export
 bs4Page <- function(
-  ..., title = NULL, theme = NULL, deps = NULL, lang = 'en', dir = 'ltr')
+  ..., title = NULL, theme = NULL, template = 'default', deps = NULL, lang = 'en', dir = 'ltr')
 {
   
   if (!is.null(deps)) {
@@ -28,6 +29,11 @@ bs4Page <- function(
     else
       deps <- NULL
   }
+  
+  template <- if (template %in% c('default')) template else 'default'
+  
+  template <- sprintf('%s.html', esc(template))
+  user_theme <- NULL
   
   # Check if a theme is provided and the type of object of the theme. html_dependency
   # must be added to the list of dependencies. Strings should be added directly to the
@@ -45,12 +51,15 @@ bs4Page <- function(
   
   # Render the html template
   html <- htmlTemplate(
+    system.file('templates', template, package = 'saiUI'),
     lang = sprintf('lang="%s" dir="%s"', lang, dir),
     theme = user_theme,
     body = tagList(
       if (!is.null(title)) tags$head(tags$title(title)),
       list(...)
-    ), lang = sprintf('lang="%s" dir="%s"', lang, dir)
+    ),
+    # TODO: Implement footerscripts
+    footerscripts = NULL
   )
   
   attachDependencies(
