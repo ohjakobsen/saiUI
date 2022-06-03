@@ -36,7 +36,7 @@ or image type, respectively.
 }}
 
 \item{width}{The width of the input, e.g. \code{'400px'}, or \code{'100\%'};
-see \code{\link[shiny:reexports]{validateCssUnit()}}.}
+see \code{\link[shiny:validateCssUnit]{validateCssUnit()}}.}
 
 \item{buttonLabel}{The label used on the button. Can be text or an HTML tag
 object.}

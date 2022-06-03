@@ -34,5 +34,5 @@ large buttons.}
 Create a button that will dismiss a modal dialog.
 }
 \seealso{
-\code{\link{bs4ModalDialog}}
+\code{\link{bs4Modal}}
 }

@@ -38,6 +38,8 @@ modalDialog(
 
 \item{easyClose}{Boolean. If \code{TRUE} the modal can be dismissed by clicking outside
 the dialog box}
+
+\item{fade}{Boolean. If \code{TRUE} the modal will fade out when closed}
 }
 \description{
 Create a modal dialog

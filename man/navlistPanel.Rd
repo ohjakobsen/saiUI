@@ -63,6 +63,6 @@ fluidPage(
 )
 }
 \seealso{
-\code{\link[shiny:tabPanel]{tabPanel()}}, \code{\link[shiny:updateTabsetPanel]{updateNavlistPanel()}},
+\code{\link[shiny:tabPanel]{tabPanel()}}, \code{\link[shiny:updateNavlistPanel]{updateNavlistPanel()}},
 \code{\link[shiny:insertTab]{insertTab()}}, \code{\link[shiny:showTab]{showTab()}}
 }

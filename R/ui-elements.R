@@ -51,7 +51,7 @@ bs4Alert <- function(..., color = 'primary', icon = NULL, dismissable = FALSE) {
 #' 
 #' @inheritParams actionButton
 #' 
-#' @seealso \code{\link{bs4ModalDialog}}
+#' @seealso \code{\link{bs4Modal}}
 #' 
 #' @export
 bs4ModalButton <- function(
@@ -82,6 +82,7 @@ modalButton <- bs4ModalButton
 #' @param footer UI for the footer of the modal
 #' @param easyClose Boolean. If \code{TRUE} the modal can be dismissed by clicking outside
 #'   the dialog box
+#' @param fade Boolean. If \code{TRUE} the modal will fade out when closed
 #' 
 #' @export
 bs4Modal <- function(

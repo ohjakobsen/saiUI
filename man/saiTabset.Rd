@@ -25,7 +25,7 @@ tab will be selected.}
 \item{\code{"tabs"}}{Standard tab look}
 \item{\code{"pills"}}{Selected tabs use the background fill color}
 \item{\code{"hidden"}}{Hides the selectable tabs. Use \code{type = "hidden"} in
-conjunction with \code{\link[shiny:tabPanel]{tabPanelBody()}} and \code{\link[shiny:updateTabsetPanel]{updateTabsetPanel()}} to control the
+conjunction with \code{\link[shiny:tabPanelBody]{tabPanelBody()}} and \code{\link[shiny:updateTabsetPanel]{updateTabsetPanel()}} to control the
 active tab via other input controls. (See example below)}
 }}
 }
