@@ -30,3 +30,8 @@ idFromTitle <- function(x) invisible(tolower(gsub('[^[:alnum:]]', '', x)))
 is.tab <- function(x) {
   inherits(x, 'shiny.tag') && !is.null(x$attribs$role) && x$attribs$role == 'tabpanel'
 }
+
+# TODO: add variations (like WordPress?)
+esc <- function(x) {
+  gsub('[^A-Za-z0-9]', '', x)
+}
