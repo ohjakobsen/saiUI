@@ -7,7 +7,7 @@
 #' @export
 toastWrapper <- function() {
   div(
-    style = 'position: relative;',
+    style = 'position: fixed; width: 100%; height: auto; z-index: 999;',
     div(id = 'toast-container')
   )
 }
