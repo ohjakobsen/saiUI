@@ -1,3 +1,8 @@
+saiUI 0.7.1
+===============
+
+* Bugfix: Add fixed positioning of the toast wrapper so that it always sticks to the top of the page. This avoids toasts getting out of view when the user scrolls past the top of the page
+
 saiUI 0.7.0
 ===============
 
