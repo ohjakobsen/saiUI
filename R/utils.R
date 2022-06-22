@@ -1,3 +1,6 @@
+#' @importFrom grDevices col2rgb
+NULL
+
 # Adds utilities that are used in various functions
 # Several are copied from \code{shiny}
 
@@ -34,4 +37,10 @@ is.tab <- function(x) {
 # TODO: add variations (like WordPress?)
 esc <- function(x) {
   gsub('[^A-Za-z0-9]', '', x)
+}
+
+lightColor <- function(color) {
+  if (!grepl('^#', color)) color <- paste0('#', color)
+  color <- col2rgb(color)
+  return(sqrt(0.299*(color[1]^2)+0.587*(color[2]^2)+0.114*(color[3]^2)) > 127.5)
 }
