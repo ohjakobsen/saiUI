@@ -1,3 +1,10 @@
+saiUI 0.7.2
+===============
+
+* `headerContent()` and `footerContent()` now supports hexadecimal colors in addition to Bootstrap colors
+* New argument `wrapper` `headerContent()` and `footerContent()`. If set to `FALSE`, the content will not be wrapped in a paragraph tag
+* Bugfix: properly import `stats::runif()`
+
 saiUI 0.7.1
 ===============
 

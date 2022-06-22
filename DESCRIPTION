@@ -1,7 +1,7 @@
 Package: saiUI
 Type: Package
 Title: Bootstrap 4 layout for Shiny apps
-Version: 0.7.1
+Version: 0.7.2
 Authors@R: c(
     person("Ove Haugland", "Jakobsen", role = c("aut", "cre"), email = "ohj@mac.com"),
     person(family = "Riksrevisjonen", role = "cph")
@@ -11,9 +11,9 @@ Description: A package to replace the sidebar layout from the Shiny package with
 License: MIT + file LICENSE
 Depends:
     R (>= 3.6.0),
-    shiny (>= 1.4.0)
+    shiny (>= 1.6.0)
 Imports:
-    htmltools (>= 0.4.0),
+    htmltools (>= 0.5.2),
     utils
 Suggests:
     knitr,
