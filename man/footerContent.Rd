@@ -4,12 +4,20 @@
 \alias{footerContent}
 \title{Add content to page footer}
 \usage{
-footerContent(..., color = "light", center = TRUE, small = FALSE)
+footerContent(
+  ...,
+  color = "light",
+  wrapper = TRUE,
+  center = TRUE,
+  small = FALSE
+)
 }
 \arguments{
-\item{...}{The text to include in the footer}
+\item{...}{The text to be included}
 
-\item{color}{The background color for the text. Must be a valid Bootstrap 4 color}
+\item{color}{The background color for the text. See details}
+
+\item{wrapper}{If \code{TRUE} the text will be wrapped in a paragraph tag}
 
 \item{center}{If \code{TRUE} the text will be centered}
 
@@ -17,4 +25,8 @@ footerContent(..., color = "light", center = TRUE, small = FALSE)
 }
 \description{
 Add a text message below the content area on \code{\link{saiPage}}
+}
+\details{
+Color can be either a valid bootstrap color, or a hexadecimal string
+of the form "\code{#rrggbb}". See \code{\link[grDevices]{rgb}}.
 }

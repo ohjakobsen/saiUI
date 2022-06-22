@@ -219,17 +219,35 @@ saiMain <- function(..., width = 8) {
 #' 
 #' Add a text message above the content area on \code{\link{saiPage}}
 #' 
-#' @param ... The text to include in the header
-#' @param color The background color for the text. Must be a valid Bootstrap 4 color
+#' @param ... The text to be included
+#' @param color The background color for the text. See details
+#' @param wrapper If \code{TRUE} the text will be wrapped in a paragraph tag
+#' @param small If \code{TRUE} the text will be smaller than the body text
+#' 
+#' @details Color can be either a valid bootstrap color, or a hexadecimal string
+#' of the form "\code{#rrggbb}". See \code{\link[grDevices]{rgb}}.
 #' 
 #' @export
-headerContent <- function(..., color = 'primary') {
+headerContent <- function(..., color = 'primary', wrapper = TRUE, small = FALSE) {
   
-  text_color <- if (!(color %in% c('light', 'white', 'info'))) 'text-white' else ''
-  color <- sprintf('bg-%s', color)
+  if (wrapper) {
+    divTag <- div(p(class = 'm-0', ...))
+  } else {
+    divTag <- div(...)
+  }
   
-  div(class = paste(color, text_color, 'clearfix'),
-      p(class = 'p-2 m-0', ...))
+  if (grepl('^#', color)) {
+    text_color <- if (lightColor(color)) '' else 'text-white'
+    divTag$attribs$class <- paste(text_color, 'p-2', 'clearfix')
+    divTag$attribs$style <- sprintf('background-color: %s', color)
+  } else {
+    text_color <- if (!(color %in% c('light', 'white', 'info'))) 'text-white' else ''
+    divTag$attribs$class <- paste(sprintf('bg-%s', color), text_color, 'p-2', 'clearfix')
+  }
+  
+  if (small) divTag <- tagAppendAttributes(divTag, class = 'small')
+  
+  divTag
   
 }
 
@@ -237,20 +255,32 @@ headerContent <- function(..., color = 'primary') {
 #' 
 #' Add a text message below the content area on \code{\link{saiPage}}
 #' 
-#' @param ... The text to include in the footer
-#' @param color The background color for the text. Must be a valid Bootstrap 4 color
+#' @inherit headerContent
 #' @param center If \code{TRUE} the text will be centered
-#' @param small If \code{TRUE} the text will be smaller than the body text
 #' 
 #' @export
-footerContent <- function(..., color = 'light', center = TRUE, small = FALSE) {
+footerContent <- function(
+    ..., color = 'light', wrapper = TRUE, center = TRUE, small = FALSE) {
   
-  text_color <- if (!(color %in% c('light', 'white', 'info'))) 'text-white' else ''
-  center <- if (center) 'text-center' else NULL
-  small <- if (small) 'small' else NULL
+  if (wrapper) {
+    divTag <- div(p(class = 'm-0', ...))
+  } else {
+    divTag <- div(...)
+  }
   
-  div(class = sprintf('bg-%s %s p-2', color, text_color), class = center, class = small,
-      p(class = 'p-2 m-0', ...))
+  if (grepl('^#', color)) {
+    text_color <- if (lightColor(color)) '' else 'text-white'
+    divTag$attribs$class <- paste(text_color, 'p-3', 'clearfix')
+    divTag$attribs$style <- sprintf('background-color: %s', color)
+  } else {
+    text_color <- if (!(color %in% c('light', 'white', 'info'))) 'text-white' else ''
+    divTag$attribs$class <- paste(sprintf('bg-%s', color), text_color, 'p-3', 'clearfix')
+  }
+  
+  if (center) divTag <- tagAppendAttributes(divTag, class = 'text-center')
+  if (small) divTag <- tagAppendAttributes(divTag, class = 'small')
+  
+  divTag
   
 }
 
