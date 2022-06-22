@@ -1,3 +1,6 @@
+#' @importFrom stats runif
+NULL
+
 #' Add a container for sending toast notifications
 #' 
 #' Manually insert a toast container. For \code{\link{saiPage}} and \code{\link{saiDashboard}},
