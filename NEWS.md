@@ -1,3 +1,9 @@
+saiUI 0.7.3
+===============
+
+* It's now possible to set min and max width on modals to override default Bootstrap widths with the arguments `minwidth` and `maxwidth`
+* Toast will not show on top of modals
+
 saiUI 0.7.2
 ===============
 
