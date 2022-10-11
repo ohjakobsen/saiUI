@@ -12,7 +12,9 @@ bs4Modal(
   size = "m",
   footer = bs4ModalButton(),
   easyClose = FALSE,
-  fade = TRUE
+  fade = TRUE,
+  minwidth = NULL,
+  maxwidth = NULL
 )
 
 modalDialog(
@@ -22,7 +24,9 @@ modalDialog(
   size = "m",
   footer = bs4ModalButton(),
   easyClose = FALSE,
-  fade = TRUE
+  fade = TRUE,
+  minwidth = NULL,
+  maxwidth = NULL
 )
 }
 \arguments{
@@ -40,6 +44,10 @@ modalDialog(
 the dialog box}
 
 \item{fade}{Boolean. If \code{TRUE} the modal will fade out when closed}
+
+\item{minwidth}{An integer specifying the minimum width of the modal}
+
+\item{maxwidth}{An integer specifying the maximum width of the modal}
 }
 \description{
 Create a modal dialog

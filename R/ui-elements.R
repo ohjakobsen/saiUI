@@ -83,15 +83,23 @@ modalButton <- bs4ModalButton
 #' @param easyClose Boolean. If \code{TRUE} the modal can be dismissed by clicking outside
 #'   the dialog box
 #' @param fade Boolean. If \code{TRUE} the modal will fade out when closed
+#' @param minwidth An integer specifying the minimum width of the modal
+#' @param maxwidth An integer specifying the maximum width of the modal
 #' 
 #' @export
 bs4Modal <- function(
   ..., title = NULL, valign = FALSE, size = 'm', footer = bs4ModalButton(),
-  easyClose = FALSE, fade = TRUE)
+  easyClose = FALSE, fade = TRUE, minwidth = NULL, maxwidth = NULL)
 {
   
   size <- match.arg(size, c('m', 's', 'l', 'xl'))
   cls <- if (fade) 'modal fade' else 'modal'
+  
+  if (all(sapply(list(minwidth, maxwidth), class) == 'numeric')) {
+    style <- sprintf('min-width: %spx; max-width: %spx', minwidth, maxwidth)
+  } else {
+    style <- NULL
+  }
   
   if (!is.null(title))
     headerTag <- div(class = 'modal-header', h5(class = 'modal-title', title))
@@ -105,6 +113,7 @@ bs4Modal <- function(
     div(
       class = 'modal-dialog modal-dialog-scrollable',
       class = switch(size, s = 'modal-s', m = 'modal-m', l = 'modal-l', xl = 'modal-xl', 'modal-m'),
+      style = style,
       role = 'document',
       div(
         class = 'modal-content',
