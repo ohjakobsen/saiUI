@@ -357,7 +357,7 @@ slicerInput <- function(
     id = inputId,
     class = 'input-group slicer mb-1',
     list(
-      controlLabel(inputId, label),
+      tags$label(class = 'control-label', `for` = inputId, label),
       p(class = 'w-100 mb-1', html)
     )
   )
