@@ -348,17 +348,16 @@ slicerInput <- function(
   html <- mapply(choices, names(choices), SIMPLIFY = FALSE, FUN = function(btn, label) {
     active <- if (btn %in% selected) 'active' else ''
     tags$button(
-      class = paste('slicer-input btn btn-pill', color, active), `data-value` = btn,
+      class = paste('slicer-input btn btn-sm', color, active), `data-value` = btn,
       `aria-pressed` = switch(active, active = 'true', 'false'),
       htmlEscape(label))
   })
-
+  
   divTag <- tags$div(
-    id = inputId,
-    class = 'input-group slicer mb-1',
-    list(
-      tags$label(class = 'control-label', `for` = inputId, label),
-      p(class = 'w-100 mb-1', html)
+    id = inputId, class = 'slicer mb-1',
+    tagList(
+      controlLabel(inputId, label),
+      tags$div(class = 'btn-group', html)
     )
   )
 

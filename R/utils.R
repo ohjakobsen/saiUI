@@ -19,10 +19,19 @@ NULL
   return(NULL)
 }
 
+is.empty <- function(x) is.null(x) || is.na(x) || !nzchar(trimws(x))
+
 firstChoice <- function(choices) {
   if (length(choices) == 0L) return()
   choice <- choices[[1]]
   if (is.list(choice)) firstChoice(choice) else choice
+}
+
+controlLabel <- function(id, label) {
+  if (!is.empty(id) && !is.empty(label))
+    tags$label(class = 'control-label w-100', `for` = id, label)
+  else
+    NULL
 }
 
 idFromTitle <- function(x) invisible(tolower(gsub('[^[:alnum:]]', '', x)))
