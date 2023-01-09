@@ -1,7 +1,7 @@
 Package: saiUI
 Type: Package
 Title: Bootstrap 4 layout for Shiny apps
-Version: 0.7.3
+Version: 0.7.4
 Authors@R: c(
     person("Ove Haugland", "Jakobsen", role = c("aut", "cre"), email = "ohj@mac.com"),
     person(family = "Riksrevisjonen", role = "cph")
@@ -21,5 +21,5 @@ Suggests:
 URL: https://gitlab.com/ohjakobsen/saiUI
 BugReports: https://gitlab.com/ohjakobsen/saiUI/issues
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr

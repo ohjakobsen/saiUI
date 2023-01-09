@@ -1,3 +1,11 @@
+saiUI 0.7.4
+===============
+
+* Change UI for `slicerInput()` to use small buttons in a button group
+* Bugfix: Label for `slicerInput()` is now properly displayed if `label` argument is not `NULL`
+* Bugfix: `slicerInput()` no longer produces warning in R 4.2+
+* Bugfix: padding is now correctly applied on alert boxes
+
 saiUI 0.7.3
 ===============
 
