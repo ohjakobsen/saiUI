@@ -1,5 +1,8 @@
 # Read me
 
+> [!WARNING]
+> Development of saiUI has been suspended. The [bslib](https://github.com/rstudio/bslib) package now offers support for Bootstrap 4 and the newer Bootstrap 5. We recommend migrating to bslib. This project will be archived at a future date. There will be no new releases of saiUI.
+
 saiUI is an extension to Shiny that let's you create beautiful layouts with a great user experience using the [Bootstrap 4](https://getbootstrap.com) framework. The package replaces the Bootstrap 3 files with the new Bootstrap 4 framework. The package introduces new functions for creating user interfaces that are compatible with Bootstrap 4.
 
 There are three main layouts included in saiUI. `singlePage` creates a simple Bootstrap 4 layout with a fluid container. It is an alternative to `fluidPage` from the Shiny package. `saiPage` is meant as a replacement for `navbarPage` in Shiny. It is built so that you can convert a navbar page to Bootstrap 4 with minimal changes to the code. Because of this, saiUI is *not* compatible with `navbarPage`. The other layout -  `saiDashboard` - is an alternative to the dashboard layout for the package [shinydashboard](https://github.com/rstudio/shinydashboard) using a custom Bootstrap 4 layout.
